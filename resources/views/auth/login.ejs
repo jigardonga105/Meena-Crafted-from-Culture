@@ -1,0 +1,30 @@
+<head>
+    <link rel="stylesheet" href="/css/authStyle.css">
+</head>
+
+<section class="auth-container">
+    <div class="login-container">
+        <div class="circle circle-one"></div>
+        <div class="form-container">
+            <img src="/img/auth.png" alt="illustration" class="illustration" />
+            <h1 class="opacity">LOGIN</h1>
+            <% if(messages.error) { %>
+                <span class="text-red-500 text-sm" style="color: red;">
+                    <%= messages.error %>
+                </span>
+                <% } %>
+                    <form action="/login" method="POST">
+                        <input name="email" type="text" placeholder="EMAIL" required/>
+                        <input name="password" type="password" placeholder="PASSWORD" required/>
+                        <button class="opacity">SUBMIT</button>
+                    </form>
+                    <div class="register-forget opacity">
+                        <a href="/signup">REGISTER</a>
+                        <a href="/forgetPassword">FORGOT PASSWORD</a>
+                    </div>
+        </div>
+        <div class="circle circle-two"></div>
+    </div>
+    <!-- <div class="theme-btn-container"></div> -->
+</section>
+<script src="/js/auth/auth.js"></script>

@@ -1,0 +1,572 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+
+<% storeData.forEach( (str)=> { %>
+    <section id="store" class="store bg-gray-100">
+        <div class="store-item-list grid justify-items-center grid-cols-1">
+
+            <div class="new-store-item mt-5">
+                <div class="w-full">
+                    <form action="/add-product" method="POST" enctype="multipart/form-data" id="form"
+                        class="add-prod-form bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+                        <div class="py-3 px-3 bg-yellow-400 rounded mb-4">
+                            <span class="font-bold">Add new Product:</span>
+                        </div>
+                        <% if(messages.error) { %>
+                            <span class="text-red-500 text-md mb-3">
+                                <%= messages.error %>
+                            </span>
+                            <% } %>
+                                <!-- ================================================ -->
+                                <!-- ================================================ -->
+                                <!-- ================================================ -->
+                                <!-- form part-1 -->
+                                <div class="add-prod-fields-1 pb-4">
+                                    <div id="addProdFormPart1" class="grid grid-cols-2 gap-x-9">
+                                        <input type="hidden" name="storeID" value="<%= str._id %>">
+
+                                        <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2" for="productcate">
+                                                Product Category:
+                                            </label>
+                                            <select name="category" id="category"
+                                                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                required>
+                                                <option disabled selected class="bg-black text-white">Select a Product
+                                                    Category
+                                                </option>
+                                                <option value="Electronics" class="bg-black text-white">Electronics
+                                                </option>
+                                                <option value="TVs & Appliances" class="bg-black text-white">TVs &
+                                                    Appliances
+                                                </option>
+                                                <option value="Men" class="bg-black text-white">Men</option>
+                                                <option value="Women" class="bg-black text-white">Women</option>
+                                                <option value="Baby & Kids" class="bg-black text-white">Baby & Kids
+                                                </option>
+                                                <option value="Home & Furniture" class="bg-black text-white">Home &
+                                                    Furniture
+                                                </option>
+                                                <option value="Sports, Books & More" class="bg-black text-white">Sports,
+                                                    Books &
+                                                    More</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2" for="productcate">
+                                                Product SubCategory:
+                                            </label>
+                                            <select name="subcategory" id="subcategory" disabled
+                                                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                required>
+                                                <option disabled selected class="bg-black text-white">Select a Product
+                                                    SubCategory</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2" for="productname">
+                                                Product Name:
+                                            </label>
+                                            <input name="productname"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                id="name" value="<%= messages.productname %>" type="text"
+                                                placeholder="Enter your Product Name" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2" for="productdesc">
+                                                Product Description:
+                                            </label>
+                                            <input name="productdesc"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                id="desc" value="<%= messages.productdesc %>" type="text"
+                                                placeholder="Enter your Product Description" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2" for="price">
+                                                Price:
+                                            </label>
+                                            <input name="price"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                id="price" type="number" value="<%= messages.price %>"
+                                                placeholder="Enter your Product Price" required>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2" for="discount">
+                                                Discount: (optional)
+                                            </label>
+                                            <input name="discount"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                id="discount" type="tel" minlength="2" maxlength="4"
+                                                value="<%= messages.discount %>"
+                                                placeholder="Product discount... like 45%">
+                                        </div>
+
+                                        <div class="mb-6">
+                                            <label class="block text-white text-sm font-bold mb-2" for="productimg">
+                                                Upload Images:
+                                            </label>
+                                            <input name="image" multiple max="5"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                id="image" type="file" accept=".jpg, .jpeg, .png" required>
+                                        </div>
+                                    </div>
+                                    <div class="float-right" id="next-1" onclick="next_1()">
+                                        <span
+                                            class="bg-yellow-300 text-green-900 px-3 py-2 rounded cursor-pointer"><strong>Next</strong></span>
+                                    </div>
+                                </div>
+
+                                <div class="last_form_data hidden"></div>
+
+                                <!-- form part-2 -->
+                                <div class="add-prod-fields-2 pb-4">
+                                    <div id="addProdFormPart2" class="grid grid-cols-2 gap-x-9">
+
+                                        <div class="mb-4">
+                                            <label class="inline-block text-white text-sm font-bold mb-2" for="offer">
+                                                Add Offers:
+                                            </label>
+                                            <span id="plus-spanBtn-offer"
+                                                class="show-offer-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+
+                                            <select name="offer" id="offer"
+                                                class="shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Add</option>
+                                                <option value="notAdd" class="bg-black text-white">Not Add</option>
+                                            </select>
+                                            <div class="show-offer-div border rounded bg-gray-400 p-3 mt-2"
+                                                style="display: none;">
+                                                <div id="offer-data-1">
+                                                    <input name="offers"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="offerstype1" type="text" placeholder="Enter Offer type">
+                                                    <input name="offers"
+                                                        class="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="offersdetails1" type="text"
+                                                        placeholder="Enter Offer Details">
+                                                </div>
+                                                <div id="more-offer-div"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="inline-block text-white text-sm font-bold mb-2" for="war/gar">
+                                                Add Warranty/Garranty:
+                                            </label>
+                                            <span id="plus-spanBtn-warr"
+                                                class="show-warr-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+                                            <select name="warr" id="warr"
+                                                class="shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Provide</option>
+                                                <option value="notadd" class="bg-black text-white">Not Provide
+                                                </option>
+                                            </select>
+                                            <div class="show-warr-div border rounded bg-gray-400 p-3 mt-2"
+                                                style="display: none;">
+                                                <div id="warr-data-1">
+                                                    <input name="warr-type"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="warr-type1" type="text"
+                                                        placeholder="type Warranty / Garranty">
+                                                    <input name="warr-dura"
+                                                        class="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="warr-dura1" type="text"
+                                                        placeholder="Enter Duration ( 2 Years )">
+                                                    <input name="warr-desc"
+                                                        class="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="warr-desc1" type="text" placeholder="Enter Description">
+                                                </div>
+                                                <div id="more-warr-div"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="inline-block text-white text-sm font-bold mb-2" for="size">
+                                                Add Sizes:
+                                            </label>
+                                            <span id="plus-spanBtn-size"
+                                                class="show-size-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+                                            <select name="sizesec" id="size"
+                                                class="shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Add Sizes</option>
+                                                <option value="notadd" class="bg-black text-white">Not Add</option>
+                                            </select>
+                                            <div class="show-size-div border rounded bg-gray-400 p-3 mt-2"
+                                                style="display: none;">
+                                                <div id="size-data-1">
+                                                    <input name="sizes"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="size1" type="text" placeholder="Enter sizes ( S,M,L,XL.. )">
+                                                </div>
+                                                <div id="more-size-div"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="inline-block text-white text-sm font-bold mb-2" for="color">
+                                                Add Colors:
+                                            </label>
+                                            <span id="plus-spanBtn-color"
+                                                class="show-color-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+                                            <select name="color" id="color"
+                                                class="shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Add Colors</option>
+                                                <option value="notadd" class="bg-black text-white">Not add</option>
+                                            </select>
+                                            <div class="show-color-div border rounded bg-gray-400 p-3 mt-2"
+                                                style="display: none;">
+                                                <div id="color-data-1">
+                                                    <input name="colors"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="color1" type="text" placeholder="Enter colors">
+                                                </div>
+                                                <div id="more-color-div"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="inline-block text-white text-sm font-bold mb-2"
+                                                for="highlight">
+                                                Add Highlights:
+                                            </label>
+                                            <span id="plus-spanBtn-highlight"
+                                                class="show-highlight-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+                                            <select name="highlight" id="highlight"
+                                                class="shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Add Highlights</option>
+                                                <option value="notadd" class="bg-black text-white">Not add</option>
+                                            </select>
+                                            <div class="show-highlight-div border rounded bg-gray-400 p-3 mt-2"
+                                                style="display: none;">
+                                                <div id="highlight-data-1">
+                                                    <input name="highlights"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="highlight1" type="text" placeholder="Enter highlights">
+                                                </div>
+                                                <div id="more-highlight-div"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="inline-block text-white text-sm font-bold mb-2" for="payops">
+                                                Add Payment Options:
+                                            </label>
+                                            <span id="plus-spanBtn-payops"
+                                                class="show-payops-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+                                            <select name="payopssec" id="payops"
+                                                class="shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Add Payment Options
+                                                </option>
+                                                <option value="notadd" class="bg-black text-white">Not add</option>
+                                            </select>
+                                            <div class="show-payops-div border rounded bg-gray-400 p-3 mt-2"
+                                                style="display: none;">
+                                                <div id="payops-data-1">
+                                                    <input name="payops"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="payops1" type="text" placeholder="Enter payment options">
+                                                </div>
+                                                <div id="more-payops-div"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="inline-block text-white text-sm font-bold mb-2"
+                                                for="services">
+                                                Add Services:
+                                            </label>
+                                            <span id="plus-spanBtn-services"
+                                                class="show-services-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+                                            <select name="service" id="services"
+                                                class="shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Add Services</option>
+                                                <option value="notadd" class="bg-black text-white">Not add</option>
+                                            </select>
+                                            <div class="show-services-div border rounded bg-gray-400 p-3 mt-2"
+                                                style="display: none;">
+                                                <div id="services-data-1">
+                                                    <input name="services"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="services1" type="text" placeholder="Enter services">
+                                                </div>
+                                                <div id="more-services-div"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="float-right" id="next-2" onclick="next_2()">
+                                        <span
+                                            class="bg-yellow-300 text-green-900 px-3 py-2 rounded cursor-pointer"><strong>Next</strong></span>
+                                    </div>
+                                    <div class="float-left" id="back-1" onclick="back_1()">
+                                        <span
+                                            class="bg-blue-500 text-green-900 px-3 py-2 rounded cursor-pointer"><strong>Privious</strong></span>
+                                    </div>
+                                </div>
+
+                                <!-- form part-3 -->
+                                <div class="add-prod-fields-3 pb-4">
+                                    <div id="addProdFormPart3" class="grid grid-cols-1 gap-x-9 mb-5">
+                                        <div class="div-spec1">
+                                            <label class="inline-block text-white text-sm font-bold mb-2"
+                                                for="specification">
+                                                Add Specification:
+                                            </label>
+                                            <span id="plus-spanBtn-spec"
+                                                class="show-spec-span bg-yellow-500 px-3 py-2 ml-2 rounded-full cursor-pointer"
+                                                style="display: none;"><strong>+</strong></span>
+
+                                            <select name="specSec" id="spec"
+                                                class="shadow border rounded w-60 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField">
+                                                <option disabled selected class="bg-black text-white">Select a Option
+                                                </option>
+                                                <option value="add" class="bg-black text-white">Add Specification
+                                                </option>
+                                                <option value="notAdd" class="bg-black text-white">Not Add</option>
+                                            </select>
+
+                                            <div id="spec-data-1"
+                                                class="sub_spec-div show-spec-div border rounded bg-gray-400 p-3 my-2"
+                                                style="display: none;">
+                                                <div id="key1" class="m-1">
+                                                    <input type="text"
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                        id="spec1" placeholder="Enter Title of Specification">
+                                                </div>
+                                                <div class="m-2 mt-4 flex specKeyValueField">
+                                                    <input type="text" class="inline-block bg-gray-200 h-12 p-3"
+                                                        id="key1.1" placeholder="Enter Title">
+                                                    <input type="text" class="ml-3 inline-block bg-gray-200 h-12 p-3"
+                                                        id="value1.1" placeholder="Enter Description">
+                                                    <span id="plus-btn"
+                                                        class="bg-yellow-500 px-3 py-2 rounded-full cursor-pointer ml-5">
+                                                        <strong>+</strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div id="more-sub_spec-1" style="display: none;"></div>
+                                        </div>
+                                        <div id="more-spec-div" style="display: none;"></div>
+                                    </div>
+                                    <div class="float-left mt-3" id="back-1" onclick="back_2()">
+                                        <span
+                                            class="bg-indigo-500 text-green-900 px-3 py-2 rounded cursor-pointer"><strong>Privious</strong></span>
+                                    </div>
+                                    <div class="float-right mt-3" id="addProdSubBtn">
+                                        <span
+                                            class="bg-green-600 px-3 py-2 rounded cursor-pointer"><strong>Submit</strong></span>
+                                    </div>
+                                </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="store-items container w-full overflow-auto bg-blue-200 rounded shadow mb-3 p-5">
+                <span class="text-3xl bg-yellow-400 p-3 rounded font-bold">Your Products:</span>
+                <table class="mt-5 bg-gray-100 shadow rounded">
+                    <tr class="bg-gray-800 text-white shadow-inner">
+                        <th>Image</th>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Explore</th>
+                    </tr>
+                    <% if(product){ %>
+                        <% product.forEach( (item)=> { %>
+                            <tr class="item-data-tr">
+                                <td>
+                                    <% if(item.image[0]) { %>
+                                        <img class="rounded mx-auto" src="../../uploadedImages/<%= item.image[0].img %>"
+                                            width="100" height="100" alt="Store Image">
+                                        <% } else { %>
+                                            <span align="center" class="inline-block text-xl">
+                                                No Image Found
+                                            </span>
+                                            <% } %>
+                                </td>
+                                <td>
+                                    <%= item.category %>
+                                </td>
+                                <td>
+                                    <%= item.name %>
+                                </td>
+                                <td>
+                                    &#8377;
+                                    <%= item.price %>
+                                </td>
+                                <td>
+                                    <a href="/seller/product/<%= item._id %>">
+                                        <button
+                                            class="allPrdViewEditBtn text-white bg-gray-800 px-3 py-2 hover:bg-gray-500 rounded-full cursor-pointer">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </a>
+                                    <a href="/seller/productUpdate/<%= item._id %>">
+                                        <button
+                                            class="allPrdViewEditBtn text-yellow-400 bg-gray-800 px-3 py-2 mt-2 hover:bg-gray-500 rounded-full cursor-pointer">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <% } %>
+                </table>
+            </div>
+
+        </div>
+    </section>
+    <% }) %>
+
+        <script>
+            let elecArr = ['Mobiles', 'Mobile Accessories', 'Smart Wearable Tech', 'Health Care Appliances', 'Laptops', 'Desktop PCs', 'Gaming Accessories', 'Computer Accessories', 'Computer Peripherals', 'Tablets', 'Speakers', 'Smart Home Automation', 'Camera', 'Camera Accessories', 'Network Components']
+
+            let tvsAppArr = ['Television', 'Washing Machine', 'Air Conditioners', 'Refrigerators', 'Kitchen Appliances', 'Healthy Living Appliances', 'Small Home Appliances']
+
+            let menArr = ['Footwear', 'Mens Grooming', 'Top Wear', 'Bottom Wear', 'Suits, Blazers & Waistcoats', 'Ties, Socks, Cops & More', 'Fabrics', 'Winter Wear', 'Ethnic Wear', 'Innerwear & Loungewear', 'Raincoats & Windcheaters', 'Watches', 'Sports & Fitness Store', 'Smart Watches', 'Personal Care Appliances']
+
+            let womanArr = ['Ethnic wear', 'Ethnic bottoms', 'footware', 'sandals', 'shoes', 'bllerians', 'slippers & Flip -flops', 'watches', 'smart watches', 'personal care Applications', 'eauty & Grooming', 'jewllery']
+
+            let babyArr = ['kids clothings', 'boys clothing', 'girls clothing', 'baby boys clothing', 'kinds footware', 'boys footware', 'girls footware', 'infant footware', 'kids footware', 'character shoes', 'kids winter wear', 'boys winter wear', 'girls winter wear', 'toys', 'schools supplies', 'baby care']
+
+            let homeArr = ['kitchen,cookware& serveware', 'Tableware &Dinner', 'kitchen storage', 'Furniture Top Offers', 'bed Room Furniture', 'Living Room Furmiture', 'Office & Study Furniture', 'DIY Furniture', 'Furnishing', 'Smart Home Automation', 'Home Improvement', 'home Decor ', 'Honme LIghting', 'Festival Decor& Gifts', 'pet Supplies', 'Durability Certified Furniture', 'Chrismas Store', 'Gardening Store']
+
+            let sportArr = ['Food Essentials', 'Health & Nutrition', 'books', 'Stationery', 'Auto Accessories', 'industriall & Scientific tools', 'Medical Supplies', 'Music', 'Gaming', 'Grocery']
+
+            function showSubCategory(Arr) {
+                let subcategory = document.getElementById('subcategory');
+                subcategory.removeAttribute('disabled')
+                subcategory.innerHTML = '';
+                for (let i = 0; i < Arr.length; i++) {
+                    let ops = document.createElement("option")
+                    ops.value = Arr[i]
+                    ops.classList = ['bg-black', 'text-white']
+                    ops.text = Arr[i]
+                    subcategory.options.add(ops)
+                }
+            }
+
+
+            let category = document.getElementById('category');
+            category.addEventListener('change', () => {
+                // console.log(category.value);
+                if (category.value === 'Electronics') {
+                    showSubCategory(elecArr);
+                }
+                if (category.value === 'TVs & Appliances') {
+                    showSubCategory(tvsAppArr);
+                }
+                if (category.value === 'Men') {
+                    showSubCategory(menArr);
+                }
+                if (category.value === 'Women') {
+                    showSubCategory(womanArr);
+                }
+                if (category.value === 'Baby & Kids') {
+                    showSubCategory(babyArr);
+                }
+                if (category.value === 'Home & Furniture') {
+                    showSubCategory(homeArr);
+                }
+                if (category.value === 'Sports, Books & More') {
+                    showSubCategory(sportArr);
+                }
+            })
+
+            let addProdField1 = document.getElementsByClassName('add-prod-fields-1')[0]
+            addProdField1.style.display = 'block'
+            let addProdField2 = document.getElementsByClassName('add-prod-fields-2')[0]
+            addProdField2.style.display = 'none'
+            let addProdField3 = document.getElementsByClassName('add-prod-fields-3')[0]
+            addProdField3.style.display = 'none'
+
+            let new_store_item = document.getElementsByClassName('new-store-item')[0]
+            let next1 = document.getElementById('next-1')
+            let next2 = document.getElementById('next-2')
+            let back1 = document.getElementById('back-1')
+
+            function next_1() {
+                if (addProdField1.style.display == 'block') {
+                    addProdField1.style.display = 'none';
+                    addProdField2.style.display = 'block';
+                    new_store_item.style.width = '810px'
+                } else {
+                    addProdField1.style.display = 'block';
+                    addProdField2.style.display = 'none'
+                }
+            }
+
+            function back_1() {
+                if (addProdField2.style.display == 'block') {
+                    addProdField2.style.display = 'none';
+                    addProdField1.style.display = 'block';
+                } else {
+                    addProdField2.style.display = 'block';
+                    addProdField1.style.display = 'none';
+                }
+            }
+
+            function next_2() {
+                if (addProdField2.style.display == 'block') {
+                    addProdField2.style.display = 'none';
+                    addProdField3.style.display = 'block';
+                } else {
+                    addProdField2.style.display = 'block';
+                    addProdField3.style.display = 'none';
+                }
+            }
+
+            function back_2() {
+                if (addProdField3.style.display == 'block') {
+                    addProdField3.style.display = 'none';
+                    addProdField2.style.display = 'block';
+                } else {
+                    addProdField3.style.display = 'block';
+                    addProdField2.style.display = 'none';
+                }
+            }
+        </script>

@@ -1,0 +1,218 @@
+<head>
+    <style>
+        .card-container.active {
+            cursor: grabbing;
+            cursor: -webkit-grabbing;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 1rem;
+            padding: 1rem;
+            scrollbar-width: none;   /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer and Edge */
+            cursor: grab;
+            cursor: -webkit-grab;
+            user-select: none; /* Prevents text/image selection */
+        }
+
+        /* Hide scrollbar for Chrome, Safari, and Opera */
+        .card-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card-container .card {
+            flex: 0 0 calc(25% - 1rem); /* 4 cards per row on large screens */
+            min-width: 16rem; /* Minimum width for smaller screens */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .card-container .card {
+                flex: 0 0 calc(33.333% - 1rem); /* 3 cards per row on medium */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-container .card {
+                flex: 0 0 calc(50% - 1rem); /* 2 cards per row on tablets */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-container .card {
+                flex: 0 0 calc(100% - 1rem); /* 1 card per row on mobile */
+            }
+        }
+
+        .card-img-top {
+            transition: none !important;
+            transform: none !important;
+        }
+
+        .card:hover .card-img-top {
+            transform: none !important;
+        }
+    </style>
+</head>
+
+<!-- <div id="cat-nav" style="display: grid; justify-content: center;">
+    <ul id="cat-nav-ul" style="overflow-x: hidden !important;"></ul>
+
+    <div id="catsMoreOpt" style="display: none;">
+        Explore all categories
+        <div id="catsMoreOpt-plus">+</div>
+    </div>
+</div> -->
+<div id="addAllCats" style="display: none;"></div>
+
+<!-- Start Banner Hero -->
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <picture>
+        <!-- Mobile image -->
+        <source media="(max-width: 640px)" srcset="/img/home_banners/Mobile_Banner_1760x1200_1200_x_1760_px_5_4cf8b3cf-a75e-416f-8128-7b1fa1c1429d_x800.webp">
+        <!-- Desktop image -->
+        <img class="d-block w-100" src="/img/home_banners/Home_Page_Banner_1800_x_600_px_4_2200x.webp"
+             style="height: 36rem;" alt="First slide">
+      </picture>
+    </div>
+
+    <div class="carousel-item">
+      <picture>
+        <source media="(max-width: 640px)" srcset="/img/home_banners/Mangalam_Mobile_Banner_x800.webp">
+        <img class="d-block w-100" src="/img/home_banners/Mangalam_Web_banner_2200x.webp"
+             style="height: 36rem;" alt="Second slide">
+      </picture>
+    </div>
+
+    <div class="carousel-item">
+      <picture>
+        <source media="(max-width: 640px)" srcset="/img/home_banners/Painted_Closed_Mobile_Banner_x800.webp">
+        <img class="d-block w-100" src="/img/home_banners/Painted_Closet_Web_Banner_2200x.webp"
+             style="height: 36rem;" alt="Third slide">
+      </picture>
+    </div>
+
+    <div class="carousel-item">
+      <picture>
+        <source media="(max-width: 640px)" srcset="/img/home_banners/Spilled_ink_banner_mobile_x800.webp">
+        <img class="d-block w-100" src="/img/home_banners/Spilled_Ink_Web_Banner_2200x.webp"
+             style="height: 36rem;" alt="Fourth slide">
+      </picture>
+    </div>
+
+  </div>
+
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<!-- End Banner Hero -->
+
+<section>
+    <div class="m-4 mx-5">
+        <div class="card-container">
+            <% if (products) { %>
+                <% if (products.length> 0) { %>
+                    <% products.forEach((product)=> { %>
+                        <div class="card border-0">
+                            <img src="../../uploadedImages/<%= product.image[0].img %>"
+                            class="card-img-top product-img" 
+                            style="height: 438px !important;" 
+                            alt="<%= product.name %>"
+                            data-default-img="../../uploadedImages/<%= product.image[0].img %>"
+                            data-hover-img="<%= product.image[1] ? '../../uploadedImages/' + product.image[1].img : '../../uploadedImages/' + product.image[0].img %>" 
+                            >
+                            <div class="card-body">
+                                <p class="card-title text-center fw-bold">
+                                    <%= product.name.substring(0, 40) %>
+                                    <% if (product.name.length> 40) { %>
+                                        <%= '...' %>
+                                            <% } %>
+                                </h5>
+                                <h6 class="text-center fw-bold mt-2 mb-3">Rs. <%= product.price %></h6>
+                                <p class="text-center">
+                                    <% product.size.map(size=> { %>
+                                        <span><%= size %>, </span>
+                                    <% }) %>
+                                </p>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 col-2 mx-auto mb-5">
+        <button class="btn btn-warning text-white" type="button">Explore More</button>
+    </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector(".card-container");
+
+    // 🟢 Prevent images from dragging
+    container.querySelectorAll("img").forEach(img => {
+      img.addEventListener("dragstart", (e) => e.preventDefault());
+    });
+
+    // 🟢 Hover effect: change image source
+    container.querySelectorAll(".product-img").forEach(img => {
+      const defaultImg = img.dataset.defaultImg;
+      const hoverImg = img.dataset.hoverImg;
+
+      img.addEventListener("mouseenter", () => {
+        img.src = hoverImg;
+      });
+      img.addEventListener("mouseleave", () => {
+        img.src = defaultImg;
+      });
+    });
+
+    // 🟢 Click and drag scroll logic
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener("mousedown", (e) => {
+      isDown = true;
+      container.classList.add("active");
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    });
+
+    container.addEventListener("mouseleave", () => {
+      isDown = false;
+      container.classList.remove("active");
+    });
+
+    container.addEventListener("mouseup", () => {
+      isDown = false;
+      container.classList.remove("active");
+    });
+
+    container.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5; // scroll speed
+      container.scrollLeft = scrollLeft - walk;
+    });
+  });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>

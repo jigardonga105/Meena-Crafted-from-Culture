@@ -1,0 +1,258 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        /* @media screen and (max-width: 820px) {
+            body {
+                width: 820px !important;
+            }
+        } */
+    </style>
+</head>
+
+
+<% if(!store) { %>
+    <section id="add-store" class="add-store flex justify-center">
+        <div class="add-store-null w-full max-w-xs mr-5 my-auto">
+            <span class="text-5xl text-yellow-600">
+                No Store found!
+            </span>
+            <br>
+            <br>
+            <span class="text-xl">
+                You could not create any store yet.
+            </span>
+        </div>
+        <div class="add-store-adder w-2/3 border rounded px-4 py-2 bg-gray-800 mt-24 h-3/4">
+            <div
+                class="add-store-adder-header w-72 mb-5 mt-5 bg-green-500 text-xl rounded text-white text-xl px-4 py-2 mx-auto">
+                <span class="mx-auto add-store-adder-header-span">Add a new Store</span>
+            </div>
+            <form action="/add-store" method="POST" enctype="multipart/form-data">
+                <% if(messages.error) { %>
+                    <span class="text-red-500 text-md">
+                        <%= messages.error %>
+                    </span>
+                    <% } %>
+                        <div class="add-store-adder-form grid grid-cols-2">
+                            <div class="add-store-adder-form-div mb-4 w-80 mx-auto">
+                                <label class="block text-white text-sm font-bold mb-2" for="username">
+                                    Store Name:
+                                </label>
+                                <input name="storename" value="<%= messages.storename %>"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                    id="username" type="text" placeholder="Enter your Store Name" required>
+                            </div>
+
+                            <div class="add-store-adder-form-div mb-4 w-80 mx-auto">
+                                <label class="block text-white text-sm font-bold mb-2" for="username">
+                                    Store Owner Name:
+                                </label>
+                                <input name="storeownername" value="<%= messages.storeownername %>"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                    id="username" type="text" placeholder="Enter Owner Name" required>
+                            </div>
+
+                            <div class="add-store-adder-form-div mb-4 w-80 mx-auto">
+                                <label class="block text-white text-sm font-bold mb-2" for="username">
+                                    Store Contact:
+                                </label>
+                                <input name="storecontact" value="<%= messages.storecontact %>"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                    id="username" type="tel" pattern="[0-9]{10}"
+                                    placeholder="Enter Store Contact Number" required>
+                            </div>
+
+                            <div class="add-store-adder-form-div mb-4 w-80 mx-auto">
+                                <label class="block text-white text-sm font-bold mb-2" for="username">
+                                    Store Address:
+                                </label>
+                                <input name="storeaddress" value="<%= messages.storeaddress %>"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                    id="username" type="text" placeholder="Enter your Store Address" required>
+                            </div>
+
+                            <div class="add-store-adder-form-div mb-4 w-80 mx-auto">
+                                <label class="block text-white text-sm font-bold mb-2" for="username">
+                                    Images:
+                                </label>
+                                <input name="image" multiple
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                    id="username" type="file" accept=".jpg, .jpeg, .png" required>
+                            </div>
+
+                            <div class="add-store-adder-form-div mb-4 w-80 mx-auto">
+                                <label class="block text-white text-sm font-bold mb-2" for="username">
+                                    Description:
+                                </label>
+                                <textarea name="storedesc" value="<%= messages.storedesc %>"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                    placeholder="Enter Description About store" minlength="10" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="add-store-adder-form-btn mx-auto">
+                            <button
+                                class="bg-green-500 rounded-full text-white font-bold py-2 px-4 rounded focus:outline-none"
+                                type="submit">
+                                Create Store
+                            </button>
+                        </div>
+            </form>
+        </div>
+    </section>
+    <% } else { %>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="w-72 bg-green-500 text-xl rounded text-bold px-4 py-2">
+                            <span class="font-bold">
+                                Add a new Store
+                            </span>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body show-store-add border rounded px-4 py-2 bg-gray-800">
+                        <form action="/add-store" method="POST" enctype="multipart/form-data">
+                            <% if(messages.error) { %>
+                                <span class="text-red-500 text-md">
+                                    <%= messages.error %>
+                                </span>
+                                <% } %>
+                                    <div class="mb-4">
+                                        <label class="block text-white text-sm font-bold mb-2" for="username">
+                                            Store Name:
+                                        </label>
+                                        <input name="storename"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                            id="username" type="text" placeholder="Enter your Store Name" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="block text-white text-sm font-bold mb-2" for="username">
+                                            Store Owner Name:
+                                        </label>
+                                        <input name="storeownername"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                            id="username" type="text" placeholder="Enter Owner Name" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="block text-white text-sm font-bold mb-2" for="username">
+                                            Store Contact:
+                                        </label>
+                                        <input name="storecontact"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                            id="username" type="tel" pattern="[0-9]{10}"
+                                            placeholder="Enter Store Contact Number" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="block text-white text-sm font-bold mb-2" for="username">
+                                            Store Address:
+                                        </label>
+                                        <input name="storeaddress"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                            id="username" type="text" placeholder="Enter your Store Address" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="block text-white text-sm font-bold mb-2" for="username">
+                                            Images:
+                                        </label>
+                                        <input name="image" multiple
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                            id="username" type="file" accept=".jpg, .jpeg, .png" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="block text-white text-sm font-bold mb-2" for="username">
+                                            Description:
+                                        </label>
+                                        <textarea name="storedesc"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                            placeholder="Enter Description About store" minlength="10"
+                                            required></textarea>
+                                    </div>
+
+                                    <button
+                                        class="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none"
+                                        type="submit">
+                                        Create Store
+                                    </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="show-store" class="show-store pt-10">
+                <div class="your-store-header inline-block w-72 border bg-gray-700 text-xl rounded text-yellow-400 px-4 py-2 mb-4">
+                    <span class="">Your Stores :</span>
+                </div>
+            <div class="addNewStoreBtnDiv float-right">
+                <div type="button" data-toggle="modal" data-target="#exampleModal" class="w-72 border bg-gray-700 text-xl rounded text-yellow-400 px-4 py-2 mb-4">
+                    Add a new Store
+                </div>
+            </div>
+
+            <div class="store-list-main">
+                <div class="show-store-list border-2 bg-white grid grid-cols-5 justify-items-center pt-10">
+                    <% if(storeData){ %>
+                        <% storeData.forEach( (str)=> { %>
+
+                            <div class="show-store-list-div bg-gray-200 shadow border-2 p-2 flex flex-col justify-center mb-5">
+                                <img class="store-img rounded mx-auto" src="../uploadedImages/<%= str.image[0].img %>"
+                                    alt="Store Image">
+                                <a class="mx-auto my-2 " href="#">
+                                    <span class="font-bold text-lg">
+                                        <%= str.storename %>
+                                    </span>
+                                    <span class="flex justify-center my-2">
+                                        <span class="border-t border-b border-l bg-gray-200">
+                                            <%= str.rating %>&nbsp;
+                                        </span>
+                                        <span class="border-t border-b border-r bg-gray-200">
+                                            <img class="mt-1" src="/img/star.png" alt="" height="20" width="20">
+                                        </span>
+                                    </span>
+                                </a>
+
+                                <div class="store-dtil-btn mx-auto">
+                                    <a href="/seller/store/<%= str._id %>">
+                                        <button
+                                            class="bg-green-200 rounded-full text-white font-bold py-2 px-4 focus:outline-none"
+                                            type="submit">
+                                            View
+                                        </button>
+                                    </a>
+                                    <a href="/seller/storeCust/<%= str._id %>">
+                                        <button
+                                            class="bg-green-200 rounded-full text-white font-bold py-2 px-4 focus:outline-none ml-5"
+                                            type="submit">
+                                            Customize
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } %>
+                </div>
+            </div>
+        </section>
+        <% } %>
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>

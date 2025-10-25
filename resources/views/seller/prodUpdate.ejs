@@ -1,0 +1,513 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        .sub_spec-div div:nth-child(2) input:nth-child(1) {
+            width: 100%;
+        }
+
+        .sub_spec-div div:nth-child(2) input:nth-child(2) {
+            width: 94%;
+        }
+    </style>
+</head>
+
+
+<div id="snackbar"><span id="snackbar-span"></span></div>
+<section>
+    <div class="item-updating border-2 rounded item-data-change px-10 py-10 bg-gray-800 shadow-xl">
+
+        <button type="button" id="viewImgLargeToggleModalBtn" class="d-none" data-toggle="modal"
+            data-target="#viewImgLargeModal"></button>
+        <div class="modal fade show" id="viewImgLargeModal" tabindex="-1" role="dialog"
+            aria-labelledby="viewImgLargeModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-viewImg" role="document">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div> -->
+                    <div id="viewImgLargeModalBody" class="modal-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade show" id="uploadMoreProdImg" tabindex="-1" role="dialog"
+            aria-labelledby="uploadMoreProdImgTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="item-updating-container-span1 font-bold py-3 px-3 bg-yellow-500 rounded">Upload
+                            more Images:</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="uploadMoreProdImgBody" class="modal-body bg-gray-800">
+                        <form action="/product-add-img/<%= product._id %>" method="POST" enctype="multipart/form-data">
+                            <span class="font-bold text-white"></span>
+                            <input name="image" multiple
+                                class="shadow w-72 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                id="username" type="file" accept=".jpg, .jpeg, .png" required>
+                            <button
+                                class="changedprice-btn h-10 mt-2 ml-20 rounded text-black bg-yellow-500 font px-1 rounded focus:outline-none"
+                                type="submit">
+                                Upload
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="delete-prd-div">
+            <form action="/seller/deletePrd/<%= product._id %>" method="POST" class="delete-prd-form hidden">
+                <!-- this is for delete Product form -->
+            </form>
+            <button
+                class="bg-red-500 px-3 py-2 mt-3 float-right rounded-full hover:text-white hover:bg-red-600 focus:outline-none">
+                Delete Product&nbsp&nbsp<i class="fas fa-trash"></i>
+            </button>
+        </div>
+
+
+        <div class="grid w-full">
+            <span class="font-bold py-3 px-3 bg-yellow-500 rounded mb-5 w-44">Update Product:</span>
+
+            <input id="itemdata" type="hidden" value="<%= JSON.stringify(product) %>">
+            <div id="forForm" class="hidden"></div>
+
+            <div class="updateProdDataMain">
+                <!-- For Change Category: -->
+                <div class="updateProdDataCatForm">
+                    <form action="/seller/updateitem/<%= product._id %>" method="POST" class="grid grid-cols-5">
+
+                        <div class="cat-select col-span-2">
+                            <label class="block text-white text-sm font-bold mb-2" for="productcate">
+                                Product Category:
+                            </label>
+                            <select name="category" id="category"
+                                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                required>
+                                <option disabled selected class="bg-black text-white">Select a Product Category</option>
+                                <option value="Electronics" class="bg-black text-white">Electronics</option>
+                                <option value="TVs & Appliances" class="bg-black text-white">TVs & Appliances</option>
+                                <option value="Men" class="bg-black text-white">Men</option>
+                                <option value="Women" class="bg-black text-white">Women</option>
+                                <option value="Baby & Kids" class="bg-black text-white">Baby & Kids</option>
+                                <option value="Home & Furniture" class="bg-black text-white">Home & Furniture</option>
+                                <option value="Sports, Books & More" class="bg-black text-white">Sports, Books & More
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="cat-select ml-5 col-span-2">
+                            <!-- For Change sub Category: -->
+                            <label class="block text-white text-sm font-bold mb-2" for="productcate">
+                                Product SubCategory:
+                            </label>
+                            <select name="subcategory" id="subcategory" disabled
+                                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                required></select>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button
+                                class="changedprice-btn h-10 float-right mt-7 rounded text-black bg-green-500 font px-1 rounded focus:outline-none"
+                                type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="updateProdDataForm1_2 my-5">
+                    <div class="updateProdDataForm1 mr-2">
+
+                        <!-- For Change Stock: -->
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                            <label class="block text-white text-sm font-bold mb-2" for="productstock">
+                                Change Stock Status:
+                            </label>
+                            <select name="stock" onchange="this.form.submit()" id="stock"
+                                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                <option id="in" class="bg-black text-white" value="in">In Stock</option>
+                                <option id="out" class="bg-black text-white" value="out">Out of Stock</option>
+                            </select>
+                        </form>
+
+                        <!-- For Change Name: -->
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                            <label class="block text-white text-sm font-bold" for="productname">
+                                Change Name:
+                            </label>
+                            <div class="flex changedname">
+                                <input name="changedname"
+                                    class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                    id="changename" type="text" placeholder="Name" required>
+                                <button
+                                    class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-green-500 font px-1 rounded focus:outline-none"
+                                    type="submit">
+                                    Update
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- For Change Price: -->
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                            <label class="block text-white text-sm font-bold" for="productprice">
+                                Change Price:
+                            </label>
+                            <div class="flex changedprice">
+                                <input name="changedprice"
+                                    class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                    id="changedprice" type="number" placeholder="Price" required>
+                                <button
+                                    class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-green-500 font px-1 rounded focus:outline-none"
+                                    type="submit">
+                                    Update
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- For Change Discount: -->
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                            <label class="block text-white text-sm font-bold" for="productdiscount">
+                                Change Discount:
+                            </label>
+                            <div class="flex changeddiscount">
+                                <input name="changeddiscount"
+                                    class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                    id="changeddiscount" type="number" placeholder="Discount" required>
+                                <button
+                                    class="changeddiscount-btn h-10 mt-2 ml-2 rounded text-black bg-green-500 font px-1 rounded focus:outline-none"
+                                    type="submit">
+                                    Update
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- For Change desc: -->
+                        <form action="/seller/updateitem/<%= product._id %>" method="POST" class="mb-2">
+                            <label class="inline-block text-white text-sm font-bold mb-2" for="productdesc">
+                                Change Descriptions:
+                            </label>
+                            <button
+                                class="changedprice-btn inline-block h-10 my-2 ml-24 rounded text-black bg-green-500 font px-1 rounded focus:outline-none"
+                                type="submit">
+                                Update
+                            </button>
+                            <br>
+                            <textarea name="desc" id="changedesc" rows="5"
+                                class="rounded focus:outline-none w-full"></textarea>
+                        </form>
+
+                    </div>
+
+                    <div id="forms2" class="updateProdDataForm2 grid grid-cols-2 gap-3">
+                        <div id="form2_1" class="form2_1">
+
+                            <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                                <div class="mb-4 bg-gray-400">
+                                    <label class="inline-block text-white text-sm font-bold" for="offer">
+                                        Offers:
+                                    </label>
+                                    <select name="offer" id="offer"
+                                        class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                        <option disabled selected class="bg-black text-white">Select a Option
+                                        </option>
+                                        <option value="ext" class="bg-black text-white">Update Existing</option>
+                                        <option value="add" class="bg-black text-white">Add New</option>
+                                        <option value="both" class="bg-black text-white">Both</option>
+                                    </select>
+                                    <div class="show-offer-div rounded  p-3 mt-1" style="display: none;"></div>
+                                    <span id="plus-spanBtn-offer"
+                                        class="show-offer-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                        style="display: none;"><strong>Add More</strong></span>
+                                    <div id="more-offer-div"></div>
+                                    <span id="btn"
+                                        class="offer offer-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                        style="display: none;margin-left: 42%;" type="submit">
+                                        Update
+                                    </span>
+                                </div>
+                            </form>
+
+                            <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                                <div class="mb-4 bg-gray-400">
+                                    <label class="inline-block text-white text-sm font-bold" for="size">
+                                        Sizes:
+                                    </label>
+                                    <select name="size" id="size"
+                                        class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                        <option disabled selected class="bg-black text-white">Select a Option
+                                        </option>
+                                        <option value="ext" class="bg-black text-white">Update Existing</option>
+                                        <option value="add" class="bg-black text-white">Add New</option>
+                                        <option value="both" class="bg-black text-white">Both</option>
+                                    </select>
+                                    <div class="show-size-div rounded  p-3 mt-1" style="display: none;"></div>
+                                    <span id="plus-spanBtn-size"
+                                        class="show-size-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                        style="display: none;"><strong>Add More</strong></span>
+                                    <div id="more-size-div"></div>
+                                    <span id="btn"
+                                        class="size size-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                        style="display: none;margin-left: 42%;" type="submit">
+                                        Update
+                                    </span>
+
+                                </div>
+                            </form>
+
+                            <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                                <div class="mb-4 bg-gray-400">
+                                    <label class="inline-block text-white text-sm font-bold" for="highlight">
+                                        Highlights:
+                                    </label>
+                                    <select name="highlight" id="highlight"
+                                        class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                        <option disabled selected class="bg-black text-white">Select a Option
+                                        </option>
+                                        <option value="ext" class="bg-black text-white">Update Existing</option>
+                                        <option value="add" class="bg-black text-white">Add New</option>
+                                        <option value="both" class="bg-black text-white">Both</option>
+                                    </select>
+                                    <div class="show-highlight-div rounded  p-3 mt-1" style="display: none;"></div>
+                                    <span id="plus-spanBtn-highlight"
+                                        class="show-highlight-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                        style="display: none;"><strong>Add More</strong></span>
+                                    <div id="more-highlight-div"></div>
+                                    <span id="btn"
+                                        class="highlight highlight-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                        style="display: none;margin-left: 42%;" type="submit">
+                                        Update
+                                    </span>
+                                </div>
+                            </form>
+
+                            <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                                <div class="mb-4 bg-gray-400">
+                                    <label class="inline-block text-white text-sm font-bold" for="service">
+                                        Services:
+                                    </label>
+                                    <select name="service" id="services"
+                                        class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                        <option disabled selected class="bg-black text-white">Select a Option
+                                        </option>
+                                        <option value="ext" class="bg-black text-white">Update Existing</option>
+                                        <option value="add" class="bg-black text-white">Add New</option>
+                                        <option value="both" class="bg-black text-white">Both</option>
+                                    </select>
+                                    <div class="show-services-div rounded  p-3 mt-1" style="display: none;"></div>
+                                    <span id="plus-spanBtn-services"
+                                        class="show-services-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                        style="display: none;"><strong>Add More</strong></span>
+                                    <div id="more-services-div"></div>
+                                    <span id="btn"
+                                        class="services services-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                        style="display: none;margin-left: 42%;" type="submit">
+                                        Update
+                                    </span>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div id="form2_2" class="form2_2">
+
+                            <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                                <div class="mb-4 bg-gray-400">
+                                    <label class="inline-block text-white text-sm font-bold" for="warr">
+                                        Warranty/Garranty:
+                                    </label>
+                                    <select name="warr" id="warr"
+                                        class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                        <option disabled selected class="bg-black text-white">Select a Option
+                                        </option>
+                                        <option value="ext" class="bg-black text-white">Update Existing</option>
+                                        <option value="add" class="bg-black text-white">Add New</option>
+                                        <option value="both" class="bg-black text-white">Both</option>
+                                    </select>
+                                    <div class="show-warr-div rounded  p-3 mt-1" style="display: none;"></div>
+                                    <span id="plus-spanBtn-warr"
+                                        class="show-warr-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                        style="display: none;"><strong>Add More</strong></span>
+                                    <div id="more-warr-div"></div>
+                                    <span id="btn"
+                                        class="warr warr-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                        style="display: none;margin-left: 42%;" type="submit">
+                                        Update
+                                    </span>
+
+                                </div>
+                            </form>
+
+                            <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                                <div class="mb-4 bg-gray-400">
+                                    <label class="inline-block text-white text-sm font-bold" for="color">
+                                        Colors:
+                                    </label>
+                                    <select name="color" id="color"
+                                        class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                        <option disabled selected class="bg-black text-white">Select a Option
+                                        </option>
+                                        <option value="ext" class="bg-black text-white">Update Existing</option>
+                                        <option value="add" class="bg-black text-white">Add New</option>
+                                        <option value="both" class="bg-black text-white">Both</option>
+                                    </select>
+                                    <div class="show-color-div rounded  p-3 mt-1" style="display: none;"></div>
+                                    <span id="plus-spanBtn-color"
+                                        class="show-color-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                        style="display: none;"><strong>Add More</strong></span>
+                                    <div id="more-color-div"></div>
+                                    <span id="btn"
+                                        class="color color-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                        style="display: none;margin-left: 42%;" type="submit">
+                                        Update
+                                    </span>
+                                </div>
+                            </form>
+
+                            <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                                <div class="mb-4 bg-gray-400">
+                                    <label class="inline-block text-white text-sm font-bold" for="payops">
+                                        Payment Options:
+                                    </label>
+                                    <select name="payops" id="payops"
+                                        class="select shadow border rounded w-full mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                        <option disabled selected class="bg-black text-white">Select a Option
+                                        </option>
+                                        <option value="ext" class="bg-black text-white">Update Existing</option>
+                                        <option value="add" class="bg-black text-white">Add New</option>
+                                        <option value="both" class="bg-black text-white">Both</option>
+                                    </select>
+                                    <div class="show-payops-div rounded  p-3 mt-1" style="display: none;"></div>
+                                    <span id="plus-spanBtn-payops"
+                                        class="show-payops-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                        style="display: none;"><strong>Add More</strong></span>
+                                    <div id="more-payops-div"></div>
+                                    <span id="btn"
+                                        class="payops payops-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                        style="display: none;margin-left: 42%;" type="submit">
+                                        Update
+                                    </span>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="forms3" class="updateProdDataForm3 forms3 w-full">
+                    <form action="/seller/updateitem/<%= product._id %>" method="POST">
+                        <div class="mb-4 bg-gray-400">
+                            <label class="inline-block text-white text-sm font-bold" for="spec">
+                                Specification:
+                            </label>
+                            <br>
+                            <select name="spec" id="spec"
+                                class="select shadow border rounded w-52 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                                <option disabled selected class="bg-black text-white">Select a Option
+                                </option>
+                                <option value="ext" class="bg-black text-white">Update Existing</option>
+                                <option value="add" class="bg-black text-white">Add New</option>
+                                <option value="both" class="bg-black text-white">Both</option>
+                            </select>
+                            <div class="show-spec-div rounded  p-3 mt-1" style="display: none;"></div>
+                            <span id="plus-spanBtn-spec"
+                                class="show-spec-span bg-yellow-500 px-3 py-2 rounded-full cursor-pointer float-right"
+                                style="display: none;"><strong>Add More</strong></span>
+                            <div id="firstSpec"></div>
+                            <div id="more-spec-div" style="display: none;"></div>
+                            <span id="btn"
+                                class="spec spec-sub-btn my-2 h-10 rounded text-black font-bold hover:text-white bg-green-500 px-3 py-2 cursor-pointer"
+                                style="display: none;margin-left: 42%;" type="submit">
+                                Update
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="item-details-Images flex justify-center">
+    <div
+        class="shower-main-container w-full flex flex-col justify-center border-2 rounded bg-gray-300 mt-10 pt-2 px-5 mx-auto">
+        <div class="addMoreProdImgMainDiv">
+            <button
+                class="bg-gray-800 px-3 py-2 float-right rounded-full hover:text-white hover:bg-gray-600 focus:outline-none text-yellow-400"
+                type="button" data-toggle="modal" data-target="#uploadMoreProdImg">
+                Add Images.&nbsp&nbsp<i class="fa-solid fa-store"></i>
+            </button>
+        </div>
+        <div class="mx-auto">
+            <span class="font-bold py-3 px-3 bg-gray-800 rounded text-yellow-400">Images</span>
+        </div>
+        <div class="item-images-shower grid grid-cols-5 gap-10 mx-auto py-10">
+            <% for (const img of product.image) { %>
+                <div class="deleteUpdateBtnMainDiv">
+                    <img class="rounded deleteUpdateBtnImg" src="../../../uploadedImages/<%= img.img %>"
+                        alt="item image" style="height: 13rem;">
+
+                    <div class="deleteUpdateBtnDiv">
+                        <button id="<%= product._id %>" value="<%= img._id %>"
+                            data-item="<%= JSON.stringify(imageSet) %>"
+                            class="delete-item-btn changedprice-btn text-green-500" type="submit">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button value="<%= img.img %>" class="view-store-btn changedprice-btn text-yellow-500">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </div>
+</section>
+
+<script>
+    let deletePrdDiv = document.getElementsByClassName('delete-prd-div')[0];
+    deletePrdDiv.addEventListener('click', () => {
+        let result = confirm('Are you sure you want to delete this Product?');
+        // console.log(result);
+        if (result) {
+            deletePrdForm = document.getElementsByClassName('delete-prd-form')[0];
+            deletePrdForm.submit();
+        }
+    })
+
+    let viewStoreBtn = document.querySelectorAll(".view-store-btn");
+    if (viewStoreBtn) {
+        for (let i = 0; i < viewStoreBtn.length; i++) {
+            viewStoreBtn[i].addEventListener('click', (e) => {
+
+                let viewImgLargeToggleModalBtn = document.getElementById('viewImgLargeToggleModalBtn');
+                let viewImgLargeModalBody = document.getElementById('viewImgLargeModalBody');
+                let value = viewStoreBtn[i].value;
+
+                let str = `<img class="d-block w-100" src="../../../uploadedImages/${value}" alt="${value}">
+                            <button type="button" class="close closeLargeImg" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>`;
+                viewImgLargeModalBody.innerHTML = '';
+                viewImgLargeModalBody.innerHTML = str;
+
+                viewImgLargeToggleModalBtn.click();
+            })
+        }
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>

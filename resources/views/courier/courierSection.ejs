@@ -1,0 +1,549 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
+    <style>
+        ul li {
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            cursor: pointer;
+        }
+
+        #courierSerUl span {
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            cursor: pointer;
+        }
+
+        .address {
+            max-width: 230px;
+            overflow: auto;
+        }
+
+        .optsBg {
+            background-color: #8bffd7;
+        }
+
+        .courierSecLeftOpt:hover {
+            cursor: pointer;
+        }
+
+        #courierSectionInfo {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 1fr;
+        }
+        
+        #courierSectionLeft {
+            grid-area: 1 / 1 / 2 / 2;
+            min-width: 225px !important;
+        }
+
+        #courierSectionRight {
+            grid-area: 1 / 2 / 2 / 7;
+        }
+
+        @media screen and (max-width: 1250px) {
+            #nameEmailPhone {
+                grid-template-columns: repeat(2,minmax(0,1fr));
+            }
+
+            #passProfpic {
+                grid-template-columns: repeat(1,minmax(0,1fr));
+            }
+        }
+
+        @media screen and (max-width: 950px) {
+            #courierAdminSecMain {
+                padding: 15px 5px !important;
+            }
+
+            #nameEmailPhone {
+                grid-template-columns: repeat(1,minmax(0,1fr));
+            }
+
+            #addressPinCity {
+                grid-template-columns: repeat(1,minmax(0,1fr));
+            }
+
+            #statePassProfpic {
+                grid-template-columns: repeat(1,minmax(0,1fr));
+            }
+        }
+
+        @media screen and (max-width: 650px) {
+            #courierSectionInfo {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 5px;
+            }
+
+            #courierSectionRight {
+                margin-left: 0px !important;
+            }
+
+            #courierSerLeft {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .courierSecLeftOpt {
+                width: -webkit-fill-available;
+            }
+        }
+
+        @media screen and (max-width: 450px) {
+            #makeAccLiDiv, #courierSectionRight {
+                padding: 5px 5px !important;
+            }
+
+            #formMainDiv {
+                margin-left: 0px !important;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            #courierAdminSecMain form input, .updateCourAgeInfoForm form input, #courierSerUl span {
+                font-size: 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <% if(courierAgents) { %>
+        <!-- <input type="hidden" id="courierAgents" value="<%= JSON.stringify(courierAgents) %>"> -->
+        <input type="hidden" id="courierAgents" data-agents="<%= JSON.stringify(courierAgents) %>">
+        <% } %>
+            <% if(msg) { %>
+                <input type="hidden" id="msg" value="<%= msg %>">
+                <% } %>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="updateCourierAgeData" tabindex="-1" role="dialog" aria-labelledby="updateCourierAgeDataModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="updateCourierAgeDataModalLabel">Update Info.</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div id="updateCourierAgeDataModalBody" class="modal-body"></div>
+                    </div>
+                    </div>
+                </div>
+
+                    <div id="courierAdminSecMain" class="bg-gray-100 p-5">
+                        <div id="courierSec" class="courierSec flex flex-col p-2">
+                            <div class="border rounded mb-2 bg-white p-4">
+                                <h3><strong>Courier Section:</strong></h3>
+                            </div>
+
+                            <div id="courierSectionInfo" class="">
+                                <div id="courierSectionLeft" class="bg-white mr-2 border rounded">
+                                    <ul id="courierSerLeft" class="pl-0 mb-0">
+                                        <li class="courierSecLeftOpt pl-4 py-3 shadow-lg">Services</li>
+                                    </ul>
+                                </div>
+
+                                <div id="courierSectionRight" class="bg-white w-full p-4 ml-2 border rounded">
+                                    <div id="alertMsg"></div>
+                                    <div id="courierSer">
+                                        <div id="courierSerUl" class="courierSerUl">
+                                            <i class="fa-solid fa-circle-dot mr-3"></i><span class="toolsOfCAg" id="makeAccLi">Make Courier
+                                                agents Account</span><br>
+                                            <i class="fa-solid fa-circle-dot mr-3"></i><span class="toolsOfCAg" id="showAccLi">Show Courier
+                                                agents Account</span><br>
+                                        </div>
+                                        <div id="makeAccLiDiv"
+                                            class="makeAcc mt-3 bg-gray-100 p-4 border rounded flex flex-col justify-between">
+                                            <h4 class="">Make an Account:</h4>
+                                            <div id="formMainDiv" class="ml-5">
+                                                <div class="block p-6 rounded-lg shadow-lg bg-white">
+                                                    <form action="/courierServiceAdmin/signupCrAg" method="POST"
+                                                        enctype="multipart/form-data">
+                                                        <div id="nameEmailPhone" class="grid grid-cols-4 gap-4">
+                                                            <input type="hidden" name="role" value="courier">
+                                                            <div id="fnameDiv" class="form-group mb-6">
+                                                                <input type="text" name="fname"
+                                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    aria-describedby="emailHelp123"
+                                                                    placeholder="First name" required>
+                                                            </div>
+                                                            <div id="lnameDiv" class="form-group mb-6">
+                                                                <input type="text" name="lname"
+                                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    aria-describedby="emailHelp124"
+                                                                    placeholder="Last name" required>
+                                                            </div>
+                                                            <div id="emailDiv" class="form-group mb-6">
+                                                                <input type="email" name="email"
+                                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    placeholder="Email address" required>
+                                                            </div>
+                                                            <div id="phoneDiv" class="form-group mb-6">
+                                                                <input type="number" name="phone"
+                                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    placeholder="Phone Number" required>
+                                                            </div>
+                                                        </div>
+                                                        <div id="statePassProfpic" class="grid grid-cols-2 gap-4">
+                                                            <div class="form-group mb-6">
+                                                                <select id="courierAgeState" name="state"
+                                                                    class="courierAgeState form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    aria-label="Default select example"
+                                                                    required></select>
+                                                            </div>
+                                                            <div id="passProfpic" class="grid grid-cols-2 gap-4">
+                                                                <div class="form-group mb-6">
+                                                                    <input type="password" name="password"
+                                                                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                        placeholder="Password" required>
+                                                                </div>
+                                                                <div class="form-group mb-6">
+                                                                    <input type="file" name="image"
+                                                                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                        placeholder="Profile Picture"
+                                                                        accept=".jpg, .jpeg, .png" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="addressPinCity" class="grid grid-cols-2 gap-4">
+                                                            <div class="form-group mb-6">
+                                                                <textarea name="address"
+                                                                    class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    id="courierAgeAdd" rows="4"
+                                                                    placeholder="Address (area & street)"
+                                                                    required></textarea>
+                                                            </div>
+                                                            <div class="form-group mb-6">
+                                                                <div class="flex flex-col">
+                                                                    <div class="form-group mb-6">
+                                                                        <input type="city" name="city"
+                                                                            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                            placeholder="City" required>
+                                                                    </div>
+                                                                    <div class="form-group mb-4">
+                                                                        <input type="pincode" name="pincode"
+                                                                            class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                            placeholder="Pincode" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <button type="submit"
+                                                            class="px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Sign
+                                                            up</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="showAccLiDiv"
+                                            class="mt-3 bg-gray-100 p-4 border rounded flex flex-col justify-between">
+                                            <h4>All Agents:</h4>
+                                            <div class="flex flex-col">
+                                                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                                                        <div class="overflow-hidden rounded">
+                                                            <table class="min-w-full">
+                                                                <thead class="bg-gray-800 border-b">
+                                                                    <tr>
+                                                                        <th scope="col"
+                                                                            class="text-white text-sm font-medium px-6 py-4 text-center">
+                                                                            State
+                                                                        </th>
+                                                                        <th scope="col"
+                                                                            class="text-white text-sm font-medium px-6 py-4 text-center">
+                                                                            Name
+                                                                        </th>
+                                                                        <th scope="col"
+                                                                            class="text-white text-sm font-medium px-6 py-4 text-center">
+                                                                            Email
+                                                                        </th>
+                                                                        <th scope="col"
+                                                                            class="text-white text-sm font-medium px-6 py-4 text-center">
+                                                                            Phone
+                                                                        </th>
+                                                                        <th scope="col"
+                                                                            class="text-white text-sm font-medium px-6 py-4 text-center">
+                                                                            Address
+                                                                        </th>
+                                                                        <th scope="col"
+                                                                            class="text-white text-sm font-medium px-6 py-4 text-center">
+                                                                            Action
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="allAgeRows" class=""></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+<script>
+    let courierSerLeft = document.getElementById('courierSerLeft');
+    let courierSerUl = document.getElementById('courierSerUl');
+    courierSerUl.style.display = 'none';
+
+    // let liIdArr = ["makeAccLi"];
+    let liIdArr = ["makeAccLi", "showAccLi"];
+
+    courierSerLeft.addEventListener('click', () => {
+        if (courierSerUl.style.display == 'none') {
+            courierSerUl.style.display = 'block';
+        } else {
+            courierSerUl.style.display = 'none';
+        }
+    });
+
+    liIdArr.map((li) => {
+        let liId = document.getElementById(li);
+        let liIdDiv = document.getElementById(`${li}Div`);
+        if (liIdDiv) {
+            liIdDiv.style.display = 'none';
+        }
+
+        if (liId) {
+            liId.addEventListener('click', () => {
+                liIdArr.map((liDiv) => {
+                    let liIdDiv = document.getElementById(`${liDiv}Div`);
+                    if (liIdDiv) {
+                        liIdDiv.style.display = 'none';
+                    }
+                })
+                if (liIdDiv) {
+                    if (liIdDiv.style.display == 'none') {
+                        liIdDiv.style.display = 'flex';
+                    } else {
+                        liIdDiv.style.display = 'none';
+                    }
+                }
+            })
+        }
+    })
+
+    //==========================================================================
+    //==========================================================================
+
+    const fillStateNameFunc = () => {
+
+        let state = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"]
+        let courierAgeState = document.getElementsByClassName('courierAgeState');
+
+        for (let i = 0; i < courierAgeState.length; i++) {
+            if (courierAgeState[i].innerHTML) {
+                courierAgeState[i].innerHTML = '';
+            }
+
+            state.map(st => {
+                if (courierAgeState[i].dataset.state) {
+                    if (courierAgeState[i].dataset.state == st) {
+                        courierAgeState[i].innerHTML += `<option value="${st}" selected>${st}</option>`;
+                    } else {
+                        courierAgeState[i].innerHTML += `<option value="${st}">${st}</option>`;
+                    }
+                } else {
+                    courierAgeState[i].innerHTML += `<option value="${st}">${st}</option>`;
+                }
+            })
+        }
+    }
+
+    fillStateNameFunc();
+
+    //=======================================================================
+    //=======================================================================
+
+    let courierAgents = document.getElementById("courierAgents");
+    courierAgents = JSON.parse(courierAgents.dataset.agents);
+
+    let allAgeRows = document.getElementById("allAgeRows");
+
+    for (let i = 0; i < courierAgents.length; i++) {
+        allAgeRows.innerHTML += `<tr class="border-b bg-white" id="${courierAgents[i]._id}">
+                                    <td id="state-${courierAgents[i]._id}" class="state px-6 whitespace-nowrap text-sm font-medium text-gray-900 text-center">
+                                        ${courierAgents[i].state}
+                                    </td>
+                                    <td id="name-${courierAgents[i]._id}" class="name text-sm text-gray-900 font-light px-6 whitespace-nowrap text-center">
+                                        ${courierAgents[i].first_name} ${courierAgents[i].last_name}
+                                    </td>
+                                    <td id="email-${courierAgents[i]._id}" class="email text-sm text-gray-900 font-light px-6 whitespace-nowrap text-center">
+                                        ${courierAgents[i].email}
+                                    </td>
+                                    <td id="phone-${courierAgents[i]._id}" class="phone text-sm text-gray-900 font-light px-6 whitespace-nowrap text-center">
+                                        ${courierAgents[i].phone}
+                                    </td>
+                                    <td id="address-${courierAgents[i]._id}" class="address text-sm text-gray-900 font-light px-6 whitespace-nowrap text-center">
+                                        ${courierAgents[i].address[0].main}<br>
+                                        ${courierAgents[i].address[0].city}<br>
+                                        ${courierAgents[i].address[0].pin}
+                                    </td>
+                                    <td id="action-${courierAgents[i]._id}" class="flex flex-row gap-2 action text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
+                                        <form action="/courierServiceAdmin/deleteAge" method="POST">
+                                            <input type="hidden" name="ageId" value="${courierAgents[i]._id}">
+                                        
+                                            <button id="${courierAgents[i]._id}" type="submit" onclick="delAge(this)" class="rounded inline-block px-3 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase hover:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-800 transition duration-150 ease-in-out"><i class="fa-solid fa-xmark"></i></button>
+
+                                        </form>
+                                        
+                                        <button id="${courierAgents[i]._id}" type="button" onclick="upAge(this)" value='${JSON.stringify(courierAgents[i])}' 
+                                            class="rounded inline-block px-3 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase hover:bg-green-600 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out"
+                                            data-toggle="modal" data-target="#updateCourierAgeData">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
+    }
+
+    //=======================================================================
+    //=======================================================================
+
+
+    const delAge = (btn) => {
+        let form = btn.parentElement;
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let res = window.confirm('Are you sure you want to delete');
+            if (res) {
+                form.submit();
+            }
+        });
+    };
+
+    const upAge = (btn) => {
+        let courierAgeData = JSON.parse(btn.value);
+        let div = document.createElement('div');
+        let updateCourierAgeDataModalBody = document.getElementById('updateCourierAgeDataModalBody');
+        if (updateCourierAgeDataModalBody) {
+            updateCourierAgeDataModalBody.innerHTML = `<div class="updateCourAgeInfoForm block p-3 rounded-lg shadow bg-white">
+                                                        <form action="/courierServiceAdmin/updateAge" method="POST" enctype="multipart/form-data">
+                                                            <div class="flex flex-column">
+                                                                <input type="hidden" name="id" value="${courierAgeData._id}">
+                                                                <div class="form-group mb-6">
+                                                                    <input type="text" name="fname" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                        aria-describedby="emailHelp123" value="${courierAgeData.first_name}" placeholder="First name" required>
+                                                                </div>
+                                                                <div class="form-group mb-6">
+                                                                    <input type="text" name="lname" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                        aria-describedby="emailHelp124" value="${courierAgeData.last_name}" placeholder="Last name" required>
+                                                                </div>
+                                                                <div class="form-group mb-6">
+                                                                    <input type="email" name="email" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" value="${courierAgeData.email}"
+                                                                        placeholder="Email address" required>
+                                                                </div>
+                                                                <div class="form-group mb-6">
+                                                                    <input type="number" name="phone" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" value="${courierAgeData.phone}"
+                                                                        placeholder="Phone Number" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex flex-column">
+                                                                <div class="form-group mb-6">
+                                                                    <select id="courierAgeState" name="state" data-state="${courierAgeData.state}" class="courierAgeState form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                        aria-label="Default select example" required></select>
+                                                                </div>
+                                                                <div class="flex flex-column">
+                                                                    <div class="form-group mb-6">
+                                                                        <input type="password" name="password" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                            placeholder="Password">
+                                                                    </div>
+                                                                    <div class="form-group mb-6">
+                                                                        <input type="file" name="image" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                            placeholder="Profile Picture" accept=".jpg, .jpeg, .png">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex flex-column">
+                                                                <div class="form-group mb-6">
+                                                                    <textarea name="address" class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                        id="courierAgeAdd-${courierAgeData._id}" rows="4" required></textarea>
+                                                                </div>
+                                                                <div class="form-group mb-6">
+                                                                    <div class="flex flex-col">
+                                                                        <div class="form-group mb-4">
+                                                                            <input type="pincode" name="pincode" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" value="${courierAgeData.address[0].pin}"
+                                                                                placeholder="Pincode" required>
+                                                                        </div>
+                                                                        <div class="form-group mb-6">
+                                                                            <input type="city" name="city" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" value="${courierAgeData.address[0].city}"
+                                                                                placeholder="City" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <button type="submit" class="px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Update</button>
+                                                        </form>
+                                                    </div>`;
+            fillStateNameFunc();
+        }
+    };
+
+    //=======================================================================
+    //=======================================================================
+
+    let courierSecLeftOpt = document.getElementsByClassName('courierSecLeftOpt')
+    if (courierSecLeftOpt) {
+        for (let i = 0; i < courierSecLeftOpt.length; i++) {
+            const opt = courierSecLeftOpt[i];
+            if (opt) {
+                opt.addEventListener('click', () => {
+                    for (let j = 0; j < courierSecLeftOpt.length; j++) {
+                        courierSecLeftOpt[j].classList.remove('optsBg')
+                    }
+                    opt.classList.add('optsBg')
+                })
+            }
+        }
+    }
+
+    //=======================================================================
+    //=======================================================================
+
+    let alertMsg = document.getElementById('alertMsg');
+    let msg = document.getElementById('msg').value;
+
+    if (msg == 'existed') {
+        new Noty({
+            type: 'error',
+            timeout: 2000,
+            text: 'Courier company already exists.',
+            progressBar: false,
+        }).show();
+    } else if (msg == 'created' || msg == 'updated') {
+        new Noty({
+            type: 'success',
+            timeout: 2000,
+            text: `Courier company account ${msg} successfully.`,
+            progressBar: false,
+        }).show();
+    } else if (msg == 'notCreated' || msg == 'imgNotDeleted' || msg == 'notDeleted' || msg == 'notUpdated') {
+        new Noty({
+            type: 'error',
+            timeout: 2000,
+            text: 'Please enter appropriate information.',
+            progressBar: false,
+        }).show();
+    } else if (msg == 'deleted') {
+        new Noty({
+            type: 'success',
+            timeout: 2000,
+            text: 'Courier company account deleted successfully.',
+            progressBar: false,
+        }).show();
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

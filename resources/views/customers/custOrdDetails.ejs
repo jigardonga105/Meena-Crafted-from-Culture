@@ -1,0 +1,1464 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+
+        input[type=number] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+
+        .ptagCSS {
+            font-size: 13px !important;
+            margin: 0;
+            margin-bottom: 3px;
+            color: #a9a7a7;
+        }
+
+        .faIcons i {
+            margin-left: 100px;
+        }
+
+        .faIcons i:nth-child(1) {
+            margin-left: 10px;
+        }
+
+        .progress {
+            height: 5px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 30px;
+            margin-top: -8.5px;
+        }
+
+        .greenEmptyDot {
+            border: 2px solid rgb(33, 177, 33);
+        }
+
+        .greenDot {
+            background-color: rgb(33, 177, 33);
+        }
+
+        .redDot {
+            background-color: #fc0505;
+        }
+
+        .yellowDot {
+            background-color: rgb(246, 255, 0);
+        }
+
+        .completedIcn {
+            color: #26a541 !important;
+        }
+
+        .remainingIcn {
+            color: #e9ecef !important;
+        }
+
+        .returnedIcn {
+            color: rgb(203 211 0) !important;
+        }
+
+        .remainingDot {
+            background: #e9ecef;
+        }
+
+        .returnedDot {
+            background: rgb(203 211 0);
+        }
+
+        .completedDot {
+            background: #26a541;
+        }
+
+        .cancelledDot {
+            background: #ff6161;
+        }
+
+        .dot1 {
+            margin-left: 0%;
+        }
+
+        .dot2 {
+            margin-left: 20%;
+        }
+
+        .dot3 {
+            margin-left: 23.5%;
+        }
+
+        .dot4 {
+            margin-left: 23.5%;
+        }
+
+        .dot5 {
+            margin-left: 23.5%;
+        }
+
+        .dot6 {
+            margin-left: 88.5%;
+        }
+
+        .fn15 {
+            font-size: 15px !important;
+        }
+
+        #cancelled {
+            color: #ff6161;
+        }
+
+        .gridImp {
+            display: grid !important;
+        }
+
+        .widthAuto {
+            width: auto !important;
+        }
+
+        .specClassForOrderProgress1 {
+            padding: 0px !important;
+            margin: 0px 10px !important;
+        }
+    </style>
+
+
+    <style>
+        .horiProgbarIcnLine {
+            width: 625px !important;
+        }
+
+        .custOrdProgressBarMain {
+            padding: 0rem 7rem;
+        }
+
+        .custOrdDtilsPayOnlBtnDiv {
+            margin-left: 0px;
+            display: inline-block;
+        }
+
+        .custOrdVertiProgbar {
+            background: #e9ecef;
+            width: 5px;
+            height: 3rem;
+            margin-left: 11px;
+        }
+
+        .vertiDot {
+            width: 12px;
+            height: 12px;
+            border-radius: 30px;
+            margin-left: 7.4px;
+            background-color: #e9ecef;
+        }
+
+        .vertiCompltDot {
+            background-color: #26a541;
+        }
+
+        .vertiRmngDot {
+            background-color: rgb(203 211 0) !important;
+        }
+
+        #verti-shipped-i {
+            margin-left: -9px;
+        }
+
+        #verti-delivery-i {
+            margin-left: -8px;
+        }
+
+        #verti-completed-i {
+            margin-left: -6px;
+        }
+
+        #verti-cancelled-i {
+            margin-left: 3px;
+        }
+
+        #verti-returned-i {
+            margin-left: -4px;
+        }
+
+        @media screen and (max-width: 1450px) {
+            .custOrdProgressBarMain {
+                padding: 0rem 4rem;
+            }
+        }
+
+        @media screen and (max-width: 1350px) {
+            .custOrdProgressBarMain {
+                padding: 0rem 2rem;
+            }
+        }
+
+        @media screen and (max-width: 1325px) {
+            .custOrdPrdImg {
+                margin-right: 1.5rem !important;
+            }
+
+            .custOrdPrdInfo {
+                margin-right: 0px;
+                width: 250px;
+            }
+        }
+
+        @media screen and (max-width: 1250px) {
+            .custOrdCancelReturnPrdMain {
+                margin-left: 10px;
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            .custOrdTracrBtns {
+                padding-right: 5px;
+                flex-direction: column !important;
+            }
+
+            .custOrdReturnFormBtn,
+            .custOrdCancelFormBtn {
+                float: right !important;
+            }
+        }
+
+        @media screen and (max-width: 1175px) {
+            .custOrdDtilsPricePay {
+                flex-direction: column;
+            }
+
+            .custOrdDtilsPayment {
+                margin-left: 0px;
+                border-top: 1px solid gainsboro;
+                border-left: 1px solid gainsboro;
+                padding-left: 10px;
+                padding-top: 5px;
+            }
+
+            .custOrdDtilsAddressPricing .custOrdDtilsPricing {
+                border-right-width: 0px !important;
+                padding-right: 0px !important;
+            }
+        }
+
+        @media screen and (max-width: 1127px) {
+            .custOrdPrdInfoMainA {
+                flex-direction: column !important;
+            }
+        }
+
+        @media screen and (max-width: 1010px) {
+            .custOrdPrdInfoMainA .custOrdPrdInfo {
+                width: auto !important;
+            }
+
+            #otherProdInOrdMainDiv {
+                padding-left: 0px !important;
+                padding-right: 0px !important;
+                margin-left: 1rem !important;
+                margin-right: 1rem !important;
+            }
+        }
+
+        @media screen and (max-width: 950px) {
+            .custOrdPrdInfoTracrBtn {
+                flex-direction: column !important;
+            }
+
+            .custOrdPrdInfoMainA {
+                flex-direction: row !important;
+                margin: auto;
+            }
+
+            .custOrdPrdInfoMainA .custOrdPrdInfo {
+                width: 300px !important;
+            }
+
+            .custOrdTracrBtns {
+                width: 46rem;
+                flex-direction: row !important;
+                margin: auto;
+                margin-top: 15px;
+            }
+
+            .custOrdReturnFormBtn,
+            .custOrdCancelFormBtn {
+                float: left !important;
+            }
+        }
+
+        @media screen and (max-width: 800px) {
+            #custOrdSingleOtherPrd {
+                height: 100% !important;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+
+            .custOrdSingleOtherPrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+                height: 10rem !important;
+            }
+
+            .custOrdSingleOtherPrdInfo {
+                grid-area: 1 / 2 / 2 / 4;
+                width: auto !important;
+            }
+
+            .custOrdSingleOtherPrdPrice {
+                grid-area: 1 / 4 / 2 / 5;
+                width: auto !important;
+            }
+
+            .custOrdSingleOtherPrdDelInfo {
+                grid-area: 2 / 3 / 3 / 5;
+            }
+        }
+
+        @media screen and (max-width: 780px) {
+            .custOrdTracrBtns {
+                width: 39.5rem;
+                flex-direction: column !important;
+            }
+
+            .custOrdReturnFormBtn,
+            .custOrdCancelFormBtn {
+                float: right !important;
+            }
+        }
+
+
+        @media screen and (max-width: 710px) {
+            .custOrdCancelReturnPrdMain {
+                margin: 0px !important;
+            }
+
+            .custOrdReturnFormBtn,
+            .custOrdCancelFormBtn {
+                float: left !important;
+            }
+
+            .custOrdPrdInfoMainA {
+                display: grid !important;
+                justify-items: center;
+                row-gap: 15px;
+            }
+
+            .custOrdPrdInfoMainA .custOrdPrdInfo {
+                width: auto !important;
+            }
+        }
+
+        @media screen and (max-width: 650px) {
+            .custOrdDtilsAddressPricing {
+                display: grid;
+                justify-items: center;
+            }
+
+            .custOrdDtilsAddressPricing .payment {
+                margin-top: 10px;
+            }
+
+            .custOrdDtilsPayment {
+                border-left: none;
+            }
+        }
+
+        @media screen and (max-width: 610px) {
+            #vertiProgBarPrdInfo {
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+
+            #vertiProgBarOnly {
+                width: 20% !important;
+            }
+
+            #prodInfoDelInfoBtns {
+                width: 80% !important;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            #fillUpdateData {
+                display: block;
+            }
+
+            #custOrdSingleOtherPrd {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+
+            .custOrdSingleOtherPrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .custOrdSingleOtherPrdInfo {
+                grid-area: 1 / 2 / 2 / 4;
+                width: auto !important;
+            }
+
+            .custOrdSingleOtherPrdPrice {
+                grid-area: 1 / 4 / 2 / 5;
+                width: auto !important;
+            }
+
+            .custOrdSingleOtherPrdDelInfo {
+                grid-area: 2 / 2 / 3 / 5;
+                margin: auto 0px;
+            }
+        }
+
+
+        @media screen and (max-width: 450px) {
+            .custOrdDtilsAddressPricing .address {
+                width: auto !important;
+            }
+
+            .custOrdDtilsAddressPricing .address .changeAddDataBtn {
+                margin-left: 70% !important;
+            }
+
+            #custOrdSingleOtherPrd {
+                display: flex;
+                flex-direction: column !important;
+                row-gap: 10px;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .custOrdProgressBarMain {
+                padding-left: 7px !important;
+                padding-right: 7px !important;
+            }
+
+            #fillUpdateData {
+                font-size: 12px !important;
+            }
+
+            #custOrdSingleOtherPrd {
+                display: flex;
+                flex-direction: column !important;
+                row-gap: 10px;
+            }
+        }
+
+        @media screen and (max-width: 350px) {
+            .custOrdDtilsAddressPricing .payment span {
+                font-size: 15px !important;
+            }
+
+            #vertiProgBarPrdInfo #prodInfoDelInfoBtns {
+                padding-left: 10px;
+            }
+        }
+
+        @media screen and (max-width: 310px) {
+            .custOrdDtilsAddressPricing .address .changeAddDataBtn {
+                margin-left: 0% !important;
+                margin-top: 3%;
+            }
+
+            .custOrdGeneralInfoAll {
+                padding-left: 7px !important;
+                padding-right: 7px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="custOrdDtils bg-gray-100" id="custOrdDtils">
+        <div>
+            <input type="hidden" name="order" id="order" value="<%= JSON.stringify(order) %>" />
+            <input type="hidden" name="product" id="product" value="<%= JSON.stringify(product) %>" />
+            <input type="hidden" name="otherPrd" id="otherPrd" value="<%= JSON.stringify(otherPrd) %>" />
+            <input type="hidden" id="strIDArr" value="<%= JSON.stringify(strIDArr) %>">
+            <input type="hidden" name="feaInd" id="feaInd" value="<%= feaInd %>" />
+            <input type="hidden" name="seller" id="seller" value="<%= seller %>" />
+        </div>
+
+        <!-- Confirmation Modal start -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Do you really want to perform this action?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="performActForm">
+                        <div class="modal-body">
+                            <label for="text" class="form-label">Write <strong>"yes"</strong> to perform this
+                                action</label>
+                            <input type="text" name="textInp" class="form-control" required>
+                        </div>
+                        <div class="modal-body hidden" id="ifReturnShowDiv">
+                            <label for="text" class="form-label">Select one option:</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="returnWhatRadio"
+                                        id="inlineRadio1" value="one" checked>
+                                    <label class="form-check-label" for="inlineRadio1">This Product only</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="returnWhatRadio"
+                                        id="inlineRadio2" value="all">
+                                    <label class="form-check-label" for="inlineRadio2">Whole Order</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Confirmation Modal end -->
+
+        <div class="custOrdGeneralInfoAll px-3 py-5">
+            <div class="custOrdDtilsAddressPricing flex">
+                <div class="address w-10/12 bg-white border rounded" style="border-right: none !important;">
+                    <h5 class="ml-2 mt-2">Delivery Address:</h5>
+                    <div id="ordAdd" class="ordAdd"></div>
+                </div>
+
+                <div class="payment w-full bg-white border rounded" style="border-left: none !important;">
+                    <h5 class="ml-2 mt-2">Billing:</h5>
+                    <hr>
+                    <div class="flex custOrdDtilsPricePay">
+                        <div id="pricing" class="custOrdDtilsPricing w-full border-r-2 pr-6"></div>
+                        <div class="custOrdDtilsPayment w-full ml-6">
+                            <div>
+                                <h6 id="payAftHeader" class="inline-block">Payment Method:</h6>
+                                <span id="paymentMethod"></span>
+                                <div class="custOrdDtilsPayOnlBtnDiv my-2">
+                                    <button id="payOnlAfterBtn" class="btn shadow-sm">Pay Online</button>
+                                </div>
+                                <div class="border p-3 bg-black text-green-500 rounded" id="cardDetailsDiv"
+                                    style="display: none; border-right: none !important;border-bottom: none !important;">
+                                    <h6>Credit/Debit Card:</h6>
+                                    <form action="/payOnlineLater/<%= order._id %>/<%= feaInd %>/<%= product._id %>"
+                                        method="post">
+                                        <div class="flex">
+                                            <div>
+                                                <div>
+                                                    <label for="cardHoldName" class="block text-white"
+                                                        style="font-size: 13px !important;">Card Holder Name</label>
+                                                    <input type="text" name="cardHoldName" id="cardHoldName"
+                                                        class="w-60 h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none"
+                                                        placeholder="John Doe" required>
+                                                </div>
+                                                <div>
+                                                    <label for="cardNum" class="block text-white"
+                                                        style="font-size: 13px !important;">Card Number</label>
+                                                    <input type="number" name="cardNum" id="cardNum"
+                                                        class="w-60 h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none"
+                                                        placeholder="____/____/____/____" required>
+                                                </div>
+                                                <div>
+                                                    <label for="expMonth" class="block text-white"
+                                                        style="font-size: 13px !important;">Expiry Month</label>
+                                                    <input type="month" name="expMonth" id="expMonth"
+                                                        class="w-60 h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none"
+                                                        placeholder="1-12" required>
+                                                </div>
+                                                <div>
+                                                    <label for="cvv" class="block text-white"
+                                                        style="font-size: 13px !important;">CVV</label>
+                                                    <input type="number" name="cvv" id="cvv"
+                                                        class="w-60 h-9 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block p-2.5 dark:placeholder-gray-400 focus:outline-none"
+                                                        placeholder="5632" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="my-auto ml-5">
+                                                <button
+                                                    class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Pay</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="custOrdProgressBarMain px-10" id="orderProgress"></div>
+
+        <div id="otherProdInOrdMainDiv" class="flex flex-col bg-white border rounded mx-5 px-10 pb-5">
+            <div class="container pt-3 pb-2" style="border-bottom: 1px solid #e6e1e1;"><strong>
+                    <h4>Other items in this Order:</h4>
+                </strong></div>
+            <div class="p-0 grid justify-items-center gap-y-10" id="otherProdInOrd"></div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+    <script>
+        let orderInp = document.getElementById("order");
+        let productInp = document.getElementById("product");
+        let otherPrdInp = document.getElementById("otherPrd");
+        let feaIndInp = document.getElementById("feaInd");
+        let sellerInp = document.getElementById("seller");
+        let strIDArrInp = document.getElementById('strIDArr');
+
+        let order = JSON.parse(orderInp.value);
+        let product = JSON.parse(productInp.value);
+        let otherPrd = JSON.parse(otherPrdInp.value);
+        let strIDArr = JSON.parse(strIDArrInp.value);
+        let feaInd = feaIndInp.value;
+        let seller = sellerInp.value;
+
+        //============================================================
+        //Fill the Address Div
+        //============================================================
+
+        const printAddressFunc = (order) => {
+
+            let ordAddDiv = document.getElementById("ordAdd");
+            let address = JSON.parse(order.address);
+            ordAddDiv.innerHTML = `<div class="flex p-3">
+                                    <label class="form-check-label ml-3" for="flexRadioDefault1">
+                                        <div class="mt-3 inline-block"> <span class="bg-gray-500 p-1 rounded font-bold text-white">${address['add-type']}</span> </div>
+                                        <div class="inline-block"> <span class="font-medium" style="font-size: 17px;">${address['add-name']}</span> </div>
+                                        <div class="changeAddDataBtn inline-block ml-52"> <button id="chgAddBtn" class="btn shadow-sm">Change</button> </div>
+                                        <div class="my-2">
+                                            <div> <span class="leading-loose" style="font-size: 14px;">${address['add-area&street']}</span> </div>
+                                            <div> <span class="leading-loose" style="font-size: 14px;">${address['add-landmark'] ? address['add-landmark'] + '-' : ''}${address['add-locality']}</span> </div>
+                                            <div> <span class="leading-loose" style="font-size: 14px;">${address['add-city']} ${address['add-state']}-${address['add-pin']}</span> </div>
+                                        </div>
+                                        <div> <span class="leading-loose" style="font-size: 14px;"><strong>Phone Number: </strong>${address['add-phone']}${address['add-altphone'] ? ' / ' + address['add-altphone'] : ''}</span> </div>
+                                        <div class="changeAddDataBtn"> <button id="chgAddBtn" class="btn shadow-sm" style="font-size: 12px;color: blue;">Change</button> </div>
+                                    </label>
+                                </div>`;
+
+            let changeAddDataBtns = document.getElementsByClassName('changeAddDataBtn');
+            for (let i = 0; i < changeAddDataBtns.length; i++) {
+                if (order.status == 'placed') {
+                    changeAddDataBtns[i].style.display = 'block';
+                } else if (order.status == 'confirmed') {
+                    changeAddDataBtns[i].style.display = 'block';
+                } else {
+                    changeAddDataBtns[i].style.display = 'none';
+                }
+            }
+        }
+        printAddressFunc(order);
+
+        //============================================================
+        //Fill the Pricing Table
+        //============================================================
+
+        let pricing = document.getElementById("pricing");
+        let qty = 0;
+        let price = 0;
+        let totalDiscount = 0;
+        let totalAmount = 0;
+        for (const key in order.items) {
+            let feature = order.items[key].feature;
+
+            feature.map((obj) => {
+                qty += obj.qty;
+                price += obj.price;
+
+                totalDiscount += ([obj.price / 100] * obj.discount) * obj.qty
+            })
+
+        }
+        totalAmount = price - totalDiscount;
+
+        price = Math.round(price);
+        totalDiscount = Math.round(totalDiscount);
+        totalAmount = Math.round(totalAmount);
+
+        pricing.innerHTML = `<div class="p-3 border-b">
+                                <span class="text-muted">PRICE DETAILS</span>
+                                <span class="text-muted float-right">Amount</span>
+                            </div>
+            
+                            <div class="m-3 border-b-4 border-dotted">
+                                <div class="my-3">
+                                    <span id="rightDivPriceItem">Price (${qty})</span>
+                                    <span id="rightDivPrice" class="float-right">₹ ${price}</span>
+                                </div>
+                                <div class="my-3">
+                                    <span>Discount</span>
+                                    <span id="rightDivDisc" class="float-right text-green-600">- ₹ ${totalDiscount}</span>
+                                </div>
+                                <div class="my-3">
+                                    <span>Delivery Charges</span>
+                                    <span class="float-right text-green-600">Free</span>
+                                </div>
+                            </div>
+
+                            <div class="m-3 border-b-4 border-dotted">
+                                <div class="my-3">
+                                    <span>Total Amount</span>
+                                    <span id="rightDivFinalPrice" class="float-right font-bold">₹ ${totalAmount}</span>
+                                </div>
+                            </div>
+            
+                            <div class="m-3">
+                                <div class="my-3">
+                                    <span id="rightDivSavePrice" class="text-green-700 font-bold">You've saved ₹ ${totalDiscount} on this order</span>
+                                </div>
+                            </div>`;
+
+        //============================================================
+        //Perform the Payment Later Action
+        //============================================================
+
+        let payOnlAfterBtn = document.getElementById("payOnlAfterBtn");
+        let cardDetailsDiv = document.getElementById("cardDetailsDiv");
+        cardDetailsDiv.style.display = "none";
+
+        const printPayAftDivFunc = (order) => {
+
+            let paymentMethod = document.getElementById("paymentMethod");
+            let currentOrdStatus = order.status;
+            let paymentStatus = order.paymentStatus;
+
+            if (currentOrdStatus == 'returned' || currentOrdStatus == 'cancelled') {
+                document.getElementById('payAftHeader').innerHTML = "Your payment has been returned successfully in your Bank.";
+                document.getElementById('payAftHeader').style.margin = "40px";
+                payOnlAfterBtn.style.display = "none";
+
+            } else {
+                if (paymentStatus) {
+                    paymentMethod.innerHTML = `Online`;
+                    payOnlAfterBtn.style.display = "none";
+                } else {
+                    paymentMethod.innerHTML = `Cash on Delivery`;
+                    payOnlAfterBtn.style.display = "block";
+                }
+            }
+
+            //============================================================
+
+            if (paymentStatus == false) {
+                payOnlAfterBtn.innerHTML = "Pay Online";
+            } else {
+                payOnlAfterBtn.innerHTML = "Pay on Delivery";
+            }
+
+            payOnlAfterBtn.addEventListener('click', () => {
+                if (cardDetailsDiv.style.display == "none") {
+                    cardDetailsDiv.style.display = "block";
+                } else {
+                    cardDetailsDiv.style.display = "none";
+                }
+            });
+        }
+        printPayAftDivFunc(order);
+
+        //============================================================
+        //Live tracker of the Order
+        //============================================================
+
+
+
+        const printLiveTrackerFunc = (order, trackerType) => {
+            let idArrI = ["placed", "confirmed", "shipped", "delivery", "completed", "returned"];
+            let orderProgress = document.getElementById("orderProgress");
+            let featureData;
+
+            for (const key in order.items) {
+                if (key == product._id) {
+                    let feaObj = order.items[key].feature
+                    feaObj.map((feature, ind) => {
+                        if (ind == feaInd) {
+                            featureData = feature;
+                        }
+                    })
+                }
+            }
+
+            let forHorizontalTracker = `<div class="cursor-pointer">
+                                        <div class="custOrdPrdInfoTracrBtn flex flex-row justify-content-center bg-white border pl-3 pt-4 pb-2 mb-2">
+                                            <div id="progBarPrdDetls"></div>
+                                            <div id="custOrdTracrBtns" class="custOrdTracrBtns inline-block flex flex-row">
+                                                <div>
+                                                    <div>
+                                                        <div id="horiProgbarIcnLine" class="horiProgbarIcnLine flex flex-col">
+                                                            <div class="faIcons relative">
+                                                                <i id="placed" class="remainingIcn fa-solid fa-2x fa-clipboard"></i>
+                                                                <i id="confirmed" class="remainingIcn fa-solid fa-2x fa-check-double"></i>
+                                                                <i id="shipped" class="remainingIcn fa-solid fa-2x fa-truck-fast"></i>
+                                                                <i id="delivery" class="remainingIcn fa-solid fa-2x fa-motorcycle"></i>
+                                                                ${order.status != "cancelled" ? `<i id="completed" class="remainingIcn fa-solid fa-2x fa-hand-holding-heart"></i>` : `<i id="cancelled" class="fa-solid fa-2x fa-xmark float-right"></i>`}
+                                                                ${order.status == "returned" ? `<i id="returned" class="remainingIcn fa-solid fa-2x fa-retweet float-right"></i>` : ``}
+                                                            </div>
+                                                            <div id="pgBarContainer" style="width: 94%; margin-left: 21px; margin-top: 20px;">
+                                                                <div id="progress" class="progress">
+                                                                    <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="background-color: #26a541;"></div>
+                                                                </div>
+                                                                <div class="flex">
+                                                                    <div id="placedDot" class="dot dot1 remainingDot"></div>
+                                                                    <div id="confirmedDot" class="dot dot2 remainingDot"></div>
+                                                                    <div id="shippedDot" class="dot dot3 remainingDot"></div>
+                                                                    <div id="deliveryDot" class="dot dot4 remainingDot"></div>
+                                                                    ${order.status != "cancelled" ? `<div id="completedDot" class="dot dot5 remainingDot"></div>` : `<div id="cancelledDot" class="dot dot6"></div>`}
+                                                                    ${order.status == "returned" ? `<div id="returnedDot" class="dot dot6 remainingDot"></div>` : ``}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="updatedAt">
+                                                            <div class="mt-10">
+                                                                <strong>Last Updated At:</strong> <span id="fillUpdateData" class="bg-gray-100 fn15 rounded-full px-3 py-1 font-black"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="custOrdCancelReturnPrdMain" class="custOrdCancelReturnPrdMain inline-block ml-10 my-auto"></div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+            let forVerticalTracker = `<div id="vertiProgBarPrdInfo" class="bg-white border mx-10 px-3 pt-4 pb-2 mb-2">
+                                        <div class="flex flex-row">
+                                            <div id="vertiProgBarOnly" class="grid justify-items-center" style="width: 30%;">
+                                                <div class="flex flex-col">
+                                                    <div id="verti-placed-Main">
+                                                        <i id="verti-placed-i" class="fa-solid fa-2x fa-clipboard"></i>
+                                                        <div class="flex flex-col my-1">
+                                                            <div id="verti-placed-dotDiv-1" class="vertiDot"></div>
+                                                            <div id="verti-placed-middleLine" class="custOrdVertiProgbar"></div>
+                                                            <div id="verti-placed-dotDiv-2" class="vertiDot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="verti-confirmed-Main">
+                                                        <i id="verti-confirmed-i" class="remainingIcn fa-solid fa-2x fa-check-double"></i>
+                                                        <div class="flex flex-col my-1">
+                                                            <div id="verti-confirmed-dotDiv-1" class="vertiDot"></div>
+                                                            <div id="verti-confirmed-middleLine" class="custOrdVertiProgbar"></div>
+                                                            <div id="verti-confirmed-dotDiv-2" class="vertiDot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="verti-shipped-Main">
+                                                        <i id="verti-shipped-i" class="remainingIcn fa-solid fa-2x fa-truck-fast"></i>
+                                                        <div class="flex flex-col my-1">
+                                                            <div id="verti-shipped-dotDiv-1" class="vertiDot"></div>
+                                                            <div id="verti-shipped-middleLine" class="custOrdVertiProgbar"></div>
+                                                            <div id="verti-shipped-dotDiv-2" class="vertiDot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="verti-delivery-Main">
+                                                        <i id="verti-delivery-i" class="remainingIcn fa-solid fa-2x fa-motorcycle"></i>
+                                                        <div class="flex flex-col my-1">
+                                                            <div id="verti-delivery-dotDiv-1" class="vertiDot"></div>
+                                                            <div id="verti-delivery-middleLine" class="custOrdVertiProgbar"></div>
+                                                            <div id="verti-delivery-dotDiv-2" class="vertiDot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="verti-completed-Main">
+                                                        <i id="verti-completed-i" class="remainingIcn fa-solid fa-2x fa-hand-holding-heart"></i>
+                                                        <div id="verti-completed-dotMidLn" class="flex flex-col my-1 hidden">
+                                                            <div id="verti-completed-dotDiv-1" class="vertiDot"></div>
+                                                            <div id="verti-completed-middleLine" class="custOrdVertiProgbar"></div>
+                                                            <div id="verti-completed-dotDiv-2" class="vertiDot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="verti-cancelled-Main" class="hidden">
+                                                        <i id="verti-cancelled-i" class="remainingIcn fa-solid fa-2x fa-xmark"></i>
+                                                        <div class="flex flex-col my-1 hidden">
+                                                            <div id="verti-cancelled-dotDiv-1" class="vertiDot"></div>
+                                                            <div id="verti-cancelled-middleLine" class="custOrdVertiProgbar"></div>
+                                                            <div id="verti-cancelled-dotDiv-2" class="vertiDot"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="verti-returned-Main" class="hidden">
+                                                        <i id="verti-returned-i" class="remainingIcn fa-solid fa-2x fa-retweet"></i>
+                                                        <div class="flex flex-col my-1 hidden">
+                                                            <div id="verti-returned-dotDiv-1" class="vertiDot"></div>
+                                                            <div id="verti-returned-middleLine" class="custOrdVertiProgbar"></div>
+                                                            <div id="verti-returned-dotDiv-2" class="vertiDot"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="prodInfoDelInfoBtns" class="flex flex-col" style="width: 70%;">
+                                                <div id="progBarPrdDetls" style="height: 65%"></div>
+
+                                                <div class="updatedAt my-auto">
+                                                    <strong>Last Updated At:</strong> <span id="fillUpdateData" class="bg-gray-100 fn15 rounded-full px-3 py-1 font-black"></span>
+                                                </div>
+
+                                                <div id="custOrdCancelReturnPrdMain" class="custOrdCancelReturnPrdMain inline-block ml-10 my-auto"></div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+
+            if (trackerType == 'horizontal') {
+                orderProgress.innerHTML = forHorizontalTracker
+
+                let progBar = document.getElementById("progress-bar");
+
+                let progressBar = document.getElementById("progress-bar");
+
+                const makeDivColored = (index) => {
+                    if (order.status == "cancelled") {
+                        document.getElementById('horiProgbarIcnLine').classList.remove('horiProgbarIcnLine');
+                        document.getElementById('horiProgbarIcnLine').classList.add('widthAuto');
+                        let progress = document.getElementById("progress");
+                        progress.style.width = "96%";
+
+                        let cancelledI = document.getElementById("cancelled");
+                        let cancelledDot = document.getElementById("cancelledDot");
+
+                        cancelledI.style.color = "#ff6161";
+                        cancelledDot.classList.add("cancelledDot");
+
+                        progressBar.style.background = "#ff6161";
+
+                        idArrI.map((id, i) => {
+                            if (id == "placed") {
+                                let favI = document.getElementById(id);
+                                let favDot = document.getElementById(`${id}Dot`);
+
+                                if (favI && favDot) {
+                                    favI.classList.remove("remainingIcn");
+                                    favDot.classList.remove("remainingDot");
+                                    favDot.classList.add("cancelledDot");
+
+                                    favI.style.color = "#ff6161";
+                                    favDot.style.color = "#ff6161";
+                                }
+
+                            } else {
+                                let favI = document.getElementById(id);
+                                let favDot = document.getElementById(`${id}Dot`);
+
+                                if (favI && favDot) {
+                                    favI.style.display = "none";
+                                    favDot.style.display = "none";
+                                }
+
+                            }
+                        });
+                    } else {
+                        idArrI.map((id, i) => {
+                            if (i <= index) {
+                                let favI = document.getElementById(id);
+                                let favDot = document.getElementById(`${id}Dot`);
+
+                                if (order.status == "returned") {
+                                    progressBar.style.background = "rgb(203 211 0)";
+
+                                    if (favI && favDot) {
+                                        favI.classList.remove("remainingIcn");
+                                        favI.classList.add("returnedIcn");
+
+                                        favDot.classList.remove("remainingDot");
+                                        favDot.classList.add("returnedDot");
+                                    }
+                                } else {
+                                    if (favI && favDot) {
+                                        favI.classList.remove("remainingIcn");
+                                        favI.classList.add("completedIcn");
+
+                                        favDot.classList.remove("remainingDot");
+                                        favDot.classList.add("completedDot");
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+                const pgBarEditFunc = (width) => {
+                    let www = 0;
+                    const setInt = setInterval(() => {
+                        progBar.style.width = `${www}%`;
+
+                        if (www === width) {
+                            clearInterval(setInt);
+                        } else {
+                            www++;
+                            if (www === 1) {
+                                let i = 0;
+                                makeDivColored(i);
+                            } else if (www === 36) {
+                                let i = 1;
+                                makeDivColored(i);
+                            } else if (www === 61) {
+                                let i = 2;
+                                makeDivColored(i);
+                            } else if (www === 85) {
+                                let i = 3;
+                                makeDivColored(i);
+                            } else if (www === 100) {
+                                if (order.status == 'returned') {
+                                    let i = 5;
+                                    makeDivColored(i);
+                                } else {
+                                    let i = 4;
+                                    makeDivColored(i);
+                                }
+                            }
+                        }
+                    }, order.status != "cancelled" ? 50 : 20);
+                }
+
+                if (order.status == 'placed') {
+                    let width = 12;
+                    pgBarEditFunc(width);
+
+                } else if (order.status == 'confirmed') {
+                    let width = 37;
+                    pgBarEditFunc(width);
+
+                } else if (order.status == 'shipped') {
+                    let width = 62;
+                    pgBarEditFunc(width);
+
+                } else if (order.status == 'delivery') {
+                    let width = 86;
+                    pgBarEditFunc(width);
+                } else if (order.status == 'completed') {
+                    let width = 100;
+                    pgBarEditFunc(width);
+                } else if (order.status == 'cancelled') {
+                    let width = 100;
+                    pgBarEditFunc(width);
+                } else if (order.status == 'returned') {
+                    let width = 100;
+                    idArrI.map((id, i) => {
+                        let favDot = document.getElementById(`${id}Dot`);
+                        if (i != 0) {
+                            favDot.classList.remove(`dot${i + 1}`);
+                            if (i == 1) {
+                                favDot.style.marginLeft = "7.2rem";
+                            } else if (i == 2) {
+                                favDot.style.marginLeft = "8.4rem";
+                            } else if (i == 3) {
+                                favDot.style.marginLeft = "8.7rem";
+                            } else if (i == 4) {
+                                favDot.style.marginLeft = "8.3rem";
+                            } else if (i == 5) {
+                                favDot.style.marginLeft = "8.3rem";
+                            }
+                        }
+                    });
+                    pgBarEditFunc(width);
+                }
+            }
+            else {
+                orderProgress.innerHTML = forVerticalTracker
+
+                const fillVertiProgDivs = (lengthOfArr) => {
+                    let abovesVertiDivs = lengthOfArr - 1;
+                    if (abovesVertiDivs) {
+                        idArrI.map((id, i) => {
+                            if (abovesVertiDivs > i) {
+                                document.getElementById(`verti-${id}-i`).classList.remove('remainingIcn');
+                                document.getElementById(`verti-${id}-i`).classList.add('completedIcn');
+                                document.getElementById(`verti-${id}-dotDiv-1`).classList.add('vertiCompltDot');
+                                document.getElementById(`verti-${id}-dotDiv-2`).classList.add('vertiCompltDot');
+                                document.getElementById(`verti-${id}-middleLine`).innerHTML = `<div id="verti-progress-bar" 
+                                            class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
+                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" 
+                                            style="background-color: rgb(38, 165, 65); width: 5px; height: 3rem;"></div>`
+                            }
+                        })
+                    }
+
+                    let statusOfProd = idArrI[lengthOfArr - 1]
+
+                    document.getElementById(`verti-${statusOfProd}-i`).classList.remove('remainingIcn');
+                    document.getElementById(`verti-${statusOfProd}-i`).classList.add('completedIcn');
+                    document.getElementById(`verti-${statusOfProd}-dotDiv-1`).classList.add('vertiCompltDot');
+                    document.getElementById(`verti-${statusOfProd}-middleLine`).innerHTML = `<div id="verti-progress-bar" 
+                                            class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
+                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" 
+                                            style="background-color: rgb(38, 165, 65); width: 5px; height: 1.8rem;"></div>`
+                }
+
+                const fillVertiProgDivsForReturnPrd = () => {
+                    idArrI.map((id, i) => {
+                        document.getElementById('verti-completed-dotMidLn').classList.remove("hidden");
+                        document.getElementById('verti-returned-Main').classList.remove("hidden");
+                        let vertiIcn = document.getElementById(`verti-${id}-i`)
+                        let vertiDotDiv1 = document.getElementById(`verti-${id}-dotDiv-1`)
+                        let vertiMiddleLine = document.getElementById(`verti-${id}-middleLine`)
+                        let vertiDotDiv2 = document.getElementById(`verti-${id}-dotDiv-2`)
+
+                        vertiIcn.classList.remove("remainingIcn");
+                        vertiIcn.classList.add("returnedIcn");
+
+                        vertiMiddleLine.style.background = "rgb(203 211 0)";
+
+                        vertiDotDiv1.classList.remove("vertiCompltDot");
+                        vertiDotDiv1.classList.add("vertiRmngDot");
+
+                        vertiDotDiv2.classList.remove("vertiCompltDot");
+                        vertiDotDiv2.classList.add("vertiRmngDot");
+                    });
+
+                    let vertiMidLines = document.getElementsByClassName('custOrdVertiProgbar');
+                    if (vertiMidLines) {
+                        for (let i = 0; i < vertiMidLines.length; i++) {
+                            const vertiMidLine = vertiMidLines[i];
+                            if (vertiMidLine) {
+                                vertiMidLine.style.height = '1.5rem';
+                            }
+                        }
+                    }
+                }
+
+                const fillVertiProgDivsForCancelPrd = () => {
+                    idArrI.map((id, i) => {
+                        let vertiMain = document.getElementById(`verti-${id}-Main`)
+                        if (vertiMain && id != 'placed') {
+                            vertiMain.style.display = 'none'
+                        }
+
+                        let vertiCancelledMain = document.getElementById('verti-cancelled-Main');
+                        if (vertiCancelledMain) {
+                            vertiCancelledMain.style.display = 'block'
+                        }
+
+                        let vertiCancelledIcn = document.getElementById(`verti-cancelled-i`)
+                        vertiCancelledIcn.classList.remove('remainingIcn');
+                        vertiCancelledIcn.style.color = '#ff6161'
+
+                        let vertiPlacedIcn = document.getElementById(`verti-placed-i`)
+                        vertiPlacedIcn.style.color = '#ff6161'
+
+                        let vertiPlaceddotDiv1 = document.getElementById(`verti-placed-dotDiv-1`)
+                        vertiPlaceddotDiv1.style.backgroundColor = '#ff6161'
+
+                        let vertiPlaceddotDiv2 = document.getElementById(`verti-placed-dotDiv-2`)
+                        vertiPlaceddotDiv2.style.backgroundColor = '#ff6161'
+
+                        let vertiPlacedMiddleLine = document.getElementById(`verti-placed-middleLine`)
+                        vertiPlacedMiddleLine.style.height = '20rem';
+                        vertiPlacedMiddleLine.innerHTML = `<div id="verti-progress-bar" 
+                                            class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" 
+                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" 
+                                            style="background-color: rgb(255, 97, 97); width: 5px; height: 20rem;"></div>`
+
+                    });
+                }
+
+                idArrI.map((id, i) => {
+                    if (order.status != "returned" && order.status != "cancelled") {
+                        fillVertiProgDivs(i + 1);
+                    } else {
+                        if (order.status == "returned") {
+                            fillVertiProgDivsForReturnPrd()
+                        } else if (order.status == "cancelled") {
+                            fillVertiProgDivsForCancelPrd()
+                        }
+                    }
+                })
+            }
+
+
+            let progBarProductDetails = `<a href="/productview/${product._id}" style="color: black;" class="custOrdPrdInfoMainA flex flex-row">
+                                            <div class="custOrdPrdImg inline-block mr-10">
+                                                <img src="/../../uploadedImages/${product.image[0].img}" class="w-24" alt="img">
+                                            </div>
+                                            <div class="custOrdPrdInfo inline-block mr-10" style="width: 300px;">
+                                                <h6 class="text-sm"><strong>${product.name}</strong></h6>
+                                                <p class="ptagCSS">
+                                                    <span class="mr-5">Color: ${featureData.color}</span>
+                                                    <span class="mr-5">Size: ${featureData.size}</span>
+                                                    <span class="mr-5">Quantity: ${featureData.qty}</span>
+                                                </p>
+                                                <p class="ptagCSS">Seller: ${seller}</p>
+                                                <p class=""><strong>₹ ${Math.round(product.price - [(product.price / 100) * product.discount])}</strong></p>
+                                            </div>
+                                        </a>`
+
+            let progBarPrdDetls = document.getElementById('progBarPrdDetls');
+            if (progBarPrdDetls) {
+                progBarPrdDetls.innerHTML = progBarProductDetails;
+            }
+
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            let month = months[new Date(order.updatedAt).getMonth()];
+            let date = new Date(order.updatedAt).getDate();
+            let year = new Date(order.updatedAt).getFullYear();
+            let hour = new Date(order.updatedAt).getHours();
+            let minute = new Date(order.updatedAt).getMinutes();
+
+            let fillUpdateData = document.getElementById("fillUpdateData");
+            fillUpdateData.innerHTML = `${month} ${date}, ${year} - ${hour}:${minute}`;
+
+
+            let returnCancelProdStr = ''
+            if (order.status == "cancelled" || order.status == "returned") { }
+            else if (order.status == "completed") {
+                returnCancelProdStr = `<form action="/returnOrd/${order._id}/${feaInd}/${product._id}" method="post" id="returnFormBtn" class="custOrdReturnFormBtn" data-action="return">
+                                        <input type="hidden" name="returnWhat" id="returnWhat">
+                                        <div class="p-1 rounded hover:bg-yellow-400">
+                                            <i class="fa-solid fa-arrow-rotate-left" style="color: #696914;"></i>
+                                            <button type="submit" class="focus:outline-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Return</button>
+                                        </div>
+                                    </form>`
+
+            } else {
+                returnCancelProdStr = `<form action="/cancelOrd/${order._id}/${feaInd}/${product._id}" method="post" id="cancelFormBtn" class="custOrdCancelFormBtn" data-action="cancel">
+                                        <div>
+                                            <i class="fa-solid fa-xmark" style="color: red;"></i>
+                                            <button type="submit" class="focus:outline-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Cancel</button>
+                                        </div>
+                                    </form>`
+            }
+
+            let custOrdCancelReturnPrdMain = document.getElementById('custOrdCancelReturnPrdMain');
+            if (custOrdCancelReturnPrdMain) {
+                custOrdCancelReturnPrdMain.innerHTML = returnCancelProdStr
+            }
+
+            //=======================================================================
+            //Perform cancel & return Action
+            //=======================================================================
+
+            let laterActionsArr = ["cancel", "return"];
+
+            laterActionsArr.map(action => {
+                let formBtn = document.getElementById(`${action}FormBtn`);
+                if (formBtn) {
+                    if (formBtn.dataset.action && formBtn.dataset.action == 'return') {
+                        if (Object.keys(order.items).length > 1) {
+                            document.getElementById('ifReturnShowDiv').classList.remove('hidden');
+                        }
+                        
+                        formBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            
+                            let performActForm = document.getElementById('performActForm');
+                            performActForm.addEventListener('submit', (e) => {
+                                e.preventDefault();
+                                const formData = new FormData(performActForm);
+
+                                for (const [key, value] of formData) {
+                                    console.log(key, ': ', value);
+                                    if (value == 'yes') {
+                                        document.getElementById('returnWhat').value = formData.get('returnWhatRadio');
+                                        formBtn.submit();
+                                    }
+                                }
+                            });
+                        });
+                    }
+                }
+            })
+
+        }
+
+        function custOrdOnloadWidthFunc() {
+            var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            if (order.status == "cancelled") {
+                if (width < 501) {
+                    printLiveTrackerFunc(order, 'vertical');
+                } else {
+                    printLiveTrackerFunc(order, 'horizontal');
+                    if (width < 781) {
+                        document.getElementById('custOrdTracrBtns').style.width = 'auto'
+                    }
+                }
+            } else if (width >= 710) {
+                if (order.status == "returned") {
+                    if (width < 795) {
+                        printLiveTrackerFunc(order, 'vertical');
+                    } else {
+                        printLiveTrackerFunc(order, 'horizontal');
+                        document.getElementById('horiProgbarIcnLine').classList.remove('horiProgbarIcnLine');
+                        document.getElementById('horiProgbarIcnLine').style.width = '772px';
+                        let custOrdPrdInfoTracrBtn = document.getElementsByClassName('custOrdPrdInfoTracrBtn')[0];
+                        if (width < 1166 && order.status == "returned") {
+                            if (custOrdPrdInfoTracrBtn) {
+                                custOrdPrdInfoTracrBtn.classList.add('gridImp');
+                            }
+                            if (width < 891) {
+                                document.getElementById('custOrdTracrBtns').classList.add('widthAuto');
+                                document.getElementById('orderProgress').classList.add('specClassForOrderProgress1');
+                            } else {
+                                document.getElementById('custOrdTracrBtns').classList.remove('widthAuto');
+                                document.getElementById('orderProgress').classList.remove('specClassForOrderProgress1');
+                            }
+                            if (width < 795) {
+                                printLiveTrackerFunc(order, 'vertical');
+                            }
+                        } else {
+                            if (custOrdPrdInfoTracrBtn) {
+                                custOrdPrdInfoTracrBtn.classList.remove('gridImp');
+                            }
+                        }
+                    }
+                } else {
+                    printLiveTrackerFunc(order, 'horizontal');
+                }
+            } else {
+                printLiveTrackerFunc(order, 'vertical');
+            }
+        };
+
+        window.onload = custOrdOnloadWidthFunc;
+        window.onresize = custOrdOnloadWidthFunc;
+
+
+        //=======================================================================
+        //Fill other Products' Div in current order
+        //=======================================================================
+
+        let otherProdInOrd = document.getElementById("otherProdInOrd");
+
+        function fillOtherPrdDivFunc(div, prdArrJ, ordItmKey, ord, strIDArr, color, size, qty, price, discount, index) {
+
+            let imgPath = prdArrJ.image[0].img;
+            let name = prdArrJ.name;
+            let storeName;
+            price = Math.round(price - [(price / 100) * discount]);
+            let status = ord.status;
+            let dot = 'greenEmptyDot';
+            let dateTime = new Date(ord.updatedAt);
+
+            if (status == 'cancelled') {
+                status = 'Cancelled on';
+                dot = 'redDot';
+            } else if (status == 'returned') {
+                status = 'Returned on';
+                dot = 'yellowDot';
+            } else if (status == 'completed') {
+                status = 'Delivered on';
+                dot = 'greenDot';
+            } else {
+                status = 'Delivery expected by'
+                dateTime = new Date(new Date(ord.updatedAt).getTime() + (5 * 24 * 60 * 60 * 1000));
+            }
+
+            let date = dateTime.getDate();
+            let year = dateTime.getFullYear();
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+            let day = days[dateTime.getDay()];
+            let month = months[dateTime.getMonth()];
+
+            for (const key in strIDArr) {
+                if (key === prdArrJ.storeId) {
+                    storeName = strIDArr[key];
+                }
+            }
+
+            let html = `<a href="/orderDetails/${ord._id}/${index}/${prdArrJ._id}" class="shadow-xl" style="color: black;">
+                            <div id="custOrdSingleOtherPrd" class="flex flex-row px-3 py-2" style="padding-top: 25px !important;  height: 10rem;">
+                                <div class="custOrdSingleOtherPrdImg inline-block mr-10 overflow-scroll">
+                                    <img src="../../../uploadedImages/${imgPath}" class="w-24" alt="img">
+                                </div>
+                                <div class="custOrdSingleOtherPrdInfo inline-block mr-10" style="width: 370px;">
+                                    <p class="text-sm"><strong>${name}</strong></p>
+                                    <p class="ptagCSS">
+                                        <span class="mr-5">Color: ${color}</span>
+                                        <span class="mr-5">Size: ${size}</span>
+                                        <span class="mr-5">Quantity: ${qty}</span>
+                                    </p>
+                                    <p class="ptagCSS">Seller: ${storeName}</p>
+                                </div>
+                                <div class="custOrdSingleOtherPrdPrice inline-block mr-10" style="width: 130px;">
+                                    ₹${price * qty}
+                                </div>
+                                <div class="custOrdSingleOtherPrdDelInfo inline-block">
+                                    <div class="dot ${dot} inline-block"></div>
+                                    <span class="mt-3" style="font-size: 16px !important;"><strong>${status} ${day} ${month} ${date},${year}</strong></span>
+                                    <div style="font-size: 12px !important;">Your item has been delivered</div>
+                                    <div class="flex flex-row mt-2">
+                                        <div>
+                                            <img class="w-7" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTknIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTggMTgiPgoJPGcgZmlsbD0nbm9uZSc+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBmaWxsPSIjMjg3NEYxIiBwb2ludHM9IjkgMTIuMDYyNSAxMy42Mzc1IDE1LjQzNzUgMTEuODYyNSA5Ljk4NzUgMTYuNSA2LjY4NzUgMTAuODEyNSA2LjY4NzUgOSAxLjA2MjUgNy4xODc1IDYuNjg3NSAxLjUgNi42ODc1IDYuMTM3NSA5Ljk4NzUgNC4zNjI1IDE1LjQzNzUiIC8+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBwb2ludHM9IjAgMCAxOCAwIDE4IDE4IDAgMTgiIC8+Cgk8L2c+Cjwvc3ZnPg==" alt="rating">
+                                        </div>
+                                        <div style="font-size: 15px !important; margin-top: 5px !important;" class="text-blue-500">
+                                            <strong>Rate & Review Product</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>`;
+
+            div.innerHTML += html;
+        }
+
+        const printOtherPrdFunc = (order) => {
+            otherProdInOrd.innerHTML = '';
+            if (Object.keys(order.items).length > 0) {
+                let ordItm = order.items;
+
+                if (Object.keys(ordItm).length > 0) {
+                    for (var key in ordItm) {
+                        if (ordItm.hasOwnProperty(key)) {
+                            for (let j = 0; j < otherPrd.length; j++) {
+                                if (key === otherPrd[j]._id) {
+                                    ordItm[key].feature.map((featurePrd, index) => {
+                                        if (key == product._id && index == feaInd) {
+                                            // console.log(featurePrd);
+                                        } else {
+                                            fillOtherPrdDivFunc(otherProdInOrd, otherPrd[j], ordItm[key], order, strIDArr, featurePrd.color, featurePrd.size, featurePrd.qty, featurePrd.price, featurePrd.discount, index);
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
+                if (!otherProdInOrd.innerHTML) {
+                    document.getElementById('otherProdInOrdMainDiv').style.display = 'none';
+                }
+            }
+        }
+        printOtherPrdFunc(order);
+
+        //============================================================
+        //Socket intigration for Live Preview
+        //============================================================
+
+        //Socket
+        let socket = io();
+
+        if (order) {
+            socket.emit('join', `order_${order._id}`);
+        }
+
+        socket.on('orderUpdated', (data) => {
+            order = data
+
+            printAddressFunc(order);
+            printPayAftDivFunc(order);
+
+            let crntWidthForSock = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            if (crntWidthForSock >= 710) {
+                printLiveTrackerFunc(order, 'horizontal');
+            } else {
+                printLiveTrackerFunc(order, 'vertical');
+            }
+            printOtherPrdFunc(order);
+        })
+    </script>
+</body>

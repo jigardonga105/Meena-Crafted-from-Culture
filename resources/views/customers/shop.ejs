@@ -1,0 +1,334 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
+    <style>
+        .card {
+            box-shadow: 2px 2px 2px 2px #ebebeb;
+        }
+
+        .card:hover {
+            box-shadow: 2px 2px 1px #ebebeb;
+        }
+
+        .card-shadowNone {
+            box-shadow: none !important;
+        }
+
+        .card {
+            border: none !important;
+            width: 300px;
+            border-radius: 20px;
+        }
+
+        .card-img {
+            height: 250px !important;
+            width: 200px !important;
+        }
+
+        @media only screen and (max-width: 1400px) {
+            #productsGridDiv {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            #productsGridDiv {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+
+        @media only screen and (max-width: 300px) {
+            .card {
+                width: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<!-- Start Content -->
+<div class="container py-5">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h1 class="h2 pb-4">Categories</h1>
+            <ul class="list-unstyled template-accordion">
+                <li class="pb-3">
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                        Gender
+                        <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul class="collapse show list-unstyled pl-3">
+                        <li><a class="text-decoration-none" href="#">Men</a></li>
+                        <li><a class="text-decoration-none" href="#">Women</a></li>
+                    </ul>
+                </li>
+                <li class="pb-3">
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                        Sale
+                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul id="collapseTwo" class="collapse list-unstyled pl-3">
+                        <li><a class="text-decoration-none" href="#">Sport</a></li>
+                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                    </ul>
+                </li>
+                <li class="pb-3">
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                        Product
+                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul id="collapseThree" class="collapse list-unstyled pl-3">
+                        <li><a class="text-decoration-none" href="#">Bag</a></li>
+                        <li><a class="text-decoration-none" href="#">Sweather</a></li>
+                        <li><a class="text-decoration-none" href="#">Sunglass</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-inline shop-top-menu pb-3 pt-1">
+                        <li class="list-inline-item">
+                            <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Men's</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 pb-4">
+                    <div class="d-flex">
+                        <select class="form-control">
+                            <option>Featured</option>
+                            <option>A to Z</option>
+                            <option>Item</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- ========================================================================= -->
+
+            <div id="productsGridDiv" class="grid justify-items-center grid-cols-3 gap-4 rounded-lg">
+                <% if (products) { %>
+                    <% if (products.length> 0) { %>
+                        <% products.forEach((product)=> { %>
+                            <div class="" style="cursor: pointer;">
+                                <div class="card mb-4 product-wap rounded-lg">
+                                    <div class="card rounded-lg image-card card-shadowNone"
+                                        style="height: 200px !important;">
+                                        <img class="card-img rounded-lg img-fluid"
+                                            src="../../uploadedImages/<%= product.image[0].img %>">
+                                        <div
+                                            class="card-img-overlay rounded-lg product-overlay d-flex align-items-center justify-content-center">
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <a class="btn btn-success text-white" href="#">
+                                                        <i class="fas fa-heart"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="btn btn-success text-white mt-2"
+                                                        href="/productview/<%= product._id %>">
+                                                        <i class="far fa-eye"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="addToCartBtn btn btn-success text-white mt-2" href="#"
+                                                        data-product="<%= JSON.stringify(product) %>">
+                                                        <i class="fas fa-cart-plus"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="/productview/<%= product._id %>" class="h3 text-decoration-none">
+                                            <%= product.name.substring(0, 20) %>
+                                                <% if (product.name.length> 20) { %>
+                                                    <%= '...' %>
+                                                        <% } %>
+                                        </a>
+                                        <ul class="rating-vote-ul">
+                                            <li class="rating-vote-li1">
+                                                <%= product.rating %>&nbsp;<i class="text-muted fa fa-star"></i>
+                                            </li>
+                                            <li class="rating-vote-li2">
+                                                (
+                                                <%= product.vote %> )
+                                            </li>
+                                        </ul>
+
+                                        <div class="bg-gray-100 p-2 rounded-lg">
+                                            <p class="text-center mb-0 "
+                                                style="font-weight: bold !important;font-size: 20px !important;">
+                                                <% if(product.discount !=0){ %>₹
+                                                    <%= Math.round(product.price -
+                                                        ((product.price/100)*product.discount)) %>
+                                                        <span class="animate-ping"
+                                                            style="color: green; font-weight: bold; font-size: 12px;margin-left: 5px;">
+                                                            <%= product.discount %>% off
+                                                        </span>
+                                                        <p class="text-center mb-0 "
+                                                            style="text-decoration: line-through;">₹
+                                                            <%= product.price %>
+                                                        </p>
+                                                        <% }else{ %>₹
+                                                            <%= product.price %>
+                                                                <% } %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div class="no-products">
+                                        <span>No products available for this Category yet!</span>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+            </div>
+            <div div="row">
+                <ul class="pagination pagination-lg justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#"
+                            tabindex="-1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                            href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Content -->
+
+<!-- Start Brands -->
+<section class="bg-light py-5">
+    <div class="container my-4">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Our Brands</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod Lorem ipsum dolor sit amet.
+                </p>
+            </div>
+            <div class="col-lg-9 m-auto tempaltemo-carousel">
+                <div class="row d-flex flex-row">
+                    <!--Controls-->
+                    <div class="col-1 align-self-center">
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                            <i class="text-light fas fa-chevron-left"></i>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+
+                    <!--Carousel Wrapper-->
+                    <div class="col">
+                        <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example"
+                            data-bs-ride="carousel">
+                            <!--Slides-->
+                            <div class="carousel-inner product-links-wap" role="listbox">
+
+                                <!--First slide-->
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End First slide-->
+
+                                <!--Second slide-->
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Second slide-->
+
+                                <!--Third slide-->
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_01.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_02.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_03.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="/img/brand_04.png"
+                                                    alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Third slide-->
+
+                            </div>
+                            <!--End Slides-->
+                        </div>
+                    </div>
+                    <!--End Carousel Wrapper-->
+
+                    <!--Controls-->
+                    <div class="col-1 align-self-center">
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                            <i class="text-light fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Brands-->

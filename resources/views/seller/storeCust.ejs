@@ -1,0 +1,303 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<div id="snackbar"><span id="snackbar-span"></span></div>
+<% if(store) { %>
+
+    <% store.forEach( (item)=> { %>
+        <!-- Update store Info Modal -->
+        <div class="modal fade" id="updateStoreInfoModal" tabindex="-1" role="dialog"
+            aria-labelledby="updateStoreInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="item-updating-container-span1 font-bold py-3 px-3 bg-yellow-500 rounded">Update
+                            Store:</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body border-2 rounded item-data-change py-10 bg-gray-800 shadow-xl">
+                        <div class="container w-56 mx-auto">
+                            <!-- For Change Name: -->
+                            <form action="/seller/updatestore/<%= item._id %>" method="POST">
+                                <span class="font-bold text-white">Change Name:</span>
+                                <div class="flex changedname">
+                                    <input name="changedname"
+                                        class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                        id="changename" type="text" placeholder="Name" required>
+                                    <button
+                                        class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-yellow-500 font px-1 rounded focus:outline-none"
+                                        type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                            <br>
+
+                            <!-- For Change Owner: -->
+                            <form action="/seller/updatestore/<%= item._id %>" method="POST">
+                                <span class="font-bold text-white">Change Owner:</span>
+                                <div class="flex changedowner">
+                                    <input name="changedowner"
+                                        class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                        id="changedowner" type="text" placeholder="Name" required>
+                                    <button
+                                        class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-yellow-500 font px-1 rounded focus:outline-none"
+                                        type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                            <br>
+
+                            <!-- For Change Contact No: -->
+                            <form action="/seller/updatestore/<%= item._id %>" method="POST">
+                                <span class="font-bold text-white">Change Contact No.:</span>
+                                <div class="flex changedcontact">
+                                    <input name="changedcontact"
+                                        class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                        id="changedcontact" type="text" placeholder="Name" required>
+                                    <button
+                                        class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-yellow-500 font px-1 rounded focus:outline-none"
+                                        type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                            <br>
+
+                            <!-- For Change Address: -->
+                            <form action="/seller/updatestore/<%= item._id %>" method="POST">
+                                <span class="font-bold text-white">Change Address:</span>
+                                <div class="flex changedaddress">
+                                    <input name="changedaddress"
+                                        class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                        id="changedaddress" type="text" placeholder="Name" required>
+                                    <button
+                                        class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-yellow-500 font px-1 rounded focus:outline-none"
+                                        type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                            <br>
+
+                            <!-- For Change Desc.: -->
+                            <form action="/seller/updatestore/<%= item._id %>" method="POST">
+                                <span class="font-bold text-white">Change Description:</span>
+                                <div class="flex changeddesc">
+                                    <input name="changeddesc"
+                                        class="bg-gray-100 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none mt-2"
+                                        id="changeddesc" type="text" placeholder="Name" required>
+                                    <button
+                                        class="changedprice-btn h-10 mt-2 ml-2 rounded text-black bg-yellow-500 font px-1 rounded focus:outline-none"
+                                        type="submit">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View store image large Modal -->
+        <button type="button" id="viewImgLargeToggleModalBtn" class="d-none" data-toggle="modal"
+            data-target="#viewImgLargeModal"></button>
+        <div class="modal fade show" id="viewImgLargeModal" tabindex="-1" role="dialog"
+            aria-labelledby="viewImgLargeModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-viewImg" role="document">
+                <div class="modal-content">
+                    <div id="viewImgLargeModalBody" class="modal-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade show" id="uploadMoreStoreImg" tabindex="-1" role="dialog"
+            aria-labelledby="uploadMoreStoreImgTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="item-updating-container-span1 font-bold py-3 px-3 bg-yellow-500 rounded">Upload
+                            more Images:</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="uploadMoreStoreImgBody" class="modal-body bg-gray-800">
+                        <form action="/store-add-img/<%= item._id %>" method="POST" enctype="multipart/form-data">
+                            <span class="font-bold text-white"></span>
+                            <input name="image" multiple
+                                class="shadow w-72 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                id="username" type="file" accept=".jpg, .jpeg, .png" required>
+                            <button
+                                class="changedprice-btn h-10 mt-2 ml-20 rounded text-black bg-yellow-500 font px-1 rounded focus:outline-none"
+                                type="submit">
+                                Upload
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="imgSlider-info-btns pt-20">
+            <div id="carouselExampleIndicators" class="carousel slide imgSliderForStore" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <% item.image.map((img,i)=> { %>
+                        <% if (i===0) { %>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="<%= i %>" class="active"></li>
+                            <% } else { %>
+                                <li data-target="#carouselExampleIndicators" data-slide-to="<%= i %>"></li>
+                                <% } %>
+                                    <% }) %>
+                </ol>
+                <div class="carousel-inner">
+                    <% item.image.map((img,i)=> { %>
+                        <% if (i===0) { %>
+                            <div class="carousel-item active">
+                                <img class="d-block storeCarouselImg w-100" src="../../../uploadedImages/<%= img.img %>"
+                                    alt="<%= i %> slide">
+                            </div>
+                            <% } else { %>
+                                <div class="carousel-item">
+                                    <img class="d-block storeCarouselImg w-100"
+                                        src="../../../uploadedImages/<%= img.img %>" alt="<%= i %> slide">
+                                </div>
+                                <% } %>
+                                    <% }) %>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="storeInfo grid justify-end mx-auto">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        <strong>Store Name:</strong>
+                        <%= item.storename %>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Store Owner:</strong>
+                            <%= item.owner %>
+                        </li>
+                        <li class="list-group-item"><strong>Contact Number:</strong>
+                            <%= item.phone %>
+                        </li>
+                        <li class="list-group-item"><strong>Address:</strong>
+                            <%= item.address %>
+                        </li>
+                        <li class="list-group-item"><strong>Description:</strong>
+                            <%= item.description %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="storeActionBtns">
+                <div class="delete-str-div">
+                    <form action="/seller/deleteStr/<%= item._id %>" method="POST" class="delete-str-form hidden">
+                    </form>
+                    <button
+                        class="bg-red-500 px-3 py-2 mt-3 float-right rounded-full hover:text-white hover:bg-red-600 focus:outline-none">
+                        Delete Store&nbsp&nbsp<i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div>
+                    <form action="/seller/deleteStr/<%= item._id %>" method="POST" class="delete-str-form hidden">
+                    </form>
+                    <button
+                        class="bg-gray-800 px-3 py-2 mt-3 float-right rounded-full hover:text-white hover:bg-gray-600 focus:outline-none text-yellow-400"
+                        type="button" data-toggle="modal" data-target="#updateStoreInfoModal">
+                        Update Info.&nbsp&nbsp<i class="fa-solid fa-pen"></i>
+                    </button>
+                </div>
+                <div>
+                    <button
+                        class="bg-gray-800 px-3 py-2 mt-3 float-right rounded-full hover:text-white hover:bg-gray-600 focus:outline-none text-yellow-400"
+                        type="button" data-toggle="modal" data-target="#uploadMoreStoreImg">
+                        Add Images.&nbsp&nbsp<i class="fa-solid fa-store"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <section class="item-details-Images flex justify-center pt-20">
+            <div
+                class="shower-main-container w-full flex flex-col justify-center border-2 rounded bg-gray-300 mt-20 pt-10 px-5 mx-auto">
+                <div class="mx-auto">
+                    <span class="font-bold py-3 px-3 bg-gray-800 rounded text-yellow-400">Images</span>
+                </div>
+                <div class="item-images-shower grid grid-cols-5 gap-10 mx-auto py-10">
+                    <% for (const img of item.image) { %>
+                        <div class="deleteUpdateBtnMainDiv">
+                            <img class="rounded deleteUpdateBtnImg" src="../../../uploadedImages/<%= img.img %>"
+                                alt="item image" style="height: 13rem;">
+
+                            <div class="deleteUpdateBtnDiv">
+                                <button value="<%= img._id %>" id="<%= item._id %>"
+                                    data-item="<%= JSON.stringify(imageSet) %>"
+                                    class="delete-strimg-btn changedprice-btn text-green-500" type="submit">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button value="<%= img.img %>" class="view-store-btn changedprice-btn text-yellow-500">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+        </section>
+
+        <% }) %>
+            <% } %>
+                <script>
+                    let deleteStrDiv = document.getElementsByClassName('delete-str-div')[0];
+                    deleteStrDiv.addEventListener('click', () => {
+                        let result = confirm('Are you sure you want to delete this Store?');
+                        if (result) {
+                            deleteStrForm = document.getElementsByClassName('delete-str-form')[0];
+                            deleteStrForm.submit();
+                        }
+                    })
+
+
+                    let viewStoreBtn = document.querySelectorAll(".view-store-btn");
+                    if (viewStoreBtn) {
+                        for (let i = 0; i < viewStoreBtn.length; i++) {
+                            viewStoreBtn[i].addEventListener('click', (e) => {
+
+                                let viewImgLargeToggleModalBtn = document.getElementById('viewImgLargeToggleModalBtn');
+                                let viewImgLargeModalBody = document.getElementById('viewImgLargeModalBody');
+                                let value = viewStoreBtn[i].value;
+
+                                let str = `<img class="d-block w-100" src="../../../uploadedImages/${value}" alt="${value}">`;
+                                viewImgLargeModalBody.innerHTML = '';
+                                viewImgLargeModalBody.innerHTML = str;
+
+                                viewImgLargeToggleModalBtn.click();
+                            })
+                        }
+                    }
+                </script>
+
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                    crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                    crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                    crossorigin="anonymous"></script>

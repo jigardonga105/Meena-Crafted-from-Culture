@@ -1,0 +1,484 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        .ptagCSS {
+            font-size: 13px !important;
+            margin: 0;
+            margin-bottom: 3px;
+            color: #a9a7a7;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50px;
+            margin-right: 5px;
+        }
+
+        .greenEmptyDot {
+            border: 2px solid rgb(33, 177, 33);
+        }
+
+        .greenDot {
+            background-color: rgb(33, 177, 33);
+        }
+
+        .redDot {
+            background-color: #fc0505;
+        }
+
+        .yellowDot {
+            background-color: rgb(246, 255, 0);
+        }
+
+        .allOrdsLeftFilter {
+            width: 300px;
+            height: 250px;
+        }
+
+        @media screen and (max-width: 1400px) {
+            .allOrdsLeftFilter {
+                margin-left: 8px !important;
+            }
+
+            .rightOrds {
+                width: 100% !important;
+                margin-right: 8px;
+            }
+        }
+
+        @media screen and (max-width: 1000px) {
+            .filterAllOrdsMain {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .rightOrds {
+                width: 99% !important;
+                margin: 0px 5px;
+                margin-top: 15px;
+            }
+
+            .allOrdsLeftFilter {
+                width: auto !important;
+                height: auto !important;
+                margin: 0rem 5rem !important;
+            }
+
+            .allOrdFilters {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                column-gap: 3rem;
+            }
+
+            .filterChbDiv {
+                display: flex;
+            }
+
+            .allOrdsLeftFilterStatusDiv {
+                display: none;
+            }
+
+            .allOrdsLeftFilterMain {
+                padding-left: 5px !important;
+            }
+
+            .allOrdsLeftFilterTitle,
+            .allOrdsLeftFilterHr {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 880px) {
+            .allOrdsLeftFilter {
+                margin: 0rem 3rem !important;
+            }
+        }
+
+        @media screen and (max-width: 825px) {
+            .allOrdsLeftFilter {
+                margin: 0rem 1rem !important;
+            }
+
+            .allOrdsFeats {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 750px) {
+            .allOrdFilters {
+                grid-template-columns: repeat(3, 1fr);
+                row-gap: 1.5rem;
+            }
+
+            .allOrdsLeftFilterTitle,
+            .allOrdsLeftFilterHr {
+                display: block;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .singleOrdMain {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+
+            .singleOrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .singleOrdInfo {
+                grid-area: 1 / 2 / 2 / 4;
+                width: auto !important;
+            }
+
+            .singleOrdPrice {
+                grid-area: 1 / 4 / 2 / 5;
+                width: auto !important;
+            }
+
+            .singleOrdDelInfo {
+                grid-area: 2 / 3 / 3 / 5;
+            }
+        }
+
+        @media screen and (max-width: 470px) {
+            .allOrdFilters {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 300px) {
+            .allOrdFilters {
+                grid-template-columns: repeat(1, 1fr);
+                justify-items: center;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .singleOrdMain {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+            }
+
+            .singleOrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .singleOrdInfo {
+                grid-area: 1 / 2 / 2 / 4;
+                width: auto !important;
+            }
+
+            .singleOrdPrice {
+                grid-area: 1 / 4 / 2 / 5;
+                width: auto !important;
+            }
+
+            .singleOrdDelInfo {
+                grid-area: 2 / 2 / 3 / 5;
+                margin: auto 0px;
+            }
+        }
+
+        @media screen and (max-width: 450px) {
+            .singleOrdMain {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+            }
+
+            .singleOrdImg {
+                grid-area: 1 / 1 / 2 / 2;
+            }
+
+            .singleOrdInfo {
+                grid-area: 1 / 2 / 2 / 5;
+            }
+
+            .singleOrdPrice {
+                grid-area: 2 / 2 / 3 / 5;
+                margin: auto;
+            }
+
+            .singleOrdDelInfo {
+                grid-area: 3 / 2 / 4 / 5;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .singleOrdMain {
+                display: flex;
+                flex-direction: column !important;
+                row-gap: 10px;
+            }
+
+            .singleOrdImg {
+                margin: auto;
+            }
+
+            .singleOrdPrice,
+            .singleOrdDelInfo {
+                margin: 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-gray-100">
+        <input type="hidden" id="userData" data-user="<%= JSON.stringify(userData) %>">
+        <input type="hidden" id="custOrders" data-orders="<%= JSON.stringify(custOrders) %>">
+        <input type="hidden" id="prdArr" data-products="<%= JSON.stringify(prdArr) %>">
+        <input type="hidden" id="prdIDArr" value="<%= JSON.stringify(prdIDArr) %>">
+        <input type="hidden" id="strIDArr" value="<%= JSON.stringify(strIDArr) %>">
+
+        <div class="filterAllOrdsMain pt-5 flex gap-x-8">
+            <div class="allOrdsLeftFilter inline-block ml-10 py-3 bg-white rounded shadow">
+                <div class="allOrdsLeftFilterTitle pl-10">
+                    <h3>Filter</h3>
+                </div>
+                <hr class="allOrdsLeftFilterHr">
+                <div class="allOrdsLeftFilterMain pl-10">
+                    <div class="allOrdsLeftFilterStatusDiv">
+                        <h5><strong>Status</strong></h5>
+                    </div>
+                    <div class="allOrdFilters cursor-pointer">
+                        <div class="filterChbDiv">
+                            <input id="all" type="radio" name="filtRadio" value="all"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="All"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">All</label>
+                        </div>
+                        <div class="filterChbDiv">
+                            <input id="placed" type="radio" name="filtRadio" value="placed"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="Remainings"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remainings</label>
+                        </div>
+                        <div class="filterChbDiv">
+                            <input id="completed" type="radio" name="filtRadio" value="completed"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="completed"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Delivered</label>
+                        </div>
+                        <div class="filterChbDiv">
+                            <input id="cancelled" type="radio" name="filtRadio" value="cancelled"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="cancelled"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Cancelled</label>
+                        </div>
+                        <div class="filterChbDiv">
+                            <input id="returned" type="radio" name="filtRadio" value="returned"
+                                class="filterChB w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:outline-none">
+                            <label for="returned"
+                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Returned</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rightOrds rounded" style="width: 1020px;">
+                <div id="allOrd" class="allOrd"></div>
+                <div id="placedOrd" class="placedOrd" style="display: none;"></div>
+                <div id="completedOrd" class="completedOrd" style="display: none;"></div>
+                <div id="cancelledOrd" class="cancelledOrd" style="display: none;"></div>
+                <div id="returnedOrd" class="returnedOrd" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    let userDataInp = document.getElementById("userData");
+    let userData = JSON.parse(userDataInp.dataset.user);
+    let cartCounter = document.getElementById("cartCounter");
+
+    if (userData.cart) {
+        let totalQty = userData.cart['custID_' + userData._id + '_cart'].totalQty
+        // console.log('cart found');
+        cartCounter.innerText = totalQty;
+    } else {
+        // console.log('cart not found');
+        setTimeout(function () {
+            cartCounter.innerText = ``;
+        }, 2000);
+    }
+
+    // =====================================================================================
+    // =====================================================================================
+    let custOrdersInp = document.getElementById("custOrders");
+    let custOrders = JSON.parse(custOrdersInp.dataset.orders);
+
+    let prdArrInp = document.getElementById("prdArr");
+    let prdArr = JSON.parse(prdArrInp.dataset.products);
+
+    let prdIDArrInp = document.getElementById('prdIDArr');
+    let prdIDArr = JSON.parse(prdIDArrInp.value);
+
+    let strIDArrInp = document.getElementById('strIDArr');
+    let strIDArr = JSON.parse(strIDArrInp.value);
+
+    let filterChB = document.getElementsByClassName('filterChB');
+
+    // Divs
+    let noOrder = document.getElementById("noOrder");
+    let allOrd = document.getElementById('allOrd');
+    let placedOrd = document.getElementById('placedOrd');
+    let completedOrd = document.getElementById('completedOrd');
+    let cancelledOrd = document.getElementById('cancelledOrd');
+    let returnedOrd = document.getElementById('returnedOrd');
+
+    function fillOrderDivFunc(div, prdArrJ, ordItmKey, ord, strIDArr, color, size, qty, price, discount, index) {
+
+        let imgPath = prdArrJ.image[0].img;
+        let name = prdArrJ.name;
+        let storeName;
+        price = Math.round(price - [(price / 100) * discount]);
+        let status = ord.status;
+        let dot = 'greenEmptyDot';
+        let dateTime = new Date(ord.updatedAt);
+
+        if (status == 'cancelled') {
+            status = 'Cancelled on';
+            dot = 'redDot';
+        } else if (status == 'returned') {
+            status = 'Returned on';
+            dot = 'yellowDot';
+        } else if (status == 'completed') {
+            status = 'Delivered on';
+            dot = 'greenDot';
+        } else {
+            status = 'Delivery expected by'
+            dateTime = new Date(new Date(ord.updatedAt).getTime() + (5 * 24 * 60 * 60 * 1000));
+        }
+
+        let date = dateTime.getDate();
+        let year = dateTime.getFullYear();
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        let day = days[dateTime.getDay()];
+        let month = months[dateTime.getMonth()];
+
+        for (const key in strIDArr) {
+            if (key === prdArrJ.storeId) {
+                storeName = strIDArr[key];
+            }
+        }
+
+        let html = `<a href="/orderDetails/${ord._id}/${index}/${prdArrJ._id}" style="color: black;">
+                        <div class="singleOrdMain flex flex-row bg-white border px-3 py-2 mb-2" style="padding-top: 25px !important;">
+                            <div class="singleOrdImg inline-block mr-10">
+                                <img src="../../uploadedImages/${imgPath}" class="w-24" alt="img">
+                            </div>
+                            <div class="singleOrdInfo inline-block mr-10" style="width: 370px;">
+                                <p class="text-sm"><strong>${name}</strong></p>
+                                <p class="allOrdsFeats ptagCSS">
+                                    <span class="mr-5">Color: ${color}</span>
+                                    <span class="mr-5">Size: ${size}</span>
+                                    <span class="mr-5">Quantity: ${qty}</span>
+                                </p>
+                                <p class="ptagCSS">Seller: ${storeName}</p>
+                            </div>
+                            <div class="singleOrdPrice inline-block mr-10" style="width: 130px;">
+                                ₹${price * qty}
+                            </div>
+                            <div class="singleOrdDelInfo inline-block">
+                                <div class="dot ${dot} inline-block"></div>
+                                <span class="mt-3" style="font-size: 16px !important;"><strong>${status} ${day} ${month} ${date},${year}</strong></span>
+                                <div style="font-size: 12px !important;">Your item has been delivered</div>
+                                <div class="flex flex-row mt-2">
+                                    <div>
+                                        <img class="w-7" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTknIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTggMTgiPgoJPGcgZmlsbD0nbm9uZSc+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBmaWxsPSIjMjg3NEYxIiBwb2ludHM9IjkgMTIuMDYyNSAxMy42Mzc1IDE1LjQzNzUgMTEuODYyNSA5Ljk4NzUgMTYuNSA2LjY4NzUgMTAuODEyNSA2LjY4NzUgOSAxLjA2MjUgNy4xODc1IDYuNjg3NSAxLjUgNi42ODc1IDYuMTM3NSA5Ljk4NzUgNC4zNjI1IDE1LjQzNzUiIC8+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBwb2ludHM9IjAgMCAxOCAwIDE4IDE4IDAgMTgiIC8+Cgk8L2c+Cjwvc3ZnPg==" alt="rating">
+                                    </div>
+                                    <div style="font-size: 15px !important; margin-top: 5px !important;" class="text-blue-500">
+                                        <strong>Rate & Review Product</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>`;
+        div.innerHTML += html;
+    }
+
+    function runFillOrderDivFunc(ordItm, prdArr, div, ord, strIDArr) {
+        if (Object.keys(ordItm).length > 0) {
+            for (var key in ordItm) {
+                if (ordItm.hasOwnProperty(key)) {
+                    for (let j = 0; j < prdArr.length; j++) {
+                        if (key === prdArr[j]._id) {
+                            ordItm[key].feature.map((featurePrd, index) => {
+                                fillOrderDivFunc(div, prdArr[j], ordItm[key], ord, strIDArr, featurePrd.color, featurePrd.size, featurePrd.qty, featurePrd.price, featurePrd.discount, index);
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function checkedUncheckedFiltFunc(custOrders, filtVal, filteredDiv) {
+        for (let j = 0; j < custOrders.length; j++) {
+            let ord = custOrders[j];
+            let ordItm = ord.items;
+
+
+            if (ord.status == 'confirmed' || ord.status == 'shipped' || ord.status == 'delivery') {
+                if (filtVal == 'placed') {
+                    runFillOrderDivFunc(ordItm, prdArr, filteredDiv, ord, strIDArr);
+                }
+            } else {
+                if (ord.status == filtVal) {
+                    runFillOrderDivFunc(ordItm, prdArr, filteredDiv, ord, strIDArr);
+                }
+            }
+
+            if (filteredDiv.id == 'allOrd') {
+                runFillOrderDivFunc(ordItm, prdArr, filteredDiv, ord, strIDArr);
+            }
+        }
+    }
+
+    let divsArr = [allOrd, placedOrd, completedOrd, cancelledOrd, returnedOrd];
+    let filterChBValues = ["all", "placed", "completed", "cancelled", "returned"];
+
+    filterChBValues.map((value) => {
+        let filterChBInp = document.getElementById(value);
+        let filtVal = filterChBInp.value;
+        if (filtVal == value) {
+            let filteredDiv = `${value}Ord`;
+            filteredDiv = document.getElementById(filteredDiv);
+            checkedUncheckedFiltFunc(custOrders, filtVal, filteredDiv);
+        }
+    })
+
+
+    //when click button
+    for (let i = 0; i < filterChB.length; i++) {
+        filterChB[i].addEventListener("click", () => {
+            let filtVal = filterChB[i].value;
+
+            filterChBValues.map((value) => {
+                if (filtVal == value) {
+                    divsArr.map((divElem) => {
+                        if (divElem.id == `${value}Ord`) {
+                            divElem.style.display = 'block';
+                            if (!divElem.innerHTML) {
+                                divElem.innerHTML = `<div class="flex justify-center my-12">
+                                                        <h4 class="border rounded p-10 bg-white shadow-2xl cursor-pointer">You don't have any orders till today!</h4>
+                                                    </div>`;
+                            }
+                        } else {
+                            divElem.style.display = 'none';
+                        }
+                    })
+                }
+            })
+        })
+    }
+</script>

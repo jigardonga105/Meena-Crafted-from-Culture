@@ -1,0 +1,775 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
+    <style>
+        #rightSideCustData {
+            max-height: 600px;
+            overflow: scroll;
+        }
+
+        .card-img {
+            height: 250px !important;
+            width: 200px !important;
+        }
+
+        .comm-img {
+            display: inline-block;
+            height: 50px !important;
+            width: 50px !important;
+            margin: 2px;
+        }
+
+        .comm-img:hover {
+            border: 1px solid rgb(236, 234, 234);
+            cursor: pointer;
+        }
+
+        .rating__star {
+            font-size: 30px;
+            cursor: pointer;
+            color: #dabd18b2;
+            transition: filter linear .3s;
+        }
+
+        .rating__star:hover {
+            filter: drop-shadow(1px 1px 4px gold);
+        }
+
+        #card-group {
+            display: flex;
+            flex-direction: row;
+            column-gap: 2rem;
+            overflow-x: auto;
+        }
+
+        #card-group .card-body {
+            max-width: 17%;
+            padding: .75rem;
+            margin-bottom: 15px;
+            border: 0;
+            flex-basis: 33.333%;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<% if(product){ %>
+    <% let prd=product[0] %>
+        <% let str=store[0] %>
+            <input id="prdID" type="hidden" value="<%= prd._id %>">
+            <% if (user) { %>
+                <input id="userID" type="hidden" value="<%= user._id %>">
+                <% } %>
+                    <input id="prdInp" type="hidden" value="<%= JSON.stringify(prd) %>">
+                    <input id="relaPrdInp-in" type="hidden" value="<%= JSON.stringify(relatedPrds) %>">
+                    <input id="commentedUsers" type="hidden" value="<%= JSON.stringify(commentedUsers) %>">
+                    <input id="allcomments" type="hidden" value="<%= JSON.stringify(comments) %>">
+
+                    <!-- Open Content -->
+                    <section class="bg-gray-100" style="padding-bottom: 3%;">
+                        <div id="prdAllInfoMain" class="pb-5 mx-5">
+                            <div class="row">
+                                <div id="leftSideCustData" class="col-lg-5 mt-5">
+                                    <div class="card mb-3">
+                                        <img class="card-img img-fluid" src="../uploadedImages/<%= prd.image[0].img %>"
+                                            alt="Card image cap" id="product-detail">
+                                    </div>
+
+                                    <div class="row">
+                                        <!--Start Controls-->
+                                        <div class="col-1 align-self-center">
+                                            <a href="#multi-item-example" role="button" data-bs-slide="prev">
+                                                <i class="text-dark fas fa-chevron-left"></i>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </div>
+                                        <!--End Controls-->
+
+                                        <!--Start Carousel Wrapper-->
+                                        <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item"
+                                            data-bs-ride="carousel">
+                                            <!--Start Slides-->
+                                            <div class="carousel-div carousel-inner product-links-wap" role="listbox">
+                                            </div>
+                                            <!--End Slides-->
+                                        </div>
+                                        <!--End Carousel Wrapper-->
+
+                                        <!--Start Controls-->
+                                        <div class="col-1 align-self-center">
+                                            <a href="#multi-item-example" role="button" data-bs-slide="next">
+                                                <i class="text-dark fas fa-chevron-right"></i>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                        <!--End Controls-->
+                                    </div>
+
+                                    <div class="cart-btns-div">
+                                        <div class="row quantity-div justify-content-center pt-3">
+                                            <div class="col-auto">
+                                                <ul class="list-inline">
+                                                    <li class="list-inline-item text-right">
+                                                        Quantity
+                                                        <input type="hidden" name="product-quanity" id="product-quanity"
+                                                            value="1">
+                                                    </li>
+                                                    <li class="list-inline-item"><span class="btn btn-success"
+                                                            id="btn-minus">-</span></li>
+                                                    <li class="list-inline-item"><span
+                                                            class="badge bg-secondary shopSingleCounter"
+                                                            id="var-value">1</span>
+                                                    </li>
+                                                    <li class="list-inline-item"><span class="btn btn-success"
+                                                            id="btn-plus">+</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div id="addToCartBuyNowMain" class="flex gap-3">
+                                            <div>
+                                                <button id="cart-button" class="addToCartBtn btn cart-buy-button"
+                                                    data-product="<%= JSON.stringify(prd) %>">
+                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                    <span>Add to Cart</span>
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <form action="/buyNow" method="post" class="hidden" id="buyNow_Form">
+                                                    <input type="hidden" name="product" id="buyNow_product">
+                                                    <input type="hidden" name="prdQty" id="buyNow_prdQty">
+                                                    <input type="hidden" name="color" id="buyNow_color">
+                                                    <input type="hidden" name="size" id="buyNow_size">
+                                                </form>
+                                                <button id="buy-button" class="btn cart-buy-button"
+                                                    data-buyNowProduct="<%= JSON.stringify(prd) %>">
+                                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                                    <span>Buy Now</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- col end -->
+                                <div id="rightSideCustData" class="col-lg-7 mt-5">
+
+                                    <div id="namePriceRate" class="namePriceRate bg-white rounded border p-2 mb-3">
+                                        <h4 class="h4">
+                                            <%= prd.name %>
+                                        </h4>
+
+                                        <div class="ml-10 my-3">
+                                            <span class="h3 py-2">
+                                                <% if(prd.discount !=0){ %>₹
+                                                    <%= Math.round(prd.price - ((prd.price/100)*prd.discount)) %>
+                                            </span>
+
+                                            <span class="text-sm" style="text-decoration: line-through;">₹
+                                                <%= prd.price %>
+                                            </span>
+
+                                            <span class="h5 text-green-500 animate-ping border bg-gray-100 p-1 rounded">
+                                                <%= prd.discount %>% off
+                                            </span>
+                                            <% }else{ %>₹
+                                                <span class="h3 py-2">₹
+                                                    <%= prd.price %>
+                                                </span>
+                                                <% } %>
+                                        </div>
+
+                                        <span class="py-2">
+                                            <% for(i=0; i< prd.rating; i++) { %>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <% } %>
+                                                    <% for(i=0; i< 5 - prd.rating; i++) { %>
+                                                        <i class="fa fa-star text-secondary"></i>
+                                                        <% } %>
+                                                            <span class="list-inline-item text-dark"> | <%=
+                                                                    comments.length %>
+                                                                    Comments </span>
+                                        </span>
+                                    </div>
+
+                                    <div id="availOffSec" class="availOffSec bg-white rounded border p-2 mb-3">
+                                        <h5>Avaliable Offers:</h5>
+                                        <div class="offer mb-0">
+                                            <% let offer=prd['offer'][0] %>
+                                                <% if(Object.keys(offer).length> 0) { %>
+                                                    <% for(i=0; i< Object.keys(offer).length; i++) { %>
+
+                                                        <% for(let key in offer[i]) { %>
+                                                            <p
+                                                                style="font-size: 15px !important; margin-bottom: 0px !important;">
+                                                                <span>
+                                                                    <img class="inline-block" src="../img/offerTag.png"
+                                                                        alt="offerTag">
+                                                                </span>
+                                                                <strong>
+                                                                    <%= key %>
+                                                                </strong>
+                                                                <span>
+                                                                    <%= offer[i][key] %>
+                                                                </span>
+                                                            </p>
+                                                            <% } %>
+
+                                                                <% } %>
+                                                                    <% } else { %>
+                                                                        <p class="ml-40">
+                                                                            <strong>No</strong> offers available
+                                                                        </p>
+                                                                        <% } %>
+
+                                        </div>
+                                    </div>
+
+                                    <div id="waaGarrSec" class="warrGarrSec bg-white rounded border p-2 mb-3">
+                                        <h5>Warranty/Garranty:</h5>
+                                        <div class="warr mb-0 flex flex-col bg-gray-100 px-2 pb-2 rounded">
+                                            <% let warr=prd['Warr_Garr'][0] %>
+                                                <% if(Object.keys(warr).length> 0) { %>
+                                                    <% for(i=0; i< Object.keys(warr).length; i++) { %>
+
+                                                        <div class="flex flex-row">
+                                                            <div id="warrGarrDesignDot" class="my-auto ml-2 mr-5">
+                                                                <i class="fa-regular fa-circle-dot"></i>
+                                                            </div>
+
+                                                            <div id="warr-p" class="">
+                                                                <% for(let key in warr[i]) { %>
+
+                                                                    <% if(key=='type' ){ %>
+                                                                        <span id="warr-span-type" style="border: none;"
+                                                                            class="rounded-lg bg-dark text-white inline-block">
+                                                                            <%= warr[i][key] %>
+                                                                        </span>
+                                                                        <% } %>
+
+                                                                            <% if(key=='duration' ){ %>
+                                                                                <span
+                                                                                    class="warr-span-duration ml-5 inline-block float-right mr-10 bg-white px-2 py-1 rounded-xl">
+                                                                                    for <strong>
+                                                                                        <%= warr[i][key] %>
+                                                                                    </strong> only
+                                                                                </span>
+                                                                                <% } %>
+
+                                                                                    <% if(key=='description' ){ %>
+                                                                                        <span class="block">
+                                                                                            <strong>include:</strong>
+                                                                                            <span class="fs-15">
+                                                                                                <%= warr[i][key] %>
+                                                                                            </span>
+                                                                                        </span>
+                                                                                        <% } %>
+                                                                                            <% } %>
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                            <% } else { %>
+                                                                <p class="ml-40"><strong>No</strong> Warranty/Garranty
+                                                                    available
+                                                                </p>
+                                                                <% } %>
+                                        </div>
+                                    </div>
+
+                                    <div id="colSizeSec" class="colSizeSec bg-white rounded border p-2 mb-3">
+                                        <% if(prd.color.length> 0) { %>
+                                            <h5>Color:</h5>
+                                            <div class="color mb-0 h-auto">
+                                                <ul class="grid grid-cols-4 mb-0 h-auto gap-y-10">
+                                                    <% prd.color.map(color=> { %>
+                                                        <li class="color-span-main justify-content-center"
+                                                            style="display: flex !important; flex-direction: row;">
+                                                            <img id="color-img" class="color-img inline-block"
+                                                                src="../uploadedImages/<%= prd.image[0].img %>"
+                                                                alt="<%= prd.name %> image" id="product-detail">
+                                                            <span id="color-name-span" data-value="<%= color %>">
+                                                                <%= color %>
+                                                            </span>
+                                                        </li>
+                                                        <% }) %>
+                                                </ul>
+                                            </div>
+                                            <% } %>
+
+                                                <% if(prd.size.length> 0) { %>
+                                                    <h5 class="inline-block mt-3">Sizes:</h5>
+                                                    <div class="size mb-0 inline-block">
+                                                        <div class="col-auto">
+                                                            <ul class="list-inline mb-0">
+                                                                <% prd.size.map(size=> { %>
+                                                                    <li class="list-inline-item ml-2">
+                                                                        <span id="sizeSelectBtn"
+                                                                            class="btn btn-warning btn-size"
+                                                                            data-value="<%= size %>">
+                                                                            <%= size %>
+                                                                        </span>
+                                                                    </li>
+                                                                    <% }) %>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                    </div>
+
+                                    <div id="extraDet" class="extraDet">
+                                        <div id="highPayopsServSellInfoMain" class="grid grid-cols-2 gap-2">
+
+                                            <% if(prd.highlight.length> 0) { %>
+                                                <div class="bg-white rounded border p-2">
+                                                    <div class="prdSingleHighlight flex">
+                                                        <h5>Highlight:</h5>
+                                                        <div class="highlight mb-0">
+                                                            <% prd.highlight.map(highlight=> { %>
+                                                                <li class="fs-15 ml-3">
+                                                                    <%= highlight %>
+                                                                </li>
+                                                                <% }) %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% } %>
+
+                                                    <% if(prd.payment_ops.length> 0) { %>
+                                                        <div class="bg-white rounded border p-2">
+                                                            <div class="prdSinglePayops flex">
+                                                                <h5 class="w-28">Payment Options:</h5>
+                                                                <div class="payops mb-0">
+                                                                    <% prd.payment_ops.map(payment_ops=> { %>
+                                                                        <li class="fs-15 ml-0">
+                                                                            <%= payment_ops %>
+                                                                        </li>
+                                                                        <% }) %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+
+                                                            <% if(prd.service.length> 0) { %>
+                                                                <div class="bg-white rounded border p-2">
+                                                                    <div class="prdSingleServices flex">
+                                                                        <h5>Service:</h5>
+                                                                        <div class="service mb-0">
+                                                                            <% prd.service.map(service=> { %>
+                                                                                <li class="fs-15 ml-6">
+                                                                                    <%= service %>
+                                                                                </li>
+                                                                                <% }) %>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <% } %>
+
+                                                                    <div class="bg-white rounded border p-2">
+                                                                        <div class="flex">
+                                                                            <h6>Seller:</h6>
+                                                                            <div class="seller mb-0">
+                                                                                <span
+                                                                                    class="fs-15 ml-12 seller-span-strName block">
+                                                                                    <%= str.storename %>
+                                                                                </span>
+                                                                                <span
+                                                                                    class="fs-15 ml-12 seller-span-strRating">
+                                                                                    <%= str.rating %>&nbsp;
+                                                                                        <i class="fa fa-star"></i>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                        </div>
+
+                                        <div id="prdSingleDesc" class="flex bg-white rounded border p-2 mt-3">
+                                            <h5>Description:</h5>
+                                            <div class="desc mb-0">
+                                                <p class="ml-3 prdSingleDesc">
+                                                    <%= prd.desc %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="spec bg-white rounded border p-2 mt-3">
+                                        <% let spec=prd['specification'][0] %>
+                                            <div class="head">
+                                                <h3>Specification:</h3>
+                                            </div>
+                                            <div class="body proSingleSpecBody" id="specBody">
+                                                <% for (let title in spec) { %>
+                                                    <div class="body-main-div">
+                                                        <h5>
+                                                            <%= title %>
+                                                        </h5>
+                                                        <% for (let keyVal in spec[title]) { %>
+                                                            <div class="row proSingleSpecBodyKeyVal">
+                                                                <div class="col-4 proSingleSpecBodyKey">
+                                                                    <span class="fs-15 row-span1">
+                                                                        <%= keyVal %>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-8 proSingleSpecBodyval">
+                                                                    <span class="fs-15 row-span2">
+                                                                        <%= spec[title][keyVal] %>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <% } %>
+                                                    </div>
+                                                    <% } %>
+                                            </div>
+                                            <div class="footer">
+                                                <span id="spec-readmore" class="btn">Read More</span>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Close Content -->
+
+                        <% if(relatedPrds) { %>
+                            <div class="related-prd">
+                                <h3>Similar Products:</h3>
+                                <!-- <div id="carousel" class="py-1">
+                                </div> -->
+                                <div id="content">
+                                    <div id="card-group" class="w-auto"></div>
+                                </div>
+                                <!-- <button id="prev">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="none" d="M0 0h24v24H0V0z" />
+                                        <path d="M15.61 7.41L14.2 6l-6 6 6 6 1.41-1.41L11.03 12l4.58-4.59z" />
+                                    </svg>
+                                </button>
+                                <button id="next">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <path fill="none" d="M0 0h24v24H0V0z" />
+                                        <path d="M10.02 6L8.61 7.41 13.19 12l-4.58 4.59L10.02 18l6-6-6-6z" />
+                                    </svg>
+                                </button> -->
+                            </div>
+                            <% } %>
+
+
+                                <div id="commentsBox" class="container mt-5 bg-white rounded shadow pb-5">
+                                    <div id="commHead">
+                                        <h3 class="py-3">Comments:</h3>
+                                    </div>
+
+                                    <% if(user) { if (isOrdered) { if (!isOrderedOutdated) { %>
+                                        <div id="giveComment" class="w-6/12 mx-auto border rounded px-10 py-2 shadow">
+
+                                            <form action="/shopSingleComment" method="post" id="commForm"
+                                                enctype="multipart/form-data" onsubmit="notyFunc()">
+
+                                                <div class="hidden">
+                                                    <input type="hidden" name="prdID" value="<%= prd._id %>">
+                                                    <input type="hidden" name="rating" id="ratingID">
+                                                </div>
+
+                                                <div class="grid grid-cols-4 gap-4">
+                                                    <div class="commLeft col-span-2">
+                                                        <div id="commTitle" class="form-group mb-6">
+                                                            <div>
+                                                                <label><strong>Comment Title:</strong></label>
+                                                            </div>
+                                                            <div>
+                                                                <input type="text" name="commTitle" id="titleField"
+                                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="commDesc" class="form-group mb-6">
+                                                            <div>
+                                                                <label><strong>Comment Description:</strong></label>
+                                                            </div>
+                                                            <div>
+                                                                <textarea name="commDesc"
+                                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    id="descField" rows="1" placeholder="Message"
+                                                                    required></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="commRight col-span-2">
+                                                        <div id="commImg" class="form-group mb-6">
+                                                            <div>
+                                                                <label><strong>Images:</strong></label>
+                                                            </div>
+                                                            <div>
+                                                                <input type="file" name="image" id="image"
+                                                                    accept=".jpg, .jpeg, .png" multiple
+                                                                    class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                                    required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="commRating" class="form-group mb-6">
+                                                            <div>
+                                                                <label><strong>Rating:</strong></label>
+                                                            </div>
+                                                            <div class="mt-2">
+                                                                <i class="rating__star fa-regular fa-star"></i>
+                                                                <i class="rating__star fa-regular fa-star"></i>
+                                                                <i class="rating__star fa-regular fa-star"></i>
+                                                                <i class="rating__star fa-regular fa-star"></i>
+                                                                <i class="rating__star fa-regular fa-star"></i>
+                                                            </div>
+                                                            <div>
+                                                                <p id="alertStar"
+                                                                    style="display: none; font-size: 13px !important; color: red;">
+                                                                    *Please select a rating</p>
+                                                            </div>
+                                                            <script>
+                                                                let rating__star = document.getElementsByClassName('rating__star');
+                                                                let rating = 0;
+
+                                                                const fillStarBackFunc = (len) => {
+                                                                    for (let i = 0; i < rating__star.length; i++) {
+                                                                        rating__star[i].classList.remove('fa-solid');
+                                                                        rating__star[i].classList.add('fa-regular');
+                                                                    }
+                                                                    for (let i = 0; i < len + 1; i++) {
+                                                                        rating__star[i].classList.remove('fa-regular');
+                                                                        rating__star[i].classList.add('fa-solid');
+                                                                    }
+                                                                    rating = len + 1;
+                                                                    document.getElementById('ratingID').setAttribute('value', rating);
+                                                                }
+
+                                                                for (let i = 0; i < rating__star.length; i++) {
+                                                                    rating__star[i].addEventListener('click', () => {
+                                                                        fillStarBackFunc(i);
+                                                                    });
+                                                                }
+
+                                                                let commForm = document.getElementById('commForm');
+                                                                commForm.addEventListener('submit', (e) => {
+                                                                    e.preventDefault();
+                                                                    if (rating === 0) {
+                                                                        document.getElementById('alertStar').style.display = 'block';
+                                                                    } else {
+                                                                        commForm.submit();
+                                                                    }
+                                                                })
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="commBtn" class="mx-44">
+                                                    <button type="submit" id="submitBtn"
+                                                        class="inline-block px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-900 hover:shadow-lg focus:bg-gray-900 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-900 active:shadow-lg transition duration-150 ease-in-out">
+                                                        Post</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                        <% } else { %>
+                                            <div id="orderOutdated"
+                                                class="w-6/12 mx-auto border rounded px-10 py-2 shadow">
+                                                <div class="">
+                                                    <h3>You are not able to give comment at this time.</h3>
+                                                    <p>*You cannot give comment after 90 days from the order placed.</p>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                                <% } else { %>
+                                                    <div id="notOrdered"
+                                                        class="w-6/12 mx-auto border rounded px-10 py-2 shadow">
+                                                        <div class="">
+                                                            <h3>You have not ordered this product yet.</h3>
+                                                            <p>Order now to continue giving comments.</p>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                            <div id="notLoggedIn"
+                                                                class="w-6/12 mx-auto border rounded px-10 py-2 shadow">
+                                                                <div class="">
+                                                                    <h3>You are not logged in.</h3>
+                                                                    <p>Login now to continue giving comments.</p>
+                                                                </div>
+                                                            </div>
+                                                            <% } %>
+
+
+                                                                <% if(comments) { %>
+
+                                                                    <% if (comments.length> 0) { %>
+
+                                                                        <div id="showComment"
+                                                                            class="rounded shadow mx-16 px-4 py-2 mt-3">
+                                                                            <div class="head">
+                                                                                <h4>All Comments:</h4>
+                                                                            </div>
+                                                                            <div id="allCom" class="ml-5">
+
+                                                                                <% comments.forEach((comm)=> { %>
+                                                                                    <div
+                                                                                        class="border-b flex justify-between">
+                                                                                        <div>
+                                                                                            <div class="title mt-2">
+                                                                                                <h5>
+                                                                                                    <%= comm.title %>
+                                                                                                </h5>
+                                                                                            </div>
+
+                                                                                            <div class="images">
+                                                                                                <% if(comm.image.length>
+                                                                                                    0) { %>
+                                                                                                    <% comm.image.map(
+                                                                                                        IMG=> { %>
+                                                                                                        <a href="/uploadedImages/<%= IMG.img %>"
+                                                                                                            target="_blank">
+                                                                                                            <img class="comm-img img-fluid"
+                                                                                                                src="../uploadedImages/<%= IMG.img %>">
+                                                                                                        </a>
+                                                                                                        <% }) %>
+                                                                                                            <% } %>
+                                                                                            </div>
+
+                                                                                            <div class="desc mb-0">
+                                                                                                <span class="text-sm">
+                                                                                                    <%= comm.desc %>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="my-auto">
+                                                                                            <div
+                                                                                                id="<%= comm.userID %>">
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <% for(i=0; i<
+                                                                                                    comm.rating; i++) {
+                                                                                                    %>
+                                                                                                    <i
+                                                                                                        class="fa fa-star text-warning"></i>
+                                                                                                    <% } %>
+                                                                                                        <% for(i=0; i< 5
+                                                                                                            -
+                                                                                                            comm.rating;
+                                                                                                            i++) { %>
+                                                                                                            <i
+                                                                                                                class="fa fa-star text-secondary"></i>
+                                                                                                            <% } %>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <% }) %>
+
+                                                                                        <% } else { %>
+                                                                                            <div id="noCommentAvil"
+                                                                                                class="w-6/12 mx-auto border rounded px-10 py-2 shadow mt-5">
+                                                                                                <div>
+                                                                                                    <h3>There are no
+                                                                                                        comments on this
+                                                                                                        page yet.</h3>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <% } %>
+
+                                                                                                <% } %>
+                                                                            </div>
+                                                                        </div>
+                                </div>
+
+                    </section>
+                    <% } %>
+
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+                        <script>
+                            let sizeSelectBtn = document.querySelectorAll('#sizeSelectBtn');
+                            for (let i = 0; i < sizeSelectBtn.length; i++) {
+                                sizeSelectBtn[i].addEventListener('click', () => {
+
+                                    for (let i = 0; i < sizeSelectBtn.length; i++) {
+                                        sizeSelectBtn[i].classList.remove('selectedSize');
+                                    }
+                                    sizeSelectBtn[i].classList.add('selectedSize');
+
+                                })
+                            }
+
+                            let commentedUsers = document.getElementById('commentedUsers');
+                            commentedUsers = JSON.parse(commentedUsers.value);
+                            commentedUsers.map((commUser, i) => {
+                                document.getElementById(commUser._id).innerHTML = commUser.first_name + ' ' + commUser.last_name
+                            })
+
+                            // ===============================================================================
+
+                            let allcomments = document.getElementById('allcomments');
+                            let userID = document.getElementById('userID').value;
+                            let comments = JSON.parse(allcomments.value);
+                            comments.map(comm => {
+                                if (comm.userID == userID) {
+                                    document.getElementById('titleField').value = comm.title;
+                                    document.getElementById('descField').value = comm.desc;
+                                    document.getElementById('submitBtn').innerHTML = 'Update';
+                                }
+                            })
+
+                            // ===============================================================================
+
+                            const notyFunc = () => {
+                                new Noty({
+                                    type: 'success',
+                                    timeout: 3000,
+                                    text: 'Comment saved.',
+                                    progressBar: false,
+                                }).show();
+                            }
+
+                            // ===============================================================================
+
+                            function updateCart(product) {
+                                //if user click on shopSingle page counter
+                                var prdQty;
+                                let shopSingleCounter = document.getElementsByClassName('shopSingleCounter')[0];
+                                if (shopSingleCounter) {
+                                    prdQty = shopSingleCounter.innerHTML;
+                                } else {
+                                    prdQty = 1;
+                                }
+
+                                //if user select color
+                                var color;
+                                let colorImg = document.getElementsByClassName('select')[0];
+                                if (colorImg) {
+                                    color = colorImg.nextElementSibling.dataset.value;
+                                }
+
+                                //if user select size
+                                var size
+                                let selectedSize = document.getElementsByClassName('selectedSize')[0];
+                                if (selectedSize) {
+                                    size = selectedSize.dataset.value;
+                                }
+
+                                let buyNow_Form = document.getElementById('buyNow_Form');
+                                let buyNow_product = document.getElementById('buyNow_product');
+                                let buyNow_prdQty = document.getElementById('buyNow_prdQty');
+                                let buyNow_color = document.getElementById('buyNow_color');
+                                let buyNow_size = document.getElementById('buyNow_size');
+
+                                buyNow_product.setAttribute('value', JSON.stringify(product))
+                                buyNow_prdQty.setAttribute('value', prdQty)
+                                buyNow_color.setAttribute('value', color)
+                                buyNow_size.setAttribute('value', size)
+
+                                buyNow_Form.submit();
+                            }
+
+                            let buy_button = document.getElementById('buy-button');
+                            buy_button.addEventListener('click', () => {
+                                let product = JSON.parse(buy_button.dataset.buynowproduct);
+                                updateCart(product);
+                            });
+                        </script>

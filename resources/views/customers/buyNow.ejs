@@ -1,0 +1,428 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+
+        input[type=number] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+
+        @media screen and (max-width: 680px) {
+            #allAddressDiv {
+                width: 100% !important;
+            }
+        }
+
+        @media screen and (max-width: 425px) {
+
+            .noAddFoundInstrTitle,
+            .noAddFoundInstr {
+                font-size: 15px !important;
+            }
+        }
+
+        #card-element {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            width: 518px;
+        }
+
+        @media screen and (max-width: 1200px) {
+            #card-element {
+                width: 156%;
+            }
+        }
+
+        @media screen and (max-width: 1010px) {
+            #card-element {
+                width: 100%;
+            }
+        }
+
+        /* @media screen and (max-width: 1400px) {
+            .payBillLastSec {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        } */
+
+        @media screen and (max-width: 650px) {
+            .addPricePayops {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .payopsChng {
+                margin-top: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .payBillLastSec {
+                padding-left: 0rem;
+                padding-right: 0rem;
+            }
+        }
+    </style>
+</head>
+
+<section class="payBillLastSec px-10 py-5">
+    <div>
+        <input type="hidden" id="userPayBill" value="<%= JSON.stringify(user) %>">
+        <input type="hidden" id="buyNowProductData" value="<%= JSON.stringify(buyNowProductData) %>">
+    </div>
+    <h1>Payment:</h1>
+    <div class="addPricePayops grid grid-cols-2 justify-items-center bg-gray-100 rounded px-6 py-2 shadow">
+
+        <div class="addressInfoChng flex flex-col w-full">
+            <div id="address" class="address selectAddress">
+                <div>
+                    <div class="mt-2 mb-3">
+                        <span class="font-medium text-2xl">Select Delivery Address:</span>
+                        <p id="addNotMsg" class="text-red-500 font-bold" style="display: none;">*Please add Address</p>
+                    </div>
+                    <div id="allAddDivBtn" class=""></div>
+                    <div id="allAddressDiv" class="bg-light inline-block rounded"></div>
+                    <div class="ml-5 mt-3">
+                        <span><a href="/myAccount" id="myAccBTN">Add more Addresses</a></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border rounded mt-5 bg-white">
+                <div class="p-3 border-b">
+                    <span class="text-muted">PRICE DETAILS</span>
+                </div>
+
+                <div class="m-3 border-b-4 border-dotted">
+                    <div class="my-3">
+                        <span id="rightDivPriceItem">Price (<span id="prdQty"></span> items)</span>
+                        <span id="rightDivPrice" class="float-right">₹</span>
+                    </div>
+                    <div class="my-3">
+                        <span>Discount</span>
+                        <span id="rightDivDisc" class="float-right text-green-600">- ₹</span>
+                    </div>
+                    <div class="my-3">
+                        <span>Delivery Charges</span>
+                        <span class="float-right text-green-600">Free</span>
+                    </div>
+                </div>
+
+                <div class="m-3 border-b-4 border-dotted">
+                    <div class="my-3">
+                        <span>Total Amount</span>
+                        <span id="rightDivFinalPrice" class="float-right font-bold">₹</span>
+                    </div>
+                </div>
+
+                <div class="m-3">
+                    <div class="my-3">
+                        <span id="rightDivSavePrice" class="text-green-700 font-bold"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="payopsChng">
+            <h3>Credit/Debit Card:</h3>
+
+            <form action="/cust/myOrders" method="post" id="payment-form">
+                <input type="hidden" name="addressToDel" class="addressToDel" value="">
+                <input type="hidden" name="finalAmount" class="finalAmountInp" value="">
+                <input type="hidden" name="itemsObj" class="itemsObj" value=''>
+
+                <div id="card-element"></div>
+                <div>
+                    <button id="stripePayBtn" class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Pay</button>
+                </div>
+            </form>
+            <!-- ----------------------------------------------- -->
+            <hr>
+
+            <h3>Cash on Delivery:</h3>
+            <form action="/cust/myOrdersBuyNow" method="post">
+                <input class="form-check-input" type="radio" name="finalPayMth" value="cod" id="finalPayMth" required>
+                <label class="form-check-label" for="finalPayMth"> Cash on Delivery </label>
+
+                <input type="hidden" name="addressToDel" class="addressToDel" value="">
+                <input type="hidden" name="finalAmount" class="finalAmountInp" value="">
+                <input type="hidden" name="itemsObj" class="itemsObj" value=''>
+
+                <div>
+                    <button id="CODPayBtn" class="bg-yellow-300 text-black px-3 py-1 mt-3 rounded focus:outline-none">Buy now</button>
+                </div>
+            </form>
+
+            <div class="mt-5 bg-white p-2 shadow">
+                <div>
+                    <span class="font-bold mr-2">
+                        Color: 
+                        <span id="buyNowPrdColor" class="fontSimple"></span>
+                    </span>
+                </div>
+                <div>
+                    <span class="font-bold mr-2">
+                        Size: 
+                        <span id="buyNowPrdSize" class="fontSimple"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
+<script>
+    let userPayBill = document.getElementById('userPayBill');
+    userPayBill = JSON.parse(userPayBill.value);
+    let userAdd = userPayBill.address
+
+    let allAddressDiv = document.getElementById('allAddressDiv');
+    let allAddDivBtn = document.getElementById('allAddDivBtn');
+    let seperateAdds = document.getElementsByClassName('seperateAdd');
+
+    if (userAdd.length > 0) {
+        userAdd.map((address, index) => {
+
+            let str1 = `<div id="seperateAdd" class="seperateAdd inline-block p-3 py-1 border-2 rounded">
+                            <input class="form-check-input" type="radio" name="selectAdd" value="${index + 1}" id="Add ${index + 1}" disabled ${index == 0 ? 'checked' : ''}>
+                            <label for="selectAdd">Add ${index + 1}</label>
+                        </div>`
+
+            allAddDivBtn.innerHTML += str1;
+        })
+    }
+    else {
+        document.getElementById('myAccBTN').style.display = 'none';
+        allAddressDiv.innerHTML = `<ul class="list-disc">
+                                        <li>
+                                            <span class="noAddFoundInstrTitle text-3xl">
+                                                No Address added yet!
+                                            </span>
+                                        </li>
+                                    </ul>
+                                    <div class="noAddFoundInstr ml-5">
+                                        <span>Go My Profile ➡ in Left side Click on Manage Address ➡ Add New Address</span>
+                                    </div>
+                                    <div class="ml-5 mt-3">
+                                        <span><a href="/myAccount" id="myAccBTN">My Profile</a></span>
+                                    </div>`;
+
+        let stripePayBtn = document.getElementById('stripePayBtn'); 
+        let CODPayBtn = document.getElementById('CODPayBtn');
+
+        stripePayBtn.setAttribute('disabled', '');
+        CODPayBtn.setAttribute('disabled', '');
+    }
+
+    //==============================================================================================
+    //==============================================================================================
+    //==============================================================================================
+    
+    for (let i = 0; i < seperateAdds.length; i++) {
+        seperateAdds[i].addEventListener("click", () => {
+
+            let clickedAdd = document.getElementById(`Add ${i + 1}`)
+            let clickedAddInd = clickedAdd.value;
+
+            if (userAdd.length > 0) {
+                userAdd.map((address, index) => {
+                    if (index == clickedAddInd - 1) {
+
+                        let allInpField = document.getElementsByName('selectAdd');
+                        for (let j = 0; j < allInpField.length; j++) {
+                            seperateAdds[j].style.backgroundColor = "white";
+                            seperateAdds[j].style.borderColor = "white";
+                            allInpField[j].removeAttribute('checked', '');
+                        }
+
+                        seperateAdds[i].style.backgroundColor = "rgba(252,211,77)";
+                        seperateAdds[i].style.borderColor = "rgba(252,211,77)";
+                        allAddressDiv.style.border = "0.5px solid rgba(252,211,77)";
+
+                        clickedAdd.setAttribute('checked', '');
+                        allAddressDiv.innerHTML = ``;
+
+                        let str = `<div class="flex p-3 border rounded">
+                                    <label class="form-check-label ml-3" for="flexRadioDefault1">
+                                        <div> <span class="font-medium">${address['add-name']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-area&street']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-landmark'] ? address['add-landmark'] + '-' : ''}${address['add-locality']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-city']} ${address['add-state']}-${address['add-pin']}</span> </div>
+                                        <div> <span class="leading-loose">${address['add-phone']}${address['add-altphone'] ? ' / ' + address['add-altphone'] : ''}</span> </div>
+                                        <div> <span class="bg-gray-500 p-1 rounded font-bold text-white">${address['add-type']}</span> </div>
+                                    </label>
+                                </div>`
+
+                        allAddressDiv.innerHTML += str;
+                    }
+                })
+            }
+        })
+    }
+    
+    //================================================================================================================
+    //================================================================================================================
+        
+    let addressToDel = document.getElementsByClassName('addressToDel');
+    for (let i = 0; i < addressToDel.length; i++) {
+        addressToDel[i].value = JSON.stringify(userAdd[0]);
+    }
+
+    //===========================================================================================================
+    //===========================================================================================================
+
+    let selectedAddInp = document.getElementsByName('selectAdd');
+    var selectedAdd;
+    
+    for (let i = 0; i < selectedAddInp.length; i++) {
+        seperateAdds[i].addEventListener('click', () => {
+            selectedAdd = selectedAddInp[i].value;
+            for (let j = 0; j < addressToDel.length; j++) {
+                addressToDel[j].value = JSON.stringify(userAdd[i]);
+                // console.log(addressToDel[j]);
+            }
+        })
+    }
+    
+    //===========================================================================================================
+    //===========================================================================================================
+    
+    let buyNowProductData = document.getElementById('buyNowProductData');
+    buyNowProductData = JSON.parse(buyNowProductData.value);
+
+    let prdQty = document.getElementById('prdQty')
+    let rightDivPrice = document.getElementById('rightDivPrice')
+    let rightDivDisc = document.getElementById('rightDivDisc')
+    let rightDivFinalPrice = document.getElementById('rightDivFinalPrice')
+    let rightDivSavePrice = document.getElementById('rightDivSavePrice')
+    let buyNowPrdColor = document.getElementById('buyNowPrdColor')
+    let buyNowPrdSize = document.getElementById('buyNowPrdSize')
+
+    let quantity = buyNowProductData.prdQty;
+    let originalPrice = buyNowProductData.product.price;
+    let originalDiscount = buyNowProductData.product.discount;
+    let totalDiscount = Math.round((originalPrice * originalDiscount) / 100);
+    let finalPrice = originalPrice - totalDiscount;
+
+    prdQty.innerHTML = quantity
+    rightDivPrice.innerHTML += originalPrice * quantity
+    rightDivDisc.innerHTML += totalDiscount * quantity
+    rightDivFinalPrice.innerHTML += (originalPrice * quantity) - (totalDiscount * quantity)
+    rightDivSavePrice.innerHTML = `You will save ₹${totalDiscount * quantity} on this order`
+
+    let finalAmountInps = document.getElementsByClassName('finalAmountInp');
+    for (let i = 0; i < finalAmountInps.length; i++) {
+        finalAmountInps[i].value = (originalPrice * quantity) - (totalDiscount * quantity)
+    }
+
+    buyNowPrdColor.innerHTML += buyNowProductData.color !== 'undefined' ? buyNowProductData.color : '----'
+    buyNowPrdSize.innerHTML += buyNowProductData.size !== 'undefined' ? buyNowProductData.size : '----'
+
+    let featureObj = {
+        color: buyNowProductData.color,
+        size: buyNowProductData.size,
+        qty: quantity,
+        price: originalPrice,
+        discount: originalDiscount
+    }
+
+    let itemsObj = {
+        [buyNowProductData.product._id]: {
+            item: buyNowProductData.product._id,
+            feature: [ { ...featureObj } ],
+        }
+    }
+    let itemsObjs = document.getElementsByClassName('itemsObj')
+    for (let i = 0; i < itemsObjs.length; i++) {
+        itemsObjs[i].value = JSON.stringify(itemsObj);
+    }
+
+    //==============================================================================================
+    //==============================================================================================
+    //==============================================================================================
+
+    var stripe = Stripe('pk_test_51IteSRSFuWv43Ec8xhCAcFtsZGArYeXc16YtEnEToEms3UjQFhTQRCWxz8vDlXfcGBX3SR7Hw3ZGoM1957UjvstO00qftwexGb');
+
+    // Set up Stripe.js and Elements to use in checkout form
+    var elements = stripe.elements();
+    var style = {
+        base: {
+            color: "#32325d",
+        }
+    };
+
+    var card = elements.create("card", {
+        style,
+        hidePostalCode: true
+    });
+    card.mount("#card-element");
+
+
+    var form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', async(e) => {
+        e.preventDefault();
+
+        let formData = new FormData(form);
+        let addressToDel = formData.get('addressToDel');
+        let finalAmount = formData.get('finalAmount');
+        let itemsObj = formData.get('itemsObj');
+
+        stripe.createToken(card).then(result => {
+                // console.log(result.token.id);
+                axios.post('/cust/myOrdersBuyNow', {
+                        token: result.token.id,
+                        addressToDel,
+                        finalAmount,
+                        itemsObj
+                    })
+                    .then(res => {
+                        new Noty({
+                            type: 'success',
+                            timeout: 2000,
+                            text: res.data.message ? res.data.message : 'Something happened!',
+                            progressBar: false,
+                        }).show();
+
+                        setTimeout(() => {
+                            window.location.href = '/cust/myOrders'
+                        }, 3000)
+                    })
+                    .catch(err => {
+                        new Noty({
+                            type: 'error',
+                            timeout: 2000,
+                            text: err.res.data.message ? err.res.data.message : 'Something went wrong!',
+                            progressBar: false,
+                        }).show();
+                    });
+            })
+            .catch(error => {
+                console.log(err);
+                new Noty({
+                    type: 'error',
+                    timeout: 2000,
+                    text: err.res.data.message,
+                    progressBar: false,
+                }).show();
+            });
+    });
+</script>

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Meena - Crafted from Culture</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/site.webmanifest">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/css/template.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/app.css">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/slick-theme.css">
+
+    <script src="https://kit.fontawesome.com/fc3dca529c.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* body {
+            overflow-x: hidden !important;
+        } */
+
+        @media only screen and (max-width: 768px) {
+            #template_nav_top {
+                display: none !important;
+            }
+        }
+
+        @media only screen and (max-width: 469px) {
+            .circle {
+                width: 2rem !important;
+                height: 2rem !important;
+            }
+        }
+
+        @media only screen and (max-width: 384px) {
+            .form-container {
+                width: 265px;
+            }
+
+            .login-container {
+                display: grid;
+                justify-items: center;
+            }
+
+            .register-forget {
+                display: grid !important;
+                justify-items: center;
+            }
+
+            .circle {
+                display: none !important;
+            }
+        }
+
+        @media only screen and (max-width: 266px) {
+            .form-container {
+                width: 200px;
+            }
+
+            .register-forget a {
+                font-size: 12px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-block" id="template_nav_top">
+        <div class="container text-light">
+            <div id="navbar_conatact_authBtns" class="w-100 d-flex justify-content-between">
+                <div id="navbar_conatact_details">
+                    <div>
+                        <i class="fa fa-envelope mx-2"></i>
+                        <a class="navbar-sm-brand text-light text-decoration-none"
+                            href="mailto:info@Meena.com">info@meena.com</a>
+                    </div>
+                    <div>
+                        <i class="fa fa-phone mx-2"></i>
+                        <a class="navbar-sm-brand text-light text-decoration-none" href="tel:1234567890">1234567890</a>
+                    </div>
+                </div>
+
+                <div id="navbar_authBtns_details">
+                    <% if(user) {%>
+                        <% if(user.role==='seller' ) { %>
+                            <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/seller/sellerStr"
+                                style="text-decoration: none;">Profile</a>
+                            <%} else {%>
+                                <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/sellerLog"
+                                    style="text-decoration: none;">Seller</a>
+                                <% } %>
+                                    <% } else { %>
+                                        <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/sellerLog"
+                                            style="text-decoration: none;">Seller</a>
+                                        <% } %>
+
+
+                                            <% if (!user) { %>
+                                                <a class="text-light p-2" href="/login"
+                                                    style="text-decoration: none;">Login</a>
+                                                <a class="text-light p-2" href="/signup"
+                                                    style="text-decoration: none;">Register</a>
+                                                <% } else { %>
+                                                    <a class="text-light p-2" href="/logout"
+                                                        style="text-decoration: none;">Logout</a>
+                                                    <% } %>
+
+
+                                                        <a class="text-light" href="https://www.facebook.com/"
+                                                            target="_blank" rel="sponsored">
+                                                            <i class="fab fa-facebook-f fa-sm fa-fw me-2"></i>
+                                                        </a>
+                                                        <a class="text-light"
+                                                            href="https://www.instagram.com/jigsdonga25__/"
+                                                            target="_blank">
+                                                            <i class="fab fa-instagram fa-sm fa-fw me-2"></i>
+                                                        </a>
+                                                        <a class="text-light" href="https://twitter.com/"
+                                                            target="_blank">
+                                                            <i class="fab fa-twitter fa-sm fa-fw me-2"></i>
+                                                        </a>
+                                                        <a class="text-light"
+                                                            href="https://www.linkedin.com/in/jigardonga/"
+                                                            target="_blank">
+                                                            <i class="fab fa-linkedin fa-sm fa-fw"></i>
+                                                        </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Close Top Nav -->
+
+
+    <!-- Start Toggle left Nav -->
+    <div>
+        <div id="mySidebar" class="sidebar" onmouseover="openNav()" onmouseout="closeNav()">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <a href="#">All Categories</a>
+            <a href="#">Offer Zone</a>
+            <a href="/sellerLog">Sell on Meena</a>
+            <hr>
+            <a href="/cust/myOrders">My Orders</a>
+            <a href="/cart">My Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="/myAccount">My Account</a>
+            <a href="#">My Notification</a>
+            <% if(user) {%>
+                <% if(user.role==='admin' ) { %>
+                    <hr>
+                    <a href="/adminSection/index">Admin Section</a>
+                    <% } %>
+                        <% } %>
+                            <% if(user) {%>
+                                <% if(user.role==='courier' ) { %>
+                                    <hr>
+                                    <a href="/courierServiceAdmin/index">Courier Section</a>
+                                    <% } %>
+                                        <% } %>
+                                            <hr>
+                                            <hr>
+                                            <a href="/courieAgeDashBoard/index">Courier Agents</a>
+
+        </div>
+
+        <div id="main">
+            <button class="openbtn" onmouseover="openNav()">☰</button>
+        </div>
+
+        <script>
+            function openNav() {
+                document.getElementById("mySidebar").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+                document.getElementById("main").style.display = "none";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidebar").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+                document.getElementById("main").style.display = "inline";
+            }
+        </script>
+    </div>
+    <!-- Close Toggle left Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div id="logoProfMore" class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" id="logoSection" href="/">
+                <img src="/img/logo/logo.png" alt="Meena" width="200" height="90">
+            </a>
+
+            <div id="profSerachNoti" class="navbar align-self-center d-flex">
+                <a class="nav-icon d-inline" href="/myAccount" style="text-decoration: none;">
+                    <% if(user) { %>
+                        <% if(user.image.length> 0) { %>
+                            <span class="flex items-center">
+                                <img id="profImage" class="mr-2 w-10 h-10 rounded-full" name="<%= user.gender %>"
+                                    src="/uploadedImages/<%= user.image[0].img %>" onerror="userImgNotFound(this)"
+                                    width="35" height="35" style="border-radius: 9999px;">
+
+                                <script>
+                                    function userImgNotFound(img) {
+                                        let gender = document.getElementById('profImage').name;
+
+                                        gender && gender == 'male' ?
+                                            img.src = '/img/male.jpg' : img.src = '/img/female.jpg';
+                                        img.alt = 'Defualt';
+                                    }
+                                </script>
+                            </span>
+
+                            <% }else{ %>
+                                <span class="flex items-center">
+                                    <% if (user.gender=="male" ) { %>
+                                        <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg" alt="User Image"
+                                            width="35" height="35" style="border-radius: 9999px;">
+                                        <% }else{ %>
+                                            <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg"
+                                                alt="User Image" width="35" height="35" style="border-radius: 9999px;">
+                                            <% } %>
+                                                <span class="mt-1">
+                                                    <%= user.first_name %>
+                                                </span>
+                                </span>
+                                <% }} %>
+                </a>
+                <a class="nav-icon d-inline" href="#" data-bs-toggle="modal" data-bs-target="#template_search">
+                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                </a>
+                <a class="nav-icon d-inline" href="#">
+                    <i class="fa fa-fw fa-heart text-dark mr-2"></i>
+                </a>
+                <a class="nav-icon position-relative text-decoration-none" href="/cart">
+                    <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+
+                    <% if(user && user.cart) { %>
+                        <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
+                            data-user="<%= JSON.stringify(user) %>">
+                        <% } %>
+                            <span id="cartCounter"
+                                class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                </a>
+                <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                    <span
+                        class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                </a>
+            </div>
+
+            <!-- <button id="toggleMoreBtn" class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#template_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation" style="margin-bottom: 15px !important;">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+                id="template_main_nav">
+                <div id="navBar_Sec_Div" class="flex-fill">
+                    <ul id="navBar_Sec_Ul" class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/shop">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact">Contact</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div id="profSerachNoti991" class="navbar align-self-center d-flex">
+                    <a class="nav-icon d-inline" href="/myAccount" style="text-decoration: none;">
+                        <% if(user){ %>
+                            <% if(user.image.length> 0) { %>
+                                <span class="flex items-center">
+                                    <img id="profImage" class="mr-2 w-10 h-10 rounded-full" name="<%= user.gender %>"
+                                        src="/uploadedImages/<%= user.image[0].img %>" onerror="userImgNotFound(this)"
+                                        width="35" height="35" style="border-radius: 9999px;">
+                                    <span class="mt-1">
+                                        <%= user.first_name %>
+                                    </span>
+                                </span>
+                                <% }else{ %>
+                                    <span class="flex items-center">
+                                        <% if (user.gender=="Male" ) { %>
+                                            <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg"
+                                                alt="User Image" width="35" height="35" style="border-radius: 9999px;">
+                                            <% }else{ %>
+                                                <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg"
+                                                    alt="User Image" width="35" height="35"
+                                                    style="border-radius: 9999px;">
+                                                <% } %>
+                                                    <span class="mt-1">
+                                                        <%= user.first_name %>
+                                                    </span>
+                                    </span>
+                                    <% } %>
+                                        <% } %>
+                    </a>
+                    <a class="nav-icon d-inline" href="#" data-bs-toggle="modal" data-bs-target="#template_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon d-inline" href="#">
+                        <i class="fa fa-fw fa-heart text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="/cart">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+
+                        <% if(user && user.cart) { %>
+                            <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
+                                data-user="<%= JSON.stringify(user) %>">
+                            <% } %>
+                                <span id="cartCounter"
+                                    class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span
+                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="template_search" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- body %>
+
+        <!-- <h2 class="h2 text-success border-bottom pb-3 border-light logo">Meena</h2> -->
+        <!-- Start Footer -->
+        <footer style="background-color: black;" id="tempaltemo_footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-4 pt-5">
+                        <a class="navbar-brand text-success logo h1 align-self-center" href="/index">
+                            <img src="/img/logo/logo.png" alt="Meena" width="200" height="75">
+                        </a>
+                        <ul class="list-unstyled text-light footer-link-list">
+                            <li>
+                                <i class="fas fa-map-marker-alt fa-fw"></i> Gujarat, India
+                            </li>
+                            <li>
+                                <i class="fa fa-phone fa-fw"></i>
+                                <a class="text-decoration-none" href="tel:1234567890">1234567890</a>
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope fa-fw"></i>
+                                <a class="text-decoration-none"
+                                    href="mailto:info@Meena.com">info@Meena.com</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4 pt-5">
+                        <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                        <ul class="list-unstyled text-light footer-link-list">
+                            <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                            <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                            <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                            <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                            <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                            <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                            <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4 pt-5">
+                        <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                        <ul class="list-unstyled text-light footer-link-list">
+                            <li><a class="text-decoration-none" href="#">Home</a></li>
+                            <li><a class="text-decoration-none" href="#">About Us</a></li>
+                            <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                            <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                            <li><a class="text-decoration-none" href="#">Contact</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="row text-light mb-4">
+                    <div class="col-12 mb-3">
+                        <div class="w-100 my-3 border-top border-light"></div>
+                    </div>
+                    <div class="col-auto me-auto">
+                        <ul class="list-inline text-left footer-icons">
+                            <li class="list-inline-item border border-light rounded-circle text-center">
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                            </li>
+                            <li class="list-inline-item border border-light rounded-circle text-center">
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="https://www.instagram.com/jigsdonga25__/"><i
+                                        class="fab fa-instagram fa-lg fa-fw"></i></a>
+                            </li>
+                            <li class="list-inline-item border border-light rounded-circle text-center">
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                            </li>
+                            <li class="list-inline-item border border-light rounded-circle text-center">
+                                <a class="text-light text-decoration-none" target="_blank"
+                                    href="https://www.linkedin.com/in/jigardonga/"><i
+                                        class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-auto">
+                        <label class="sr-only" for="subscribeEmail">Email address</label>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
+                                placeholder="Email address">
+                            <div class="input-group-text btn-success text-light">Subscribe</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-100 py-3" style="background-color: #060607;">
+                <div class="container">
+                    <div class="row pt-2">
+                        <div class="col-12">
+                            <p class="text-left text-light">
+                                Copyright &copy; <span id="copyYear"></span> Meena
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+        <!-- End Footer -->
+
+        <script>
+            const setCartVal = (user, cartData) => {
+                let cartCounterSpan = document.getElementById('cartCounter');
+
+                if (!cartData['custID_' + user['_id'] + '_cart']) {
+                    cartCounterSpan.innerHTML = '';
+                } else {
+                    let cartIconMain = document.getElementsByClassName('cartIconMain')
+                    for (let i = 0; i < cartIconMain.length; i++) {
+                        const cartIconMainSingle = cartIconMain[i];
+                        cartIconMainSingle.innerHTML = cartData['custID_' + user['_id'] + '_cart'].totalQty;
+                    }
+                }
+            }
+
+            // ======================================================================================================
+
+            //set cart value
+            let cartData = document.getElementById('cartData');
+            if (cartData) {
+                let user = JSON.parse(cartData.dataset.user);
+                cartData = JSON.parse(cartData.value);
+                
+                setCartVal(user, cartData)
+            } else {
+                let cartCounterSpan = document.getElementById('cartCounter');
+                cartCounterSpan.innerHTML = '';
+            }
+
+            // ======================================================================================================
+            // ======================================================================================================
+
+            document.getElementById('copyYear').innerHTML = new Date().getFullYear();
+
+        </script>
+
+        <!-- Start Script -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/jquery-1.11.0.min.js"></script>
+        <script src="/js/jquery-migrate-1.2.1.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/template.js"></script>
+        <script src="/js/custom.js"></script>
+
+
+        <script src="/js/app.js"></script>
+        <!-- End Script -->
+
+        <script>
+            let catsMoreOpt = document.getElementById('catsMoreOpt');
+            let catsMoreOpt_plus = document.getElementById('catsMoreOpt-plus');
+            let addAllCats = document.getElementById('addAllCats');
+            let cat_nav_ul = document.getElementById('cat-nav-ul');
+
+            if (catsMoreOpt) {
+                catsMoreOpt.addEventListener('click', () => {
+                    if (catsMoreOpt_plus.innerHTML === '+') {
+                        catsMoreOpt_plus.innerHTML = 'x';
+                        addAllCats.style.display = 'block';
+                        cat_nav_ul.style.display = 'flex';
+                        cat_nav_ul.style.flexDirection = 'column';
+                        addAllCats.append(cat_nav_ul);
+                    } else {
+                        catsMoreOpt_plus.innerHTML = '+';
+                        addAllCats.style.display = 'none';
+                        cat_nav_ul.style.display = 'none';
+                    }
+                })
+            }
+        </script>
+
+        <script>
+            document.onreadystatechange = function () {
+                var state = document.readyState
+
+                if (state == 'interactive') {
+                    // document.getElementsByTagName('body')[0].style.visibility = "hidden";
+                } else if (state == 'complete') {
+                    setTimeout(function () {
+                        // document.getElementsByTagName('body')[0].classList.add('overflow_x');
+                    }, 1000);
+                }
+            }
+        </script>
+</body>
+
+</html>
