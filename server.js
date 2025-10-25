@@ -14,6 +14,7 @@ const Emitter = require('events')
 const multer = require("multer");
 
 let dbUrl = process.env.MONGO_CONNECTION_URL;
+console.log("DB URL:", dbUrl);
 require('./app/helper/dbConn')
 
 //Event Emitter
