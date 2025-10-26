@@ -3,9 +3,14 @@ const Product = require('../../models/product');
 function homeController() {
     return {
         async home(req, res) {
-            const products = await Product.find();
-            // console.log(products);
-            return res.render('home', { products })
+            const subcategories = await Product.distinct("subcategory");
+            const data = await Promise.all(
+                subcategories.map(async (subcat) => {
+                    const products = await Product.find({ subcategory: subcat });
+                    return { subcategory: subcat, products };
+                })
+            );
+            return res.render('home', { data })
         },
         async about(req, res) {
             return res.render('admin/about')

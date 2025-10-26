@@ -77,6 +77,19 @@
                 font-size: 12px !important;
             }
         }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 20px; /* small gap from bottom edge */
+            left: 0;
+            width: 100%;
+            background-color: #111; /* same as sidebar */
+        }
+
+        .sidebar-bottom a {
+            display: block;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -101,46 +114,38 @@
                     <% if(user) {%>
                         <% if(user.role==='seller' ) { %>
                             <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/seller/sellerStr"
-                                style="text-decoration: none;">Profile</a>
-                            <%} else {%>
-                                <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/sellerLog"
-                                    style="text-decoration: none;">Seller</a>
-                                <% } %>
-                                    <% } else { %>
-                                        <a id="sellerATag" class="seller-bord-blink text-light p-2" href="/sellerLog"
-                                            style="text-decoration: none;">Seller</a>
-                                        <% } %>
+                                style="text-decoration: none;">Your Store</a>
+                        <% } %>
+                    <% } %>
 
+                    <% if (!user) { %>
+                        <a class="text-light p-2" href="/login"
+                            style="text-decoration: none;">Login</a>
+                        <a class="text-light p-2" href="/signup"
+                            style="text-decoration: none;">Register</a>
+                    <% } else { %>
+                        <a class="text-light p-2" href="/logout"
+                            style="text-decoration: none;">Logout</a>
+                    <% } %>
 
-                                            <% if (!user) { %>
-                                                <a class="text-light p-2" href="/login"
-                                                    style="text-decoration: none;">Login</a>
-                                                <a class="text-light p-2" href="/signup"
-                                                    style="text-decoration: none;">Register</a>
-                                                <% } else { %>
-                                                    <a class="text-light p-2" href="/logout"
-                                                        style="text-decoration: none;">Logout</a>
-                                                    <% } %>
-
-
-                                                        <a class="text-light" href="https://www.facebook.com/"
-                                                            target="_blank" rel="sponsored">
-                                                            <i class="fab fa-facebook-f fa-sm fa-fw me-2"></i>
-                                                        </a>
-                                                        <a class="text-light"
-                                                            href="https://www.instagram.com/jigsdonga25__/"
-                                                            target="_blank">
-                                                            <i class="fab fa-instagram fa-sm fa-fw me-2"></i>
-                                                        </a>
-                                                        <a class="text-light" href="https://twitter.com/"
-                                                            target="_blank">
-                                                            <i class="fab fa-twitter fa-sm fa-fw me-2"></i>
-                                                        </a>
-                                                        <a class="text-light"
-                                                            href="https://www.linkedin.com/in/jigardonga/"
-                                                            target="_blank">
-                                                            <i class="fab fa-linkedin fa-sm fa-fw"></i>
-                                                        </a>
+                    <a class="text-light" href="https://www.facebook.com/"
+                        target="_blank" rel="sponsored">
+                        <i class="fab fa-facebook-f fa-sm fa-fw me-2"></i>
+                    </a>
+                    <a class="text-light"
+                        href="https://www.instagram.com/jigsdonga25__/"
+                        target="_blank">
+                        <i class="fab fa-instagram fa-sm fa-fw me-2"></i>
+                    </a>
+                    <a class="text-light" href="https://twitter.com/"
+                        target="_blank">
+                        <i class="fab fa-twitter fa-sm fa-fw me-2"></i>
+                    </a>
+                    <a class="text-light"
+                        href="https://www.linkedin.com/in/jigardonga/"
+                        target="_blank">
+                        <i class="fab fa-linkedin fa-sm fa-fw"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -153,30 +158,50 @@
         <div id="mySidebar" class="sidebar" onmouseover="openNav()" onmouseout="closeNav()">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <a href="#">All Categories</a>
+            <a href="#">Dresses</a>
+            <a href="#">Kurtas</a>
+            <a href="#">Sets</a>
+            <a href="#">Tops</a>
             <a href="#">Offer Zone</a>
-            <a href="/sellerLog">Sell on Meena</a>
             <hr>
-            <a href="/cust/myOrders">My Orders</a>
-            <a href="/cart">My Cart</a>
-            <a href="#">My Wishlist</a>
-            <a href="/myAccount">My Account</a>
-            <a href="#">My Notification</a>
+
             <% if(user) {%>
                 <% if(user.role==='admin' ) { %>
                     <hr>
                     <a href="/adminSection/index">Admin Section</a>
+                <% } %>
+            <% } %>
+            <% if(user) {%>
+                <% if(user.role==='courier' ) { %>
+                    <hr>
+                    <a href="/courierServiceAdmin/index">Courier Section</a>
+                <% } %>
+            <% } %>
+            <div class="sidebar-bottom">
+                <hr>
+                <% if(user) {%>
+                    <% if(user.role==='seller' ) { %>
+                        <a href="/seller/sellerStr">Manage Store</a>
+                    <% } else { %>
+                        <a href="/sellerLog">Manage Store</a>
                     <% } %>
-                        <% } %>
-                            <% if(user) {%>
-                                <% if(user.role==='courier' ) { %>
-                                    <hr>
-                                    <a href="/courierServiceAdmin/index">Courier Section</a>
-                                    <% } %>
-                                        <% } %>
-                                            <hr>
-                                            <hr>
-                                            <a href="/courieAgeDashBoard/index">Courier Agents</a>
+                <% } %>
 
+                <% if (!user) { %>
+                    <a href="/login">Login</a>
+                    <a href="/signup">Register</a>
+                <% } else { %>
+                    <% if (user.role==='user') { %>
+                        <a href="/cust/myOrders">My Orders</a>
+                        <a href="/cart">My Cart</a>
+                        <a href="#">My Wishlist</a>
+                        <a href="/myAccount">My Account</a>
+                    <% } %>
+                    <a href="/logout">Logout</a>
+                <% } %>
+                
+                <a href="/courieAgeDashBoard/index" class="d-none">Courier Agents</a>
+            </div>
         </div>
 
         <div id="main">
@@ -205,7 +230,7 @@
         <div id="logoProfMore" class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand text-success logo h1 align-self-center" id="logoSection" href="/">
-                <img src="/img/logo/logo.png" alt="Meena" width="200" height="90">
+                <img src="/img/logo/logo.png" alt="Meena" width="210" height="80">
             </a>
 
             <div id="profSerachNoti" class="navbar align-self-center d-flex">
@@ -259,10 +284,9 @@
                             <span id="cartCounter"
                                 class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                 </a>
-                <a class="nav-icon position-relative text-decoration-none" href="#">
+                <a class="nav-icon position-relative text-decoration-none d-none" href="#">
                     <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                    <span
-                        class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                    <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                 </a>
             </div>
 
@@ -336,10 +360,9 @@
                                 <span id="cartCounter"
                                     class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none d-none" href="#">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span
-                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                     </a>
                 </div>
             </div>

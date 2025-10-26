@@ -48,8 +48,12 @@
                                             <label class="block text-white text-sm font-bold mb-2" for="productcate">
                                                 Product Category:
                                             </label>
-                                            <select name="category" id="category"
-                                                class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                            <input name="category"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                id="name" value="<%= messages.category %>" type="text"
+                                                placeholder="Dresses, Kurtas and more" required>
+                                            <select id="category"
+                                                class="d-none shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
                                                 required>
                                                 <option disabled selected class="bg-black text-white">Select a Product
                                                     Category
@@ -76,12 +80,16 @@
                                             <label class="block text-white text-sm font-bold mb-2" for="productcate">
                                                 Product SubCategory:
                                             </label>
-                                            <select name="subcategory" id="subcategory" disabled
+                                            <input name="subcategory"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
+                                                id="name" value="<%= messages.subcategory %>" type="text"
+                                                placeholder="Multicolor, Blooming Florals and more" required>
+                                            <!-- <select name="subcategory" id="subcategory" disabled
                                                 class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none prdInpField"
                                                 required>
                                                 <option disabled selected class="bg-black text-white">Select a Product
                                                     SubCategory</option>
-                                            </select>
+                                            </select> -->
                                         </div>
 
                                         <div class="mb-4">

@@ -59,28 +59,14 @@ function authController() {
             const hashPassword = await bcrypt.hash(password, 10)
             let user;
 
-            if (req.body.role) {
-                //Create a new user
-                user = new User({
-                    first_name: fname,
-                    last_name: lname,
-                    email,
-                    phone,
-                    role: req.body.role,
-                    password: hashPassword,
-                    image: productPictures
-                })
-            } else {
-                //Create a new user
-                user = new User({
-                    first_name: fname,
-                    last_name: lname,
-                    email,
-                    phone,
-                    password: hashPassword,
-                    image: productPictures
-                })
-            }
+            user = new User({
+                first_name: fname,
+                last_name: lname,
+                email,
+                phone,
+                password: hashPassword,
+                image: productPictures
+            })
 
             user.save()
                 .then((user) => {

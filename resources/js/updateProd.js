@@ -13,18 +13,18 @@ export function updateProd() {
 
     let sportArr = ['Food Essentials', 'Health & Nutrition', 'books', 'Stationery', 'Auto Accessories', 'industriall & Scientific tools', 'Medical Supplies', 'Music', 'Gaming', 'Grocery']
 
-    function showSubCategory(Arr) {
-        let subcategory = document.getElementById('subcategory');
-        subcategory.removeAttribute('disabled')
-        subcategory.innerHTML = '';
-        for (let i = 0; i < Arr.length; i++) {
-            let ops = document.createElement("option")
-            ops.value = Arr[i]
-            ops.classList = ['bg-black', 'text-white']
-            ops.text = Arr[i]
-            subcategory.options.add(ops)
-        }
-    }
+    // function showSubCategory(Arr) {
+    //     let subcategory = document.getElementById('subcategory');
+    //     subcategory.removeAttribute('disabled')
+    //     subcategory.innerHTML = '';
+    //     for (let i = 0; i < Arr.length; i++) {
+    //         let ops = document.createElement("option")
+    //         ops.value = Arr[i]
+    //         ops.classList = ['bg-black', 'text-white']
+    //         ops.text = Arr[i]
+    //         subcategory.options.add(ops)
+    //     }
+    // }
 
     let itemdata = document.querySelector('#itemdata');
     let category = document.querySelector('#category');
@@ -38,53 +38,53 @@ export function updateProd() {
         let product = JSON.parse(itemdata.value);
 
         category.value = product.category;
-        if (category.value === 'Electronics') {
-            showSubCategory(elecArr);
-        }
-        if (category.value === 'TVs & Appliances') {
-            showSubCategory(tvsAppArr);
-        }
-        if (category.value === 'Men') {
-            showSubCategory(menArr);
-        }
-        if (category.value === 'Women') {
-            showSubCategory(womanArr);
-        }
-        if (category.value === 'Baby & Kids') {
-            showSubCategory(babyArr);
-        }
-        if (category.value === 'Home & Furniture') {
-            showSubCategory(homeArr);
-        }
-        if (category.value === 'Sports, Books & More') {
-            showSubCategory(sportArr);
-        }
+        // if (category.value === 'Electronics') {
+        //     showSubCategory(elecArr);
+        // }
+        // if (category.value === 'TVs & Appliances') {
+        //     showSubCategory(tvsAppArr);
+        // }
+        // if (category.value === 'Men') {
+        //     showSubCategory(menArr);
+        // }
+        // if (category.value === 'Women') {
+        //     showSubCategory(womanArr);
+        // }
+        // if (category.value === 'Baby & Kids') {
+        //     showSubCategory(babyArr);
+        // }
+        // if (category.value === 'Home & Furniture') {
+        //     showSubCategory(homeArr);
+        // }
+        // if (category.value === 'Sports, Books & More') {
+        //     showSubCategory(sportArr);
+        // }
 
 
-        category.addEventListener('change', () => {
-            // console.log(category.value);
-            if (category.value === 'Electronics') {
-                showSubCategory(elecArr);
-            }
-            if (category.value === 'TVs & Appliances') {
-                showSubCategory(tvsAppArr);
-            }
-            if (category.value === 'Men') {
-                showSubCategory(menArr);
-            }
-            if (category.value === 'Women') {
-                showSubCategory(womanArr);
-            }
-            if (category.value === 'Baby & Kids') {
-                showSubCategory(babyArr);
-            }
-            if (category.value === 'Home & Furniture') {
-                showSubCategory(homeArr);
-            }
-            if (category.value === 'Sports, Books & More') {
-                showSubCategory(sportArr);
-            }
-        })
+        // category.addEventListener('change', () => {
+        //     // console.log(category.value);
+        //     if (category.value === 'Electronics') {
+        //         showSubCategory(elecArr);
+        //     }
+        //     if (category.value === 'TVs & Appliances') {
+        //         showSubCategory(tvsAppArr);
+        //     }
+        //     if (category.value === 'Men') {
+        //         showSubCategory(menArr);
+        //     }
+        //     if (category.value === 'Women') {
+        //         showSubCategory(womanArr);
+        //     }
+        //     if (category.value === 'Baby & Kids') {
+        //         showSubCategory(babyArr);
+        //     }
+        //     if (category.value === 'Home & Furniture') {
+        //         showSubCategory(homeArr);
+        //     }
+        //     if (category.value === 'Sports, Books & More') {
+        //         showSubCategory(sportArr);
+        //     }
+        // })
 
         subcategory.value = product.subcategory;
         changename.value = product.name;
@@ -204,7 +204,7 @@ export function updateProd() {
         // console.log(key);
         // console.log(product[key]);
 
-        if (product[key][0]) {
+        if (key && product[key] && product[key][0]) {
             if (Object.keys(product[key][0]).length > 0) {
                 // console.log(product[key][0]);
 

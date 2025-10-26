@@ -119,45 +119,63 @@
 </div>
 <!-- End Banner Hero -->
 
-<section>
-    <div class="m-4 mx-5">
-        <div class="card-container">
-            <% if (products) { %>
-                <% if (products.length> 0) { %>
-                    <% products.forEach((product)=> { %>
-                        <div class="card border-0">
-                            <img src="../../uploadedImages/<%= product.image[0].img %>"
-                            class="card-img-top product-img" 
-                            style="height: 438px !important;" 
-                            alt="<%= product.name %>"
-                            data-default-img="../../uploadedImages/<%= product.image[0].img %>"
-                            data-hover-img="<%= product.image[1] ? '../../uploadedImages/' + product.image[1].img : '../../uploadedImages/' + product.image[0].img %>" 
-                            >
-                            <div class="card-body">
-                                <p class="card-title text-center fw-bold">
-                                    <%= product.name.substring(0, 40) %>
-                                    <% if (product.name.length> 40) { %>
-                                        <%= '...' %>
-                                            <% } %>
-                                </h5>
-                                <h6 class="text-center fw-bold mt-2 mb-3">Rs. <%= product.price %></h6>
-                                <p class="text-center">
-                                    <% product.size.map(size=> { %>
-                                        <span><%= size %>, </span>
-                                    <% }) %>
-                                </p>
+<% if (data) { %>
+  <% if (data.length> 0) { %>
+    <section>
+      <div class="m-4 mx-5">
+          <% data.forEach((doc, docIndex)=> { %>
+            <h4 class="text-center"><%= doc.subcategory %></h4>
+            <div class="card-container">
+                <% if (doc) { %>
+                  <% if(doc.products) { %>
+                    <% if (doc.products.length> 0) { %>
+                        <% doc.products.forEach((product)=> { %>
+                            <div class="card border-0" onclick="redirectTo('/productview/<%= product.id %>')">
+                                <img src="../../uploadedImages/<%= product.image[0].img %>"
+                                class="card-img-top product-img" 
+                                style="height: 438px !important;" 
+                                alt="<%= product.name %>"
+                                data-default-img="../../uploadedImages/<%= product.image[0].img %>"
+                                data-hover-img="<%= product.image[1] ? '../../uploadedImages/' + product.image[1].img : '../../uploadedImages/' + product.image[0].img %>" 
+                                >
+                                <div class="card-body">
+                                    <p class="card-title text-center fw-bold">
+                                        <%= product.name.substring(0, 40) %>
+                                        <% if (product.name.length> 40) { %>
+                                            <%= '...' %>
+                                                <% } %>
+                                    </h5>
+                                    <h6 class="text-center fw-bold mt-2 mb-3">Rs. <%= product.price %></h6>
+                                    <p class="text-center">
+                                        <% product.size.map((size, index)=> { %>
+                                            <span><%= size %></span>
+                                            <% if (product.size.length != (index + 1) ) { %><span>, </span><% } %>
+                                        <% }) %>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    <% }) %>
+                        <% }) %>
+                    <% } %>
+                  <% } %>
                 <% } %>
-            <% } %>
+            </div>
         </div>
-    </div>
 
-    <div class="d-grid gap-2 col-2 mx-auto mb-5">
-      <a class="btn btn-warning text-white" type="button" href="/shop">Explore More</a>
-    </div>
-</section>
+        <div class="d-grid gap-2 col-2 mx-auto mb-5">
+          <a class="btn btn-warning text-white" type="button" href="/subCategory/<%= doc.subcategory.replace(/\s+/g, '-').toLowerCase() %>">Explore More <%= doc.subcategory %></a>
+        </div>
+
+        <% if (data.length != (docIndex + 1) ) { %><hr class="mx-3"><% } %>
+    </section>
+    <% }) %>
+  <% } %>
+<% } %>
+
+<script>
+  function redirectTo(url) {
+      window.location.href = url;
+  }
+</script>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

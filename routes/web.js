@@ -33,6 +33,7 @@ function initRoutes(app) {
     //this is for show product when click on Category Navbar
     app.get('/category/:category', catProdShowController().showCategory)
     app.get('/category/:category/:subCategory', catProdShowController().showSubCategory)
+    app.get('/subCategory/:subCategory', catProdShowController().showOnlySubCategory)
     app.get('/productview/:prdID', catProdShowController().viewProduct)
     // app.get('/productview/:prdID/:msg', catProdShowController().viewProductwithMsg)
 

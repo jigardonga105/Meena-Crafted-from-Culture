@@ -62,6 +62,17 @@ function catProdShowController() {
             return res.render('customers/shop', { products });
         },
 
+        async showOnlySubCategory(req, res) {
+            const { subCategory } = req.params;
+            const originalName =
+            subCategory.split("-")
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ");
+            const products = await Product.find({ subcategory: originalName });
+
+            return res.render('customers/shop', { products });
+        },
+
         async viewProduct(req, res) {
             viewProdFunc(req, res);
         },
