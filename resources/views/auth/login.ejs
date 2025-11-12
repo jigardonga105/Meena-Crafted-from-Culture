@@ -16,6 +16,7 @@
                     <form action="/login" method="POST">
                         <input name="email" type="text" placeholder="EMAIL" required/>
                         <input name="password" type="password" placeholder="PASSWORD" required/>
+                        <input id="wishlistField" name="wishlist" type="text" class="d-none"/>
                         <button class="opacity">SUBMIT</button>
                     </form>
                     <div class="register-forget opacity">
@@ -27,4 +28,7 @@
     </div>
     <!-- <div class="theme-btn-container"></div> -->
 </section>
+<script>
+    document.getElementById('wishlistField').value = JSON.stringify(localStorage.getItem('MeenaFavoriteProducts')) || '';
+</script>
 <script src="/js/auth/auth.js"></script>

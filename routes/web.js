@@ -29,6 +29,8 @@ function initRoutes(app) {
     app.get('/about', homeController().about)
     app.get('/contact', homeController().contact)
     app.get('/shop', homeController().shop)
+    app.get('/wishlist', homeController().wishlist)
+    app.post('/wishlist', homeController().wishlist)
     app.get('/shop-single', homeController().shopSingle)
     //this is for show product when click on Category Navbar
     app.get('/category/:category', catProdShowController().showCategory)

@@ -11,6 +11,7 @@ const userSchema = new Schema({
     gender: { type: String, default: 'male' },
     image: [{ img: { type: String, required: true } }],
     address: { type: [Object] },
+    wishlist: { type: [Object] },
     cart: { type: Object, default: {} },
     rateHistory: { type: Object, default: {} }
 }, { timestamps: true })

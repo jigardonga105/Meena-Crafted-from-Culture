@@ -23,6 +23,18 @@ function homeController() {
             // console.log(products);
             return res.render('customers/shop', { products })
         },
+        async wishlist(req, res) {
+            const { wishlist } = req.body;
+            if (req.session && req.session.user && req.session.user.wishlist && req.session.user.wishlist.length) {
+                const products = await Product.find({ _id: { $in: JSON.parse(req.session.user.wishlist) } });
+                return res.render('customers/wishlist', { products })
+            } else if (wishlist && wishlist.length) {
+                const products = await Product.find({ _id: { $in: JSON.parse(wishlist) } });
+                return res.render('customers/wishlist', { products })
+            } else {
+                return res.render('customers/wishlist', { products: [] })
+            }
+        },
         async shopSingle(req, res) {
             return res.render('customers/shop-single')
         }

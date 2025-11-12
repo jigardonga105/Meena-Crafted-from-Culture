@@ -130,7 +130,11 @@
                   <% if(doc.products) { %>
                     <% if (doc.products.length> 0) { %>
                         <% doc.products.forEach((product)=> { %>
-                            <div class="card border-0" onclick="redirectTo('/productview/<%= product.id %>')">
+                          <div class="card border-0">
+                              <a class="btn text-white position-absolute top-0 end-0" onclick="toggleFavorite(`<%= product.id %>`, this)">
+                                <i class="fa-regular fa-heart"></i>
+                              </a>
+                              <div onclick="redirectTo('/productview/<%= product.id %>')">
                                 <img src="../../uploadedImages/<%= product.image[0].img %>"
                                 class="card-img-top product-img" 
                                 style="height: 438px !important;" 
@@ -153,6 +157,7 @@
                                         <% }) %>
                                     </p>
                                 </div>
+                              </div>
                             </div>
                         <% }) %>
                     <% } %>
@@ -173,9 +178,50 @@
 
 <script>
   function redirectTo(url) {
-      window.location.href = url;
+    window.location.href = url;
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const favorites = JSON.parse(localStorage.getItem("MeenaFavoriteProducts")) || [];
+
+    favorites.forEach(productId => {
+      const btn = document.querySelector(`[onclick*="${productId}"]`);
+      if (btn) {
+        const icon = btn.querySelector("i");
+        icon.classList.remove("fa-regular");
+        icon.classList.add("fa-solid");
+        icon.style.color = "#ffc107"; // highlight saved wishlist items
+      }
+    });
+  });
+
+  function 
+  toggleFavorite(productId, element) {
+    // Get current saved product IDs from localStorage
+    let favorites = JSON.parse(localStorage.getItem("MeenaFavoriteProducts")) || [];
+
+    const icon = element.querySelector("i");
+
+    // Check if product is already in favorites
+    if (favorites.includes(productId)) {
+      // Remove from wishlist
+      favorites = favorites.filter(id => id !== productId);
+      icon.classList.remove("fa-solid");
+      icon.classList.add("fa-regular");
+      icon.style.color = ""; // reset to default color
+    } else {
+      // Add to wishlist
+      favorites.push(productId);
+      icon.classList.remove("fa-regular");
+      icon.classList.add("fa-solid");
+      icon.style.color = "#ffc107"; // yellow color for wishlist
+    }
+
+    // Save updated favorites to localStorage
+    localStorage.setItem("MeenaFavoriteProducts", JSON.stringify(favorites));
   }
 </script>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

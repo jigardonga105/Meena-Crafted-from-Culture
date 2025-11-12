@@ -271,7 +271,7 @@
                 <a class="nav-icon d-inline" href="#" data-bs-toggle="modal" data-bs-target="#template_search">
                     <i class="fa fa-fw fa-search text-dark mr-2"></i>
                 </a>
-                <a class="nav-icon d-inline" href="#">
+                <a class="nav-icon d-inline" onclick="sendWishlist(event)">
                     <i class="fa fa-fw fa-heart text-dark mr-2"></i>
                 </a>
                 <a class="nav-icon position-relative text-decoration-none" href="/cart">
@@ -347,7 +347,7 @@
                     <a class="nav-icon d-inline" href="#" data-bs-toggle="modal" data-bs-target="#template_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon d-inline" href="#">
+                    <a class="nav-icon d-inline" onclick="sendWishlist(event)">
                         <i class="fa fa-fw fa-heart text-dark mr-2"></i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/cart">
@@ -578,6 +578,34 @@
                     }, 1000);
                 }
             }
+        </script>
+
+        <script>
+            function sendWishlist(event) {
+                event.preventDefault();
+
+                // Get wishlist from localStorage
+                const wishlist = JSON.parse(localStorage.getItem("MeenaFavoriteProducts")) || [];
+
+                // Create a form dynamically
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "/wishlist";
+
+                // Create a hidden input field for wishlist
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "wishlist";
+                input.value = JSON.stringify(wishlist);
+
+                // Append input to form
+                form.appendChild(input);
+
+                // Add form to document and submit it
+                document.body.appendChild(form);
+                form.submit();
+            };
+
         </script>
 </body>
 

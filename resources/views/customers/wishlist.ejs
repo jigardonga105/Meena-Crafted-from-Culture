@@ -1,0 +1,175 @@
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
+    <style>
+        .card {
+            box-shadow: 2px 2px 2px 2px #ebebeb;
+        }
+
+        .card:hover {
+            box-shadow: 2px 2px 1px #ebebeb;
+        }
+
+        .card-shadowNone {
+            box-shadow: none !important;
+        }
+
+        .card {
+            border: none !important;
+            width: 300px;
+            border-radius: 20px;
+        }
+
+        .card-img {
+            height: 250px !important;
+            width: 200px !important;
+        }
+
+        @media only screen and (max-width: 1400px) {
+            #productsGridDiv {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            #productsGridDiv {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+
+        @media only screen and (max-width: 300px) {
+            .card {
+                width: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<!-- Start Content -->
+<div class="container py-5">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="h2 pb-4">My Wishlist</h2>
+                </div>
+                <div class="col-md-6 pb-4">
+                    <div class="d-flex flex-row-reverse">
+                        <button type="button" class="btn btn-secondary">Clear Wishlist</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========================================================================= -->
+            <!-- ========================================================================= -->
+
+            <% if (products && products.length> 0) { %>
+                <div id="productsGridDiv" class="grid justify-items-center grid-cols-4 gap-4 rounded-lg">
+                    <% products.forEach((product)=> { %>
+                        <div class="" style="cursor: pointer;">
+                            <div class="card mb-4 product-wap rounded-lg">
+                                <div class="card rounded-lg image-card card-shadowNone"
+                                    style="height: 200px !important;">
+                                    <img class="card-img rounded-lg img-fluid pt-3"
+                                        src="../../uploadedImages/<%= product.image[0].img %>">
+                                    <div
+                                        class="card-img-overlay rounded-lg product-overlay d-flex align-items-center justify-content-center">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a class="btn btn-success text-white" href="#">
+                                                    <i class="fas fa-heart"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-success text-white mt-2"
+                                                    href="/productview/<%= product._id %>">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="addToCartBtn btn btn-success text-white mt-2" href="#"
+                                                    data-product="<%= JSON.stringify(product) %>">
+                                                    <i class="fas fa-cart-plus"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <a href="/productview/<%= product._id %>" class="h3 text-decoration-none">
+                                        <%= product.name.substring(0, 20) %>
+                                            <% if (product.name.length> 20) { %>
+                                                <%= '...' %>
+                                                    <% } %>
+                                    </a>
+                                    <ul class="rating-vote-ul">
+                                        <li class="rating-vote-li1">
+                                            <%= product.rating %>&nbsp;<i class="text-muted fa fa-star"></i>
+                                        </li>
+                                        <li class="rating-vote-li2">
+                                            (
+                                            <%= product.vote %> )
+                                        </li>
+                                    </ul>
+
+                                    <div class="bg-gray-100 p-2 rounded-lg">
+                                        <p class="text-center mb-0 "
+                                            style="font-weight: bold !important;font-size: 20px !important;">
+                                            <% if(product.discount !=0){ %>₹
+                                                <%= Math.round(product.price -
+                                                    ((product.price/100)*product.discount)) %>
+                                                    <span class="animate-ping"
+                                                        style="color: green; font-weight: bold; font-size: 12px;margin-left: 5px;">
+                                                        <%= product.discount %>% off
+                                                    </span>
+                                                    <p class="text-center mb-0 "
+                                                        style="text-decoration: line-through;">₹
+                                                        <%= product.price %>
+                                                    </p>
+                                                    <% }else{ %>₹
+                                                        <%= product.price %>
+                                                            <% } %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div id="noWishlistProds" class="border p-5 text-center rounded-lg">
+                    <p style="font-size: 2rem !important;">There are no items in your Wishlist</p>
+
+                    <div>
+                        <button type="button" class="btn btn-warning">
+                            <a href="/shop" class="text-dark text-decoration-none">
+                                Shop Now
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            <% } %>
+            <!-- </div> -->
+
+            <div div="row" class="d-none">
+                <ul class="pagination pagination-lg justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#"
+                            tabindex="-1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                            href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Content -->

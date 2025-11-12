@@ -57,9 +57,12 @@ function cartController() {
                             };
                         }
 
-                        // Check if item does not exist in cart
-                        if (!cart["custID_" + req.session.user._id + "_cart"].items[product._id]) {
+                        if (!cart["custID_" + req.session.user._id + "_cart"].items) {
+                            cart["custID_" + req.session.user._id + "_cart"].items = {};
+                        }
 
+                        // Check if item does not exist in cart
+                        if (!cart["custID_" + req.session.user._id + "_cart"].items || !cart["custID_" + req.session.user._id + "_cart"].items[product._id]) {
                             //if not then add item in to the cart
                             let featureObj = {
                                 color,

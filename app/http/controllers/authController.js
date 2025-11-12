@@ -89,7 +89,7 @@ function authController() {
         },
 
         async loginPost(req, res, next) {
-            const { email, password } = req.body
+            const { email, password, wishlist } = req.body
 
             //Validate request
             if (!email || !password) {
@@ -100,8 +100,9 @@ function authController() {
             const isExist = await User.count({ email: email, role: 'customer' })
             const isExist2 = await User.count({ email: email, role: 'courier' })
             const isExist3 = await User.count({ email: email, role: 'admin' })
+            const isExist4 = await User.count({ email: email, role: 'seller' })
 
-            if (!isExist && !isExist2 && !isExist3) {
+            if (!isExist && !isExist2 && !isExist3 && !isExist4) {
                 req.flash('error', 'User not found')
                 return res.redirect('/login')
             }
@@ -110,18 +111,34 @@ function authController() {
             if (user) {
                 const result = await bcrypt.compare(password, user.password);
                 if (result) {
+                    if (req.session.user) {
+                        delete req.session.user
+                    }
+                    
                     if (req.session.courierAgents) {
                         delete req.session.courierAgents
-                        // req.session.regenerate((err) => {
-                        //     if (err) {
-                        //         console.log(err);
-                        //     }
-                        // })
-                        req.session.user = user;
-                    } else {
-                        req.session.user = user;
+                    }
+                    
+                    req.session.user = user;
+
+                    if (wishlist.length > 0) {
+                        const wishlistArray = JSON.parse(wishlist);
+
+                        const resultNew = await User.updateOne({ _id: req.session.user.id }, { $set: { wishlist: wishlistArray } })
+                        // console.log(result);
+                        if (resultNew) {
+                            const userNew = await User.findById({ _id: req.session.user.id })
+                            delete req.session.user
+                            req.session.user = userNew
+                        } else {
+                            req.flash('error', 'Something went wrong...')
+                            return res.redirect('/login')
+                        }
                     }
 
+                    if (req.session.user.role == 'seller') {
+                        return res.redirect('/seller/sellerStr')
+                    }
                     return res.redirect('/')
                 } else {
                     req.flash('error', 'Username or password incorrect')

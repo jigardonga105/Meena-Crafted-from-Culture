@@ -181,8 +181,7 @@
 <section>
     <% if(user){ %>
         <!-- if cart is awailable and product is awailable then show that product -->
-        <% if(user.cart && user.cart['custID_' + user._id + '_cart' ] && Object.keys(user.cart['custID_' + user._id
-            + '_cart' ].items).length){ %>
+        <% if(user.cart && user.cart['custID_' + user._id + '_cart' ] && user.cart['custID_' + user._id + '_cart' ].items && Object.keys(user.cart['custID_' + user._id + '_cart' ].items).length){ %>
             <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
                 data-user="<%= JSON.stringify(user) %>">
             <input type="hidden" id="prdData" value="<%= JSON.stringify(cartProduct) %>">
@@ -216,29 +215,29 @@
                     </div>
                 </div>
             </div>
-            <% }else{ %>
-                <div id="cartNoPrdMain" class="bg-gray-100 p-20">
-                    <div id="emptyCartDiv" class="bg-white m-auto p-2">
+        <% }else{ %>
+            <div id="cartNoPrdMain" class="bg-gray-100 p-20">
+                <div id="emptyCartDiv" class="bg-white m-auto p-2">
+                    <div class="p-3">
+                        <h4>My Cart</h4>
+                    </div>
+                    <div class="grid justify-items-center">
                         <div class="p-3">
-                            <h4>My Cart</h4>
+                            <img class="w-58 h-48" src="/img/cart.png" alt="emptyCart">
                         </div>
-                        <div class="grid justify-items-center">
-                            <div class="p-3">
-                                <img class="w-58 h-48" src="/img/cart.png" alt="emptyCart">
-                            </div>
-                            <div class="">
-                                <span class="block font-bold text-xl">Your cart is empty!</span>
-                                <span class="block text-base mx-3 my-3">Add items to it now.</span>
-                                <a href="/shop">
-                                    <button id="emptyCartBtn"
-                                        class="bg-green-600 shadow text-white w-44 h-10 rounded mb-10">
-                                        Shop Now
-                                    </button>
-                                </a>
-                            </div>
+                        <div class="">
+                            <span class="block font-bold text-xl">Your cart is empty!</span>
+                            <span class="block text-base mx-3 my-3">Add items to it now.</span>
+                            <a href="/shop">
+                                <button id="emptyCartBtn"
+                                    class="bg-green-600 shadow text-white w-44 h-10 rounded mb-10">
+                                    Shop Now
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <% } %>
-                    <% } %>
+            </div>
+        <% } %>
+    <% } %>
 </section>
