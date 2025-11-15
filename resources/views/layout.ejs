@@ -90,6 +90,17 @@
             display: block;
             text-decoration: none;
         }
+
+        .wishlistIcon:hover {
+            cursor: pointer;
+        }
+
+        .productNameDisplay {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 
@@ -253,36 +264,36 @@
                                 </script>
                             </span>
 
-                            <% }else{ %>
-                                <span class="flex items-center">
-                                    <% if (user.gender=="male" ) { %>
-                                        <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg" alt="User Image"
-                                            width="35" height="35" style="border-radius: 9999px;">
-                                        <% }else{ %>
-                                            <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg"
-                                                alt="User Image" width="35" height="35" style="border-radius: 9999px;">
-                                            <% } %>
-                                                <span class="mt-1">
-                                                    <%= user.first_name %>
-                                                </span>
-                                </span>
-                                <% }} %>
+                        <% }else{ %>
+                            <span class="flex items-center">
+                                <% if (user.gender=="male" ) { %>
+                                    <img class="mr-2 w-10 h-10 rounded-full" src="/img/male.jpg" alt="User Image"
+                                        width="35" height="35" style="border-radius: 9999px;">
+                                    <% }else{ %>
+                                        <img class="mr-2 w-10 h-10 rounded-full" src="/img/female.jpg"
+                                            alt="User Image" width="35" height="35" style="border-radius: 9999px;">
+                                        <% } %>
+                                            <span class="mt-1">
+                                                <%= user.first_name %>
+                                            </span>
+                            </span>
+                    <% }} %>
                 </a>
                 <a class="nav-icon d-inline" href="#" data-bs-toggle="modal" data-bs-target="#template_search">
                     <i class="fa fa-fw fa-search text-dark mr-2"></i>
                 </a>
-                <a class="nav-icon d-inline" onclick="sendWishlist(event)">
+                <a class="nav-icon d-inline wishlistIcon" onclick="goToWishlist(event)">
+                <!-- <a class="nav-icon d-inline wishlistIcon" href="/wishlist"> -->
                     <i class="fa fa-fw fa-heart text-dark mr-2"></i>
                 </a>
                 <a class="nav-icon position-relative text-decoration-none" href="/cart">
                     <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
 
                     <% if(user && user.cart) { %>
-                        <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>"
-                            data-user="<%= JSON.stringify(user) %>">
-                        <% } %>
-                            <span id="cartCounter"
-                                class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                        <input type="hidden" id="cartData" value="<%= JSON.stringify(user.cart) %>" data-user="<%= JSON.stringify(user) %>">
+                    <% } %>
+                    
+                    <span id="cartCounter" class="cartIconMain position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                 </a>
                 <a class="nav-icon position-relative text-decoration-none d-none" href="#">
                     <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -347,7 +358,8 @@
                     <a class="nav-icon d-inline" href="#" data-bs-toggle="modal" data-bs-target="#template_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon d-inline" onclick="sendWishlist(event)">
+                    <a class="nav-icon d-inline wishlistIcon" onclick="goToWishlist(event)">
+                    <!-- <a class="nav-icon d-inline wishlistIcon" href="/wishlist"> -->
                         <i class="fa fa-fw fa-heart text-dark mr-2"></i>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/cart">
@@ -391,222 +403,293 @@
 
     <%- body %>
 
-        <!-- <h2 class="h2 text-success border-bottom pb-3 border-light logo">Meena</h2> -->
-        <!-- Start Footer -->
-        <footer style="background-color: black;" id="tempaltemo_footer">
+    <!-- <h2 class="h2 text-success border-bottom pb-3 border-light logo">Meena</h2> -->
+    <!-- Start Footer -->
+    <footer style="background-color: black;" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <a class="navbar-brand text-success logo h1 align-self-center" href="/index">
+                        <img src="/img/logo/logo.png" alt="Meena" width="200" height="75">
+                    </a>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i> Gujarat, India
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:1234567890">1234567890</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none"
+                                href="mailto:info@Meena.com">info@Meena.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Home</a></li>
+                        <li><a class="text-decoration-none" href="#">About Us</a></li>
+                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/jigsdonga25__/"><i
+                                    class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.linkedin.com/in/jigardonga/"><i
+                                    class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
+                            placeholder="Email address">
+                        <div class="input-group-text btn-success text-light">Subscribe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 py-3" style="background-color: #060607;">
             <div class="container">
-                <div class="row">
-
-                    <div class="col-md-4 pt-5">
-                        <a class="navbar-brand text-success logo h1 align-self-center" href="/index">
-                            <img src="/img/logo/logo.png" alt="Meena" width="200" height="75">
-                        </a>
-                        <ul class="list-unstyled text-light footer-link-list">
-                            <li>
-                                <i class="fas fa-map-marker-alt fa-fw"></i> Gujarat, India
-                            </li>
-                            <li>
-                                <i class="fa fa-phone fa-fw"></i>
-                                <a class="text-decoration-none" href="tel:1234567890">1234567890</a>
-                            </li>
-                            <li>
-                                <i class="fa fa-envelope fa-fw"></i>
-                                <a class="text-decoration-none"
-                                    href="mailto:info@Meena.com">info@Meena.com</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-4 pt-5">
-                        <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
-                        <ul class="list-unstyled text-light footer-link-list">
-                            <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                            <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-                            <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-                            <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-                            <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-                            <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
-                            <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-4 pt-5">
-                        <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
-                        <ul class="list-unstyled text-light footer-link-list">
-                            <li><a class="text-decoration-none" href="#">Home</a></li>
-                            <li><a class="text-decoration-none" href="#">About Us</a></li>
-                            <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
-                            <li><a class="text-decoration-none" href="#">FAQs</a></li>
-                            <li><a class="text-decoration-none" href="#">Contact</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div class="row text-light mb-4">
-                    <div class="col-12 mb-3">
-                        <div class="w-100 my-3 border-top border-light"></div>
-                    </div>
-                    <div class="col-auto me-auto">
-                        <ul class="list-inline text-left footer-icons">
-                            <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank"
-                                    href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                            </li>
-                            <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank"
-                                    href="https://www.instagram.com/jigsdonga25__/"><i
-                                        class="fab fa-instagram fa-lg fa-fw"></i></a>
-                            </li>
-                            <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank"
-                                    href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
-                            </li>
-                            <li class="list-inline-item border border-light rounded-circle text-center">
-                                <a class="text-light text-decoration-none" target="_blank"
-                                    href="https://www.linkedin.com/in/jigardonga/"><i
-                                        class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-auto">
-                        <label class="sr-only" for="subscribeEmail">Email address</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
-                                placeholder="Email address">
-                            <div class="input-group-text btn-success text-light">Subscribe</div>
-                        </div>
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            Copyright &copy; <span id="copyYear"></span> Meena
+                        </p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="w-100 py-3" style="background-color: #060607;">
-                <div class="container">
-                    <div class="row pt-2">
-                        <div class="col-12">
-                            <p class="text-left text-light">
-                                Copyright &copy; <span id="copyYear"></span> Meena
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    </footer>
+    <!-- End Footer -->
 
-        </footer>
-        <!-- End Footer -->
+    <script>
+        const setCartVal = (user, cartData) => {
+            let cartCounterSpan = document.getElementById('cartCounter');
 
-        <script>
-            const setCartVal = (user, cartData) => {
-                let cartCounterSpan = document.getElementById('cartCounter');
-
-                if (!cartData['custID_' + user['_id'] + '_cart']) {
-                    cartCounterSpan.innerHTML = '';
-                } else {
-                    let cartIconMain = document.getElementsByClassName('cartIconMain')
-                    for (let i = 0; i < cartIconMain.length; i++) {
-                        const cartIconMainSingle = cartIconMain[i];
-                        cartIconMainSingle.innerHTML = cartData['custID_' + user['_id'] + '_cart'].totalQty;
-                    }
+            if (!cartData['custID_' + user['_id'] + '_cart']) {
+                cartCounterSpan.innerHTML = '';
+            } else {
+                let cartIconMain = document.getElementsByClassName('cartIconMain')
+                for (let i = 0; i < cartIconMain.length; i++) {
+                    const cartIconMainSingle = cartIconMain[i];
+                    cartIconMainSingle.innerHTML = cartData['custID_' + user['_id'] + '_cart'].totalQty;
                 }
             }
+        }
 
-            // ======================================================================================================
+        // ======================================================================================================
 
-            //set cart value
-            let cartData = document.getElementById('cartData');
-            if (cartData) {
-                let user = JSON.parse(cartData.dataset.user);
-                cartData = JSON.parse(cartData.value);
-                
-                setCartVal(user, cartData)
-            } else {
-                let cartCounterSpan = document.getElementById('cartCounter');
-                cartCounterSpan.innerHTML = '';
+        //set cart value
+        let cartData = document.getElementById('cartData');
+        if (cartData) {
+            let user = JSON.parse(cartData.dataset.user);
+            cartData = JSON.parse(cartData.value);
+            
+            setCartVal(user, cartData)
+        } else {
+            let cartCounterSpan = document.getElementById('cartCounter');
+            cartCounterSpan.innerHTML = '';
+        }
+
+        // ======================================================================================================
+        // ======================================================================================================
+
+        document.getElementById('copyYear').innerHTML = new Date().getFullYear();
+
+    </script>
+
+    <!-- Start Script -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <script src="/js/jquery-1.11.0.min.js"></script>
+    <script src="/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/template.js"></script>
+    <script src="/js/custom.js"></script>
+
+
+    <script src="/js/app.js"></script>
+    <!-- End Script -->
+
+    <script>
+        let catsMoreOpt = document.getElementById('catsMoreOpt');
+        let catsMoreOpt_plus = document.getElementById('catsMoreOpt-plus');
+        let addAllCats = document.getElementById('addAllCats');
+        let cat_nav_ul = document.getElementById('cat-nav-ul');
+
+        if (catsMoreOpt) {
+            catsMoreOpt.addEventListener('click', () => {
+                if (catsMoreOpt_plus.innerHTML === '+') {
+                    catsMoreOpt_plus.innerHTML = 'x';
+                    addAllCats.style.display = 'block';
+                    cat_nav_ul.style.display = 'flex';
+                    cat_nav_ul.style.flexDirection = 'column';
+                    addAllCats.append(cat_nav_ul);
+                } else {
+                    catsMoreOpt_plus.innerHTML = '+';
+                    addAllCats.style.display = 'none';
+                    cat_nav_ul.style.display = 'none';
+                }
+            })
+        }
+    </script>
+
+    <script>
+        document.onreadystatechange = function () {
+            var state = document.readyState
+
+            if (state == 'interactive') {
+                // document.getElementsByTagName('body')[0].style.visibility = "hidden";
+            } else if (state == 'complete') {
+                setTimeout(function () {
+                    // document.getElementsByTagName('body')[0].classList.add('overflow_x');
+                }, 1000);
             }
+        }
+    </script>
 
-            // ======================================================================================================
-            // ======================================================================================================
+    <script>
+        function flashNotyMsg(msg, type) {
+            new Noty({
+                type: type,
+                timeout: 3000,
+                text: msg,
+                progressBar: false,
+            }).show();
+        }
 
-            document.getElementById('copyYear').innerHTML = new Date().getFullYear();
-
-        </script>
-
-        <!-- Start Script -->
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/jquery-1.11.0.min.js"></script>
-        <script src="/js/jquery-migrate-1.2.1.min.js"></script>
-        <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="/js/template.js"></script>
-        <script src="/js/custom.js"></script>
-
-
-        <script src="/js/app.js"></script>
-        <!-- End Script -->
-
-        <script>
-            let catsMoreOpt = document.getElementById('catsMoreOpt');
-            let catsMoreOpt_plus = document.getElementById('catsMoreOpt-plus');
-            let addAllCats = document.getElementById('addAllCats');
-            let cat_nav_ul = document.getElementById('cat-nav-ul');
-
-            if (catsMoreOpt) {
-                catsMoreOpt.addEventListener('click', () => {
-                    if (catsMoreOpt_plus.innerHTML === '+') {
-                        catsMoreOpt_plus.innerHTML = 'x';
-                        addAllCats.style.display = 'block';
-                        cat_nav_ul.style.display = 'flex';
-                        cat_nav_ul.style.flexDirection = 'column';
-                        addAllCats.append(cat_nav_ul);
-                    } else {
-                        catsMoreOpt_plus.innerHTML = '+';
-                        addAllCats.style.display = 'none';
-                        cat_nav_ul.style.display = 'none';
+        function saveProdInWishlistDB(wishlist, removeFromWishlist = false) {
+            axios.post('/addToWishlist', { wishlist, removeFromWishlist })
+                .then((response) => {
+                    if (response.data.message != undefined) {
+                        flashNotyMsg(response.data.message, response.data.type);
                     }
                 })
+                .catch((err) => {
+                    console.log(err);
+                    if (response.data.message != undefined) {
+                        flashNotyMsg(response.data.message, response.data.type);
+                    }
+                })
+        }
+
+        function addToWishlist(productId, element) {
+            // Get current saved product IDs from localStorage
+            let favorites = JSON.parse(localStorage.getItem("MeenaFavoriteProducts")) || [];
+
+            const icon = element.querySelector("i");
+
+            // Check if product is already in favorites
+            if (favorites.includes(productId)) {
+                // Remove from wishlist
+                favorites = favorites.filter(id => id !== productId);
+                icon.classList.remove("fa-solid");
+                icon.classList.add("fa-regular");
+                icon.style.color = ""; // reset to default color
+                saveProdInWishlistDB(favorites, true)
+            } else {
+                // Add to wishlist
+                favorites.push(productId);
+                icon.classList.remove("fa-regular");
+                icon.classList.add("fa-solid");
+                icon.style.color = "#ffc107"; // yellow color for wishlist
+                saveProdInWishlistDB(favorites)
             }
-        </script>
 
-        <script>
-            document.onreadystatechange = function () {
-                var state = document.readyState
+            // Save updated favorites to localStorage
+            localStorage.setItem("MeenaFavoriteProducts", JSON.stringify(favorites));
 
-                if (state == 'interactive') {
-                    // document.getElementsByTagName('body')[0].style.visibility = "hidden";
-                } else if (state == 'complete') {
-                    setTimeout(function () {
-                        // document.getElementsByTagName('body')[0].classList.add('overflow_x');
-                    }, 1000);
-                }
+        }
+
+        function goToWishlist(event, clear=false) {
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/requestWishlist";
+
+            if (clear) {
+                localStorage.removeItem("MeenaFavoriteProducts");
+
+                const input2 = document.createElement("input");
+                input2.type = "hidden";
+                input2.name = "wishlistClear";
+                input2.value = clear;
+
+                form.appendChild(input2);
             }
-        </script>
 
-        <script>
-            function sendWishlist(event) {
-                event.preventDefault();
+            const wishlist = JSON.parse(localStorage.getItem("MeenaFavoriteProducts")) || [];
 
-                // Get wishlist from localStorage
-                const wishlist = JSON.parse(localStorage.getItem("MeenaFavoriteProducts")) || [];
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "wishlist";
+            input.value = JSON.stringify(wishlist);
 
-                // Create a form dynamically
-                const form = document.createElement("form");
-                form.method = "POST";
-                form.action = "/wishlist";
+            form.appendChild(input);
 
-                // Create a hidden input field for wishlist
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = "wishlist";
-                input.value = JSON.stringify(wishlist);
+            document.body.appendChild(form);
+            form.submit();
+        }
 
-                // Append input to form
-                form.appendChild(input);
+          window.addEventListener("DOMContentLoaded", () => {
+            const favorites = JSON.parse(localStorage.getItem("MeenaFavoriteProducts")) || [];
 
-                // Add form to document and submit it
-                document.body.appendChild(form);
-                form.submit();
-            };
-
-        </script>
+            favorites.forEach(productId => {
+            const btn = document.querySelector(`[onclick*="${productId}"]`);
+            if (btn) {
+                const icon = btn.querySelector("i");
+                icon.classList.remove("fa-regular");
+                icon.classList.add("fa-solid");
+                icon.style.color = "#ffc107"; // highlight saved wishlist items
+            }
+            });
+        });
+    </script>
 </body>
 
 </html>

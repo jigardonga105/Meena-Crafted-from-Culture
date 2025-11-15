@@ -130,7 +130,7 @@
                                             class="card-img-overlay rounded-lg product-overlay d-flex align-items-center justify-content-center">
                                             <ul class="list-unstyled">
                                                 <li>
-                                                    <a class="btn btn-success text-white" href="#">
+                                                    <a class="btn btn-success text-white" onclick="addToWishlist(`<%= product.id %>`, this)">
                                                         <i class="fas fa-heart"></i>
                                                     </a>
                                                 </li>
@@ -150,17 +150,14 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <a href="/productview/<%= product._id %>" class="h3 text-decoration-none">
-                                            <%= product.name.substring(0, 20) %>
-                                                <% if (product.name.length> 20) { %>
-                                                    <%= '...' %>
-                                                        <% } %>
+                                        <a href="/productview/<%= product._id %>" class="productNameDisplay h3 text-decoration-none">
+                                            <%= product.name %>
                                         </a>
                                         <ul class="rating-vote-ul">
-                                            <li class="rating-vote-li1">
+                                            <li class="rating-vote-li1" style="font-size: 15px !important;">
                                                 <%= product.rating %>&nbsp;<i class="text-muted fa fa-star"></i>
                                             </li>
-                                            <li class="rating-vote-li2">
+                                            <li class="rating-vote-li2" style="font-size: 17px !important;">
                                                 (
                                                 <%= product.vote %> )
                                             </li>
@@ -169,7 +166,7 @@
                                         <div class="bg-gray-100 p-2 rounded-lg">
                                             <p class="text-center mb-0 "
                                                 style="font-weight: bold !important;font-size: 20px !important;">
-                                                <% if(product.discount !=0){ %>₹
+                                                <% if(product.discount !=0 && product.discount == ""){ %>₹
                                                     <%= Math.round(product.price -
                                                         ((product.price/100)*product.discount)) %>
                                                         <span class="animate-ping"
@@ -180,9 +177,9 @@
                                                             style="text-decoration: line-through;">₹
                                                             <%= product.price %>
                                                         </p>
-                                                        <% }else{ %>₹
-                                                            <%= product.price %>
-                                                                <% } %>
+                                                <% }else{ %>₹
+                                                    <%= product.price %>
+                                                <% } %>
                                             </p>
                                         </div>
                                     </div>

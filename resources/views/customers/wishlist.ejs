@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-6 pb-4">
                     <div class="d-flex flex-row-reverse">
-                        <button type="button" class="btn btn-secondary">Clear Wishlist</button>
+                        <button type="button" class="btn btn-secondary" onclick="goToWishlist(event, clear=true)">Clear Wishlist</button>
                     </div>
                 </div>
             </div>
@@ -77,11 +77,11 @@
                                     <div
                                         class="card-img-overlay rounded-lg product-overlay d-flex align-items-center justify-content-center">
                                         <ul class="list-unstyled">
-                                            <li>
+                                            <!-- <li>
                                                 <a class="btn btn-success text-white" href="#">
                                                     <i class="fas fa-heart"></i>
                                                 </a>
-                                            </li>
+                                            </li> -->
                                             <li>
                                                 <a class="btn btn-success text-white mt-2"
                                                     href="/productview/<%= product._id %>">
@@ -98,17 +98,14 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <a href="/productview/<%= product._id %>" class="h3 text-decoration-none">
-                                        <%= product.name.substring(0, 20) %>
-                                            <% if (product.name.length> 20) { %>
-                                                <%= '...' %>
-                                                    <% } %>
+                                    <a href="/productview/<%= product._id %>" class="productNameDisplay h3 text-decoration-none">
+                                        <%= product.name %>
                                     </a>
-                                    <ul class="rating-vote-ul">
-                                        <li class="rating-vote-li1">
+                                    <ul class="rating-vote-ul d-flex justify-content-center">
+                                        <li class="rating-vote-li1" style="font-size: 15px !important;">
                                             <%= product.rating %>&nbsp;<i class="text-muted fa fa-star"></i>
                                         </li>
-                                        <li class="rating-vote-li2">
+                                        <li class="rating-vote-li2" style="font-size: 17px !important;">
                                             (
                                             <%= product.vote %> )
                                         </li>
@@ -117,7 +114,7 @@
                                     <div class="bg-gray-100 p-2 rounded-lg">
                                         <p class="text-center mb-0 "
                                             style="font-weight: bold !important;font-size: 20px !important;">
-                                            <% if(product.discount !=0){ %>₹
+                                            <% if(product.discount !=0 && product.discount == ""){ %>₹
                                                 <%= Math.round(product.price -
                                                     ((product.price/100)*product.discount)) %>
                                                     <span class="animate-ping"
@@ -128,9 +125,9 @@
                                                         style="text-decoration: line-through;">₹
                                                         <%= product.price %>
                                                     </p>
-                                                    <% }else{ %>₹
-                                                        <%= product.price %>
-                                                            <% } %>
+                                            <% }else{ %>₹
+                                                <%= product.price %>
+                                            <% } %>
                                         </p>
                                     </div>
                                 </div>
